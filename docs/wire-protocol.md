@@ -16,9 +16,9 @@ family (see §8).
 - **Headers:**
   - `Authorization: Bearer <token>`. v1 uses one shared token per server; v2
     replaces it with a device certificate and a challenge (§9).
-  - `X-Yolovm-Worker-Id: <device id>`: 1–64 characters of `[A-Za-z0-9._-]`. The
-    header name is kept for compatibility with existing devices; v2 also accepts
-    `X-Worker-Id`.
+  - `X-Device-Id: <device id>`: 1–64 characters of `[A-Za-z0-9._-]`. Firmware from
+    before 2026-10-02 sends the same value as `X-Yolovm-Worker-Id`; servers accept it
+    until protocol v2, clients send only `X-Device-Id`.
 
 ## 2. Frames
 
@@ -158,7 +158,7 @@ The commands a device family offers are documented with that family:
   class, so servers, UIs and AI agents can use a new device without code written for
   it.
 - **Neutral names:** `DeviceTelemetry`, `DeviceEvent`, `DeviceCommand` accepted next to
-  the v1 names.
+  the v1 names, and the legacy `X-Yolovm-Worker-Id` header no longer accepted.
 - **Delegated actions:** `action_request {id, action, params, why, expires}` from a
   requester and `action_result {id, ok, receipt | signature | reason}` from the holder,
   routed by the node to the devices allowed to hold that action
