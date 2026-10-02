@@ -1,0 +1,49 @@
+# home-w42-eu
+
+A **local first, security and privacy first platform for a home**: Go servers on a
+small machine at home around one event hub, every device (new or old) a light client
+of them, and loops and controllers that AI helps you write and you approve.
+
+> Nothing leaves the home unless its owner signs that it may.
+
+## Read in this order
+
+1. [Vision](docs/vision.md): the problem, what we build, what it should feel like.
+2. [Use cases](docs/use-cases.md): **the main driver**: who needs what, and when it works.
+3. [Principles](docs/principles.md): the binding rules.
+4. [Architecture](docs/architecture.md): home node (web/API server, controller
+   server, event hub), light clients, adapters, apps, loops, AI agents, trust and
+   access control, relay.
+5. [Device wire protocol](docs/wire-protocol.md): the reference for how devices,
+   adapters and agents connect.
+6. [Stack-chan](docs/implementations/stackchan.md): the first device family, with
+   its apps and the TPBot car.
+7. [Fit and roadmap](docs/fit-and-roadmap.md): how the existing repos fit, the gaps,
+   and the next stages.
+
+Ideas for devices, adapters and loops (old phones, a Roomba, lawn mowers, Home
+Assistant, a private GPS app, cameras and plate OCR, Wi-Fi presence, calendars,
+NFC and QR) are in the `home-w42-eu-ideas` repo.
+
+## The repos today
+
+Each repo is independent. A home is made of the repos its user includes.
+
+| Repo | Role |
+|---|---|
+| `stackchan` (branch `mj-remote`) | Stack-chan firmware: Embody Mode, a light client |
+| `stackchan-server` | Go implementation of the wire protocol, dashboard app, relay at `chan.w42.eu` |
+| `stackchan-pet` | the pet app |
+| `sbot` | grows into the home node; the cockpit app |
+| `tpbot-ble` | micro:bit firmware for the TPBot car, laptop tool and bridge |
+| `stackchan-mj` | Stack-chan workspace notes, trust design, build and run scripts |
+| `home-w42-eu-ideas` | ideas for devices, adapters, apps and loops |
+
+## Status
+
+Design draft, 2026-10-02, after the first working proofs of concept (Stack-chan with
+three apps, the TPBot car over BLE, the sbot cockpit with joystick and safety stop).
+
+## License
+
+Apache License 2.0, see [LICENSE](LICENSE).
