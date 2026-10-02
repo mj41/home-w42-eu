@@ -31,7 +31,7 @@ Each repo is independent. A home is made of the repos its user includes.
 
 | Repo | Role |
 |---|---|
-| `stackchan` (branch `mj-remote`) | Stack-chan firmware: Embody Mode, a light client |
+| `stackchan` (branch `embody-mj41`) | Stack-chan firmware: Embody Mode, a light client |
 | `stackchan-server` | Go implementation of the wire protocol, dashboard app, relay at `chan.w42.eu` |
 | `stackchan-pet` | the pet app |
 | `sbot` | grows into the home node; the cockpit app |

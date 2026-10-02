@@ -7,7 +7,7 @@
 | Repo | Part of the [architecture](architecture.md) | State |
 |---|---|---|
 | `sbot` | **grows into the home node**: today the web/API server with the cockpit app, many devices, hosted-device links (`with`), the first controller (safety stop), a small state file | works on the LAN |
-| `stackchan` (firmware fork, branch `mj-remote`) | light client (§3); hosts the car over BLE (§4) | works on the LAN |
+| `stackchan` (firmware fork, branch `embody-mj41`) | light client (§3); hosts the car over BLE (§4) | works on the LAN |
 | `stackchan-server` | the Go implementation of the [wire protocol](wire-protocol.md) (`wire` package); a separate dashboard app (§5); later the rendezvous role (§10) | works; v0.1.0 at `chan.w42.eu` |
 | `stackchan-pet` | a separate app repo, part of a home when included (§5) | works on the LAN |
 | `tpbot-ble` | micro:bit firmware (light client), the `tpbot` tool, the `tpbot-bridge` adapter (§4) | works |

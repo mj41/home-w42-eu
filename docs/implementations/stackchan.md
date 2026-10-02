@@ -26,7 +26,7 @@ Details and coverage: `stackchan-mj` repo, `docs/hardware.md`.
 
 ## The firmware: Embody Mode as a light client
 
-The fork of M5Stack's firmware (`stackchan`, branch `mj-remote`) adds **Embody
+The fork of M5Stack's firmware (`stackchan`, branch `embody-mj41`) adds **Embody
 Mode**, the first launcher app. It:
 
 - connects out to a server over WebSocket and registers its capabilities (the
