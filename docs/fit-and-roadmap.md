@@ -115,8 +115,8 @@ What each project does today, checked against the [principles](principles.md) an
 
 ### stackchan-server (wire package, dashboard, `chan.w42.eu`)
 - ✓ The Go implementation of the wire protocol; the full-control dashboard.
-- ✗ **Hub, not cloud (principle 4, §10):** at `chan.w42.eu` TLS ends at the cluster
-  gateway, so the cloud sees all traffic. That is a relay, not yet the blind hub.
+- ✗ **Hub, not cloud (principle 4, §10):** at `chan.w42.eu` TLS ends before
+  the server, so the cloud sees all traffic. That is a relay, not yet the blind hub.
 - ✗ Its `wire` package comment still points at another project as the reference; it
   should point at this repo's [wire protocol](wire-protocol.md).
 
