@@ -12,7 +12,8 @@ family (see §8).
 
 - **WebSocket**, opened by the device (outbound only; nothing at home needs an open
   port). `ws://` on the LAN today, `wss://` everywhere once nodes have certificates.
-- **Path:** `GET /api/workers/connect`.
+- **Path:** `GET /api/devices/connect`. Firmware from before 2026-10-02 connects to
+  `/api/workers/connect`; servers serve it too until protocol v2.
 - **Headers:**
   - `Authorization: Bearer <token>`. v1 uses one shared token per server; v2
     replaces it with a device certificate and a challenge (§9).
