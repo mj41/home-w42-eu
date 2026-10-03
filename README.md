@@ -37,15 +37,15 @@ NFC and QR) are in [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas
 
 Each repo is independent. A home is made of the repos its user includes.
 
-| Repo | Role |
-|---|---|
-| [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) |
-| [stackchan-server](https://github.com/mj41/stackchan-server) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard, the relay at `chan.w42.eu` |
-| [stackchan-pet](https://github.com/mj41/stackchan-pet) | the pet app (a Tamagotchi for kids) |
-| [sbot](https://github.com/mj41/sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app |
-| [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge |
-| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stackchan working notes, hardware coverage, trust design, build and run scripts |
-| [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops |
+| Repo | Role | License |
+|---|---|---|
+| [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) | MIT (the firmware, as upstream) |
+| [stackchan-server](https://github.com/mj41/stackchan-server) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard, the relay at `chan.w42.eu` | MIT |
+| [stackchan-pet](https://github.com/mj41/stackchan-pet) | the pet app (a Tamagotchi for kids) | MIT |
+| [sbot](https://github.com/mj41/sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app | Apache-2.0 |
+| [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge | Apache-2.0 |
+| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stackchan working notes, hardware coverage, trust design, build and run scripts | Apache-2.0 |
+| [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops | Apache-2.0 |
 
 How they fit together and what comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
 
