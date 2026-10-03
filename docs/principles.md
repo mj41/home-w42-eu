@@ -4,7 +4,7 @@
 Where a repo's own rule is stricter, the stricter rule wins.
 
 They collect the data and trust rules designed earlier for w42 and for Stack-chan
-(`stackchan-mj`, `docs/design.md`), and what the work on Stack-chan, sbot and the
+([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj), and what the work on Stack-chan, sbot and the
 TPBot car taught.
 
 ## Value

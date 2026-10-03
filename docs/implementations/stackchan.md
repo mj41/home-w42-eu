@@ -6,6 +6,10 @@ M5Stack's Stack-chan (a CoreS3 with an ESP32-S3, in a body with two servos) is t
 first device built the home-w42-eu way: **one universal firmware that is a light
 client, and several apps on the server side that give it different jobs.**
 
+Setting up a robot, from building the firmware to pairing a phone:
+[SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md)
+in the firmware fork.
+
 ## The device
 
 | Part | What the platform gets |
@@ -22,11 +26,11 @@ client, and several apps on the server side that give it different jobs.**
 | Power (AXP2101, INA226) | voltages, currents, plug and button events |
 | BLE (NimBLE central) | hosts other devices: the TPBot car today |
 
-Details and coverage: `stackchan-mj` repo, `docs/hardware.md`.
+Details and coverage: [hardware.md](https://github.com/mj41/stackchan-mj/blob/main/docs/hardware.md) in stackchan-mj.
 
 ## The firmware: Embody Mode as a light client
 
-The fork of M5Stack's firmware (`stackchan`, branch `embody-mj41`) adds **Embody
+The [fork](https://github.com/mj41/StackChan/tree/embody-mj41) of [M5Stack's firmware](https://github.com/m5stack/StackChan) (branch `embody-mj41`) adds **Embody
 Mode**, the first launcher app. It:
 
 - connects out to a server over WebSocket and registers its capabilities (the
@@ -47,9 +51,9 @@ firmware-update path is closed (`patches/xiaozhi-esp32.patch`).
 
 | App | Repo | Job | Status |
 |---|---|---|---|
-| **Embody dashboard** | `stackchan-server` | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.1.0 at `chan.w42.eu` |
-| **Pet** (Tamagotchi) | `stackchan-pet` | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
-| **sbot cockpit** | `sbot` | Stack-chan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
+| **Embody dashboard** | [stackchan-server](https://github.com/mj41/stackchan-server) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.1.0 at `chan.w42.eu` |
+| **Pet** (Tamagotchi) | [stackchan-pet](https://github.com/mj41/stackchan-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
+| **sbot cockpit** | [sbot](https://github.com/mj41/sbot) | Stack-chan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
 | AI.AGENT (upstream) | — | voice assistant through xiaozhi's cloud | outside the platform |
 
 The same robot, with the same firmware, is a remote-controlled telepresence head,
@@ -59,7 +63,7 @@ That is principle 22 (switching is simple) in practice.
 ## The car extension
 
 - **Device:** an ELECFREAKS TPBot (V1 board) with a micro:bit V2 running
-  `tpbot-ble` (TinyGo): BLE peripheral, raw sonar,
+  [tpbot-ble](https://github.com/mj41/tpbot-ble) (TinyGo): BLE peripheral, raw sonar,
   line sensors and buttons, motors, headlights, servos, and a 500 ms watchdog.
 - **Two adapters, one capability:** first the laptop's `tpbot-bridge`, then
   Stack-chan itself over BLE. Both offer the same `car_*` commands and telemetry,
@@ -79,7 +83,7 @@ That is principle 22 (switching is simple) in practice.
 ## What it does not have yet
 
 - **Trust:** one shared token per deployment; no device key, no grants, no scopes.
-  The plan is the Stack-chan trust design (`stackchan-mj`, `docs/design.md`),
+  The plan is the Stack-chan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj),
   generalized in [architecture §8](../architecture.md#8-trust-identity-and-access-control).
 - **App routing:** switching means reconnecting to another server; the node does not
   route yet.

@@ -113,5 +113,5 @@ Use case by use case: each stage makes one of the [use cases](use-cases.md) work
 real people, proved on real hardware, and leaves something that works.
 The current state and the next stages are in [fit-and-roadmap](fit-and-roadmap.md);
 the design is in [architecture](architecture.md); the first full device family is
-[Stack-chan](implementations/stackchan.md); new device and app ideas live in the
-`home-w42-eu-ideas` repo.
+[Stack-chan](implementations/stackchan.md); new device and app ideas live in
+[home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas).

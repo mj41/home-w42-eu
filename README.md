@@ -23,7 +23,7 @@ of them, and loops and controllers that AI helps you write and you approve.
 
 Ideas for devices, adapters and loops (old phones, a Roomba, lawn mowers, Home
 Assistant, a private GPS app, cameras and plate OCR, Wi-Fi presence, calendars,
-NFC and QR) are in the `home-w42-eu-ideas` repo.
+NFC and QR) are in [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas).
 
 ## The repos today
 
@@ -31,13 +31,15 @@ Each repo is independent. A home is made of the repos its user includes.
 
 | Repo | Role |
 |---|---|
-| `stackchan` (branch `embody-mj41`) | Stack-chan firmware: Embody Mode, a light client |
-| `stackchan-server` | Go implementation of the wire protocol, dashboard app, relay at `chan.w42.eu` |
-| `stackchan-pet` | the pet app |
-| `sbot` | grows into the home node; the cockpit app |
-| `tpbot-ble` | micro:bit firmware for the TPBot car, laptop tool and bridge |
-| `stackchan-mj` | Stack-chan workspace notes, trust design, build and run scripts |
-| `home-w42-eu-ideas` | ideas for devices, adapters, apps and loops |
+| [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stack-chan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) |
+| [stackchan-server](https://github.com/mj41/stackchan-server) | Go implementation of the wire protocol (`wire` package), the full Stack-chan dashboard, the relay at `chan.w42.eu` |
+| [stackchan-pet](https://github.com/mj41/stackchan-pet) | the pet app (a Tamagotchi for kids) |
+| [sbot](https://github.com/mj41/sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app |
+| [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge |
+| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stack-chan working notes, hardware coverage, trust design, build and run scripts |
+| [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops |
+
+How they fit together and what comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
 
 ## Status
 

@@ -41,9 +41,10 @@ the node on the LAN, and the node dials the relay. Nothing at home needs an open
 the node directly, and some devices never use `w42.eu` at all (§10).
 
 **One home, many repos.** A home is made of the repos its user includes: the node
-(growing out of `sbot`), device firmware (`stackchan`, `tpbot-ble`), and app repos
-that stay separate but join the home when included (`stackchan-pet`, the
-`stackchan-server` dashboard). Each repo is independent; they meet at the
+(growing out of [sbot](https://github.com/mj41/sbot)), device firmware (the [StackChan fork](https://github.com/mj41/StackChan/tree/embody-mj41),
+[tpbot-ble](https://github.com/mj41/tpbot-ble)), and app repos that stay separate but join the home when
+included ([stackchan-pet](https://github.com/mj41/stackchan-pet), the [stackchan-server](https://github.com/mj41/stackchan-server)
+dashboard). All the repos: [The repos today](../README.md#the-repos-today). Each repo is independent; they meet at the
 [wire protocol](wire-protocol.md) and the event hub's topics.
 
 ## 2. Concepts
@@ -181,7 +182,7 @@ so they do not change.
 
 ## 5. The web/API server and apps
 
-The **web/API server** is the synchronous half of the node. It grows out of `sbot`.
+The **web/API server** is the synchronous half of the node. It grows out of [sbot](https://github.com/mj41/sbot).
 
 - **Device gateway:** the wire protocol endpoint for light clients and adapters.
 - **Registry, pairing, policy:** devices, capabilities, people, sessions, grants;
@@ -349,7 +350,7 @@ takes about 0.8 s today, which is too slow for anything that must react quickly.
 
 ### 8.1 Identity
 
-Generalizes the Stack-chan trust design (`stackchan-mj` repo, `docs/design.md`) to
+Generalizes the Stack-chan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj) to
 every device:
 
 - **Owner key** (ECDSA P-256) signs: device certificates, the node certificate,

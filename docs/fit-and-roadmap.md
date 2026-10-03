@@ -6,12 +6,12 @@
 
 | Repo | Part of the [architecture](architecture.md) | State |
 |---|---|---|
-| `sbot` | **grows into the home node**: today the web/API server with the cockpit app, many devices, hosted-device links (`with`), the first controller (safety stop), a small state file | works on the LAN |
-| `stackchan` (firmware fork, branch `embody-mj41`) | light client (§3); hosts the car over BLE (§4) | works on the LAN |
-| `stackchan-server` | the Go implementation of the [wire protocol](wire-protocol.md) (`wire` package); a separate dashboard app (§5); later the rendezvous role (§10) | works; v0.1.0 at `chan.w42.eu` |
-| `stackchan-pet` | a separate app repo, part of a home when included (§5) | works on the LAN |
-| `tpbot-ble` | micro:bit firmware (light client), the `tpbot` tool, the `tpbot-bridge` adapter (§4) | works |
-| `stackchan-mj` | Stack-chan workspace notes, build and run scripts, and the trust design (`docs/design.md`) that §8 generalizes | design for trust |
+| [sbot](https://github.com/mj41/sbot) | **grows into the home node**: today the web/API server with the cockpit app, many devices, hosted-device links (`with`), the first controller (safety stop), a small state file | works on the LAN |
+| [StackChan](https://github.com/mj41/StackChan/tree/embody-mj41) (firmware fork, branch `embody-mj41`) | light client (§3); hosts the car over BLE (§4) | works on the LAN |
+| [stackchan-server](https://github.com/mj41/stackchan-server) | the Go implementation of the [wire protocol](wire-protocol.md) (`wire` package); a separate dashboard app (§5); later the rendezvous role (§10) | works; v0.1.0 at `chan.w42.eu` |
+| [stackchan-pet](https://github.com/mj41/stackchan-pet) | a separate app repo, part of a home when included (§5) | works on the LAN |
+| [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware (light client), the `tpbot` tool, the `tpbot-bridge` adapter (§4) | works |
+| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stack-chan working notes, build and run scripts, and the [trust design](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) that §8 generalizes | design for trust |
 
 **What the POCs proved:** light clients on real hardware (Stack-chan, micro:bit),
 adapters that can be swapped without touching apps (bridge → robot), app switching
@@ -76,7 +76,7 @@ work for real people, leaves a working system, and is proved on our own hardware
     "share to home" from the phone), captures in the person's store, and a weekly
     digest. *(use case 13)*
 
-Ideas that are not on the roadmap yet live in the `home-w42-eu-ideas` repo.
+Ideas that are not on the roadmap yet live in [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas).
 
 ## 4. Review against the design (2026-10-02)
 

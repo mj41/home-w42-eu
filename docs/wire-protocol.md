@@ -3,9 +3,9 @@
 **Status:** v1, 2026-10-02. **This document is the reference.** Other projects that
 want devices or agents to connect the same way implement and reference it.
 
-v1 is what the home's servers speak today. The `wire` package in `stackchan-server`
-implements it in Go, and Stack-chan's Embody Mode, `tpbot-bridge`, `sbot` and
-`stackchan-pet` all use it. Per-device command catalogs live with each device
+v1 is what the home's servers speak today. The `wire` package in [stackchan-server](https://github.com/mj41/stackchan-server)
+implements it in Go, and Stack-chan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
+([tpbot-ble](https://github.com/mj41/tpbot-ble)), [sbot](https://github.com/mj41/sbot) and [stackchan-pet](https://github.com/mj41/stackchan-pet) all use it. Per-device command catalogs live with each device
 family (see §8).
 
 ## 1. Transport
@@ -141,8 +141,8 @@ The commands a device family offers are documented with that family:
 
 | Family | Catalog |
 |---|---|
-| Stack-chan | `stackchan-server` readme, "Commands" |
-| Car (`car_*`) | `sbot` readme, "Car capability"; firmware side in `tpbot-ble` |
+| Stack-chan | stackchan-server readme, [Commands](https://github.com/mj41/stackchan-server#commands) |
+| Car (`car_*`) | sbot readme, [Car capability](https://github.com/mj41/sbot#car-capability); firmware side in [tpbot-ble](https://github.com/mj41/tpbot-ble) |
 
 ## 9. v2 (planned)
 
