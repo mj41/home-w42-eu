@@ -154,6 +154,21 @@ model, no permissions, and one shared token everywhere. Those are what to build 
   frown loop in shadow mode recorded 76 would-be faces in 30 s before it sent anything.
   Fixed in sbot: a missed echo no longer ends an episode. Then `frown` went live.
 
+### Done since (2026-10-03)
+- ✓ **Sign-in for w42.eu apps (principle 5, §8):** an OpenID Connect provider (Dex) at
+  `auth.w42.eu` with GitHub and Google; apps are its clients and never see passwords.
+- ✓ **Access per robot (principles 6, 7) on chan.w42.eu:** people sign in and add their own
+  robots (a per-robot token, only its hash kept, bound to the account); every robot is
+  **private** to its owner by default or **public** by the owner's choice; anonymous
+  browsers cannot send join requests. Still bearer tokens in the firmware (stage 2 of
+  stackchan-server's roadmap goes further).
+- ✓ **The relay as a hub, safer (§10.2):** real client addresses (PROXY protocol), limits
+  per address and per robot, and the cluster hardened: a node firewall, a Kubernetes API
+  allow-list, default-deny NetworkPolicies and Pod Security `restricted` for the apps. Still
+  open: end-to-end encryption through it.
+- ✓ **Robots run without anyone touching them (optional, off by default):** the firmware
+  can start Embody Mode after a power-on, and a server can restart it or open another app.
+
 ## 5. What to do next
 
 **First, small fixes that remove known gaps (done 2026-10-02, see above):**
