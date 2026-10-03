@@ -24,6 +24,13 @@ of them, and loops and controllers that AI helps you write and you approve.
    access control, relay.
 5. [Device wire protocol](docs/wire-protocol.md): the reference for how devices,
    adapters and agents connect.
+   - [Device setup](docs/device-setup.md): firmware, connecting over USB, one page with
+     the person's consent, and what the robot confirms itself.
+   - [App catalog](docs/app-catalog.md): the apps a home's devices can use, one directory
+     per app, shared by the home's servers.
+   - [Independent rebuild](docs/independent-rebuild.md): a third verification of releases on
+     a short-lived cloud VM, bootstrapped from Guix's seed, with its own certified key and a
+     signed audit log.
 6. [Stackchan](docs/implementations/stackchan.md): the first device family, with
    its apps and the TPBot car.
 7. [Fit and roadmap](docs/fit-and-roadmap.md): how the existing repos fit, the gaps,
