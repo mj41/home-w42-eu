@@ -1,7 +1,9 @@
 # End-to-end encryption between a device and its browsers
 
-**Status:** design, 2026-10-03. Done: step 1 of the rollout (§9), the Go reference
-implementation (stackchan-server's `e2e` package, test vectors) and the relay, tested end to end.
+**Status:** 2026-10-03. Done: steps 1 and 2 of the rollout (§9): the Go reference
+implementation (stackchan-server's `e2e` package, test vectors), the relay, and the browser
+side (the dashboard's `e2e.js`, the vectors pass in Chrome), tested end to end with
+`fake-robot -e2e`. Next: the firmware.
 Part of the [wire protocol](wire-protocol.md) (planned for v2, usable from v1 as an extension).
 
 A relay such as `chan.w42.eu` connects robots and browsers that cannot reach each other
@@ -106,6 +108,10 @@ Encryption is a setting of each entry in the robot's server list, because it onl
 `chan.w42.eu` is a relay: encrypted. With encryption on, the robot sends no plaintext media
 or telemetry to that server and accepts commands only as `E2ECommand`, except the relay's
 `camera`/`mic` stream switches.
+
+Also refused from the relay while encrypted: plaintext binary messages (pictures, file
+chunks, speaker audio), since the relay could inject them. Pictures and files go sealed in
+a later step; until then they are not available for an encrypted robot.
 
 ## 8. Managing enrolled browsers
 
