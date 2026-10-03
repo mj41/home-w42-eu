@@ -12,9 +12,9 @@ takes, what must stay private, and where it stands.
 
 | # | Use case | For | Status |
 |---|---|---|---|
-| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | a parent away from home | works on the LAN (Stack-chan dashboard, sbot cockpit) |
+| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | a parent away from home | works on the LAN (Stackchan dashboard, sbot cockpit) |
 | 2 | [A friend for the kids](#2-a-friend-for-the-kids) | kids | works (the pet) |
-| 3 | [Play and explore together](#3-play-and-explore-together) | kids and parents | works (Stack-chan on the TPBot, joystick, safety stop) |
+| 3 | [Play and explore together](#3-play-and-explore-together) | kids and parents | works (Stackchan on the TPBot, joystick, safety stop) |
 | 4 | [Kids got home safely](#4-kids-got-home-safely) | parents | next: Wi-Fi presence, NFC card |
 | 5 | [A comfortable home that saves energy](#5-a-comfortable-home-that-saves-energy) | everyone | next: Home Assistant data, window shutters controller |
 | 6 | [The home looks after itself when we are away](#6-the-home-looks-after-itself-when-we-are-away) | the family | idea |
@@ -34,10 +34,10 @@ takes, what must stay private, and where it stands.
 - **Who:** a parent at work or travelling.
 - **Need:** see and hear the home, talk to the kids, look around, without a vendor app
   or a cloud that watches too.
-- **When it works:** I open one page, see through Stack-chan's eyes, turn its head
+- **When it works:** I open one page, see through Stackchan's eyes, turn its head
   towards the kitchen, say hello through its speaker, and it frowns or smiles as I
   choose. At home it is instant; away it still works, and nobody else could watch.
-- **Takes:** Stack-chan (camera, mic, speaker, head), the cockpit, local-first
+- **Takes:** Stackchan (camera, mic, speaker, head), the cockpit, local-first
   connection, the hub when away.
 - **Private:** media only while watched, LIVE badge on the robot, no recording by
   default; robots in kids' rooms LAN only.
@@ -52,7 +52,7 @@ takes, what must stay private, and where it stands.
   game, and the pet naps when it is bedtime. Parents set the rules behind a PIN.
   Later: Ema taps her own card on any robot in the house and her pet appears there;
   ten minutes after she stops playing, the robot goes back to its normal face.
-- **Takes:** Stack-chan, the pet app, NFC cards; later the calendar (use case 8).
+- **Takes:** Stackchan, the pet app, NFC cards; later the calendar (use case 8).
 - **Private:** the kid's data is the kid's (and the parents'); game photos stay on the
   node.
 - **Status:** works.
@@ -61,10 +61,10 @@ takes, what must stay private, and where it stands.
 
 - **Who:** kids and parents.
 - **Need:** a robot that can move around the home, driven like a game, safely.
-- **When it works:** we put Stack-chan on the car, drag the joystick on a phone, and
+- **When it works:** we put Stackchan on the car, drag the joystick on a phone, and
   look through its eyes as it drives down the corridor. It stops by itself before
   the wall, and the face shows it.
-- **Takes:** the TPBot car with the micro:bit, Stack-chan hosting it over BLE, the
+- **Takes:** the TPBot car with the micro:bit, Stackchan hosting it over BLE, the
   cockpit, the safety stop; next: the robot reacting to the car.
 - **Private:** the camera is on only while someone drives.
 - **Status:** works (POC). Next: lower latency, BLE security, the robot frowning when
@@ -112,7 +112,7 @@ takes, what must stay private, and where it stands.
 
 - **Who:** whoever is home (busy in another room), or away.
 - **Need:** to know who is at the door, or that a parcel was left.
-- **When it works:** Stack-chan turns to me and says "a parcel at the door"; the cockpit
+- **When it works:** Stackchan turns to me and says "a parcel at the door"; the cockpit
   shows the door camera. A family car arriving opens the gate.
 - **Takes:** a door camera (an old phone works), person and car detection on the node,
   known plates only, loops.

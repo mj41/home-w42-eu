@@ -3,8 +3,8 @@
 **Status:** draft, 2026-10-02. **Binding** on every repo that is part of home-w42-eu.
 Where a repo's own rule is stricter, the stricter rule wins.
 
-They collect the data and trust rules designed earlier for w42 and for Stack-chan
-([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj), and what the work on Stack-chan, sbot and the
+They collect the data and trust rules designed earlier for w42 and for Stackchan
+([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj), and what the work on Stackchan, sbot and the
 TPBot car taught.
 
 ## Value
@@ -41,7 +41,7 @@ TPBot car taught.
    and exports are rate limited, budgeted and logged; a caller reading far more than
    usual is paused.
 8. **Media is never implied.** Camera, microphone, speaker and location are separate
-   scopes, granted explicitly, and visible on the device while in use (Stack-chan's
+   scopes, granted explicitly, and visible on the device while in use (Stackchan's
    red LIVE badge is the pattern). Sensitive data (location, calendars, presence)
    goes only to AI models the owner allowed for it, by default local ones.
 

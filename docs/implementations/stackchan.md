@@ -1,8 +1,8 @@
-# Stack-chan: the first device family
+# Stackchan: the first device family
 
 **Status:** 2026-10-02. Works on the LAN with one robot (`stackchan-0a1b2c3d4e50`).
 
-M5Stack's Stack-chan (a CoreS3 with an ESP32-S3, in a body with two servos) is the
+M5Stack's Stackchan robots (a CoreS3 with an ESP32-S3, in a body with two servos) is the
 first device built the home-w42-eu way: **one universal firmware that is a light
 client, and several apps on the server side that give it different jobs.**
 
@@ -53,7 +53,7 @@ firmware-update path is closed (`patches/xiaozhi-esp32.patch`).
 |---|---|---|---|
 | **Embody dashboard** | [stackchan-server](https://github.com/mj41/stackchan-server) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.1.0 at `chan.w42.eu` |
 | **Pet** (Tamagotchi) | [stackchan-pet](https://github.com/mj41/stackchan-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
-| **sbot cockpit** | [sbot](https://github.com/mj41/sbot) | Stack-chan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
+| **sbot cockpit** | [sbot](https://github.com/mj41/sbot) | Stackchan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
 | AI.AGENT (upstream) | — | voice assistant through xiaozhi's cloud | outside the platform |
 
 The same robot, with the same firmware, is a remote-controlled telepresence head,
@@ -66,12 +66,12 @@ That is principle 22 (switching is simple) in practice.
   [tpbot-ble](https://github.com/mj41/tpbot-ble) (TinyGo): BLE peripheral, raw sonar,
   line sensors and buttons, motors, headlights, servos, and a 500 ms watchdog.
 - **Two adapters, one capability:** first the laptop's `tpbot-bridge`, then
-  Stack-chan itself over BLE. Both offer the same `car_*` commands and telemetry,
+  Stackchan itself over BLE. Both offer the same `car_*` commands and telemetry,
   so sbot did not change when the robot took over.
-- **Safety in three layers:** the micro:bit's watchdog, Stack-chan stopping the
+- **Safety in three layers:** the micro:bit's watchdog, Stackchan stopping the
   motors when its server connection drops, and sbot's sonar safety stop.
 
-## What Stack-chan proves for the architecture
+## What Stackchan proves for the architecture
 
 - One firmware, many apps: the light-client model works on a real, rich device.
 - Raw data first: every feature exposes primary readings; meaning is made on the
@@ -83,11 +83,11 @@ That is principle 22 (switching is simple) in practice.
 ## What it does not have yet
 
 - **Trust:** one shared token per deployment; no device key, no grants, no scopes.
-  The plan is the Stack-chan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj),
+  The plan is the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj),
   generalized in [architecture §8](../architecture.md#8-trust-identity-and-access-control).
 - **App routing:** switching means reconnecting to another server; the node does not
   route yet.
 - **Event hub:** each server keeps recent events in memory (and a small state file);
   there is no shared, persistent hub yet.
-- **Latency through the robot:** a car command takes about 0.8 s through Stack-chan,
+- **Latency through the robot:** a car command takes about 0.8 s through Stackchan,
   against 70 ms through the laptop bridge. Commands wait in the app loop.

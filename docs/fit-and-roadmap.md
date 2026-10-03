@@ -11,9 +11,9 @@
 | [stackchan-server](https://github.com/mj41/stackchan-server) | the Go implementation of the [wire protocol](wire-protocol.md) (`wire` package); a separate dashboard app (§5); later the rendezvous role (§10) | works; v0.1.0 at `chan.w42.eu` |
 | [stackchan-pet](https://github.com/mj41/stackchan-pet) | a separate app repo, part of a home when included (§5) | works on the LAN |
 | [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware (light client), the `tpbot` tool, the `tpbot-bridge` adapter (§4) | works |
-| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stack-chan working notes, build and run scripts, and the [trust design](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) that §8 generalizes | design for trust |
+| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stackchan working notes, build and run scripts, and the [trust design](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) that §8 generalizes | design for trust |
 
-**What the POCs proved:** light clients on real hardware (Stack-chan, micro:bit),
+**What the POCs proved:** light clients on real hardware (Stackchan, micro:bit),
 adapters that can be swapped without touching apps (bridge → robot), app switching
 by server list, raw-data-first telemetry, and safety in layers (device watchdog,
 link-loss stop, node controller).
@@ -33,7 +33,7 @@ link-loss stop, node controller).
 | Connection paths | devices connect to whichever server is in their list; `chan.w42.eu` relays plain WebSocket for one deployment | local first: direct on the LAN by alias or IP; `w42.eu` only as a hub when away (blind relay, TLS on the node); per-device relay policy, LAN-only devices |
 | Delegated actions | secrets sit where they are used (a shared token on the robot) | secrets stay in their perimeter (signing station, capture station, phone); others send action requests; the person approves on the holder |
 | Personal captures | none | capture station with tiny reviewed collectors; captures in the person's store; digests |
-| Latency through Stack-chan | ~0.8 s per car command | ~0.1 s |
+| Latency through Stackchan | ~0.8 s per car command | ~0.1 s |
 
 ## 3. Roadmap
 
@@ -45,7 +45,7 @@ work for real people, leaves a working system, and is proved on our own hardware
    sbot; sbot produces telemetry, events, commands and decisions into it. Start the
    controller server, and move the safety stop there with the loop interface and the
    three modes (replay, shadow, live). Add a second loop that links two devices
-   (Stack-chan frowns while the car is blocked). *(use cases 3, 10)*
+   (Stackchan frowns while the car is blocked). *(use cases 3, 10)*
 3. **Home Assistant as the data source, and the home model v1.** People, rooms and
    which devices belong to them, so events can say "the kitchen" and "Ema". An
    adapter for a first set of entities
@@ -54,8 +54,8 @@ work for real people, leaves a working system, and is proved on our own hardware
 4. **Window shutters controller.** Bring the existing custom shutter hardware and
    software in as a device, and run its algorithm as a controller on the node, with
    HA data as input. The first HA automation replaced by something smarter. *(use case 5)*
-5. **Trust**, generalizing the Stack-chan design: owner key and `homectl`, device keys
-   for Stack-chan and the micro:bit (BLE pairing or an allowlist), grants and scopes
+5. **Trust**, generalizing the Stackchan design: owner key and `homectl`, device keys
+   for Stackchan and the micro:bit (BLE pairing or an allowlist), grants and scopes
    enforced on the device and the node. Drop the shared token. The owner's signing
    station is the first security perimeter, and signing is the first delegated action:
    a release or a permission is prepared elsewhere and signed there after the owner
@@ -135,7 +135,7 @@ safety on the device). The gaps are all on the **node side**: no event hub, no h
 model, no permissions, and one shared token everywhere. Those are what to build next.
 
 ### Done since the review (2026-10-02)
-- ✓ **Car latency through Stack-chan:** `car_*` commands go from the WebSocket's receive
+- ✓ **Car latency through Stackchan:** `car_*` commands go from the WebSocket's receive
   task straight to BLE. Command to telemetry echo 185–285 ms, with or without the camera
   streaming (was ~0.8 s with the camera on).
 - ✓ **BLE allowlist** on the micro:bit (tpbot-ble 0.3.x): only listed centrals; a refused
@@ -157,9 +157,9 @@ model, no permissions, and one shared token everywhere. Those are what to build 
 ## 5. What to do next
 
 **First, small fixes that remove known gaps (done 2026-10-02, see above):**
-1. **Car latency through Stack-chan:** run `car_*` commands straight from the client
+1. **Car latency through Stackchan:** run `car_*` commands straight from the client
    callback, not the app loop (use case 3).
-2. **BLE allowlist on the micro:bit:** accept only listed central addresses (Stack-chan,
+2. **BLE allowlist on the micro:bit:** accept only listed central addresses (Stackchan,
    the laptop), set with a button press on the micro:bit (principle 6).
 3. **Names in sbot:** a first, tiny home model (device → name, room), shown everywhere
    instead of ids (principle 2).

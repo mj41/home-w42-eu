@@ -31,7 +31,7 @@ not goals: when a part does not help a use case, it waits.
                                                    │                                                 │
                                                    │   stores (one home per record)                  │
                                                    └──────────────────────────────────────────────────┘
-       light clients: Stack-chan, micro:bit car, old phones, ESP32 sensors, browser tabs
+       light clients: Stackchan, micro:bit car, old phones, ESP32 sensors, browser tabs
        adapters:      tpbot-bridge (BLE), Home Assistant, Wi-Fi router, Roomba (serial), cameras (RTSP)
 ```
 
@@ -57,7 +57,7 @@ dashboard). All the repos: [The repos today](../README.md#the-repos-today). Each
 | **Event hub** | The home's log-based message hub: append-only topics, consumers with their own positions, replay from any position within retention. |
 | **Device** | Anything that registers through the wire protocol: a robot, a phone, a sensor, a browser, an adapter acting for hardware. Called a *worker* in the protocol. |
 | **Capability** | What a device offers: commands it accepts, measurements it reports, events it sends, media it streams. |
-| **Hosted device** | A device reached through another one (the TPBot car through Stack-chan's BLE), linked by `with`. |
+| **Hosted device** | A device reached through another one (the TPBot car through Stackchan's BLE), linked by `with`. |
 | **Adapter** | A program that speaks to hardware or a data source in its own way and brings it into the home. |
 | **App** | Code with a UI that uses devices: the cockpit, the pet, a dashboard. |
 | **Loop** | Code that consumes events and produces commands and decisions, with no UI. |
@@ -74,7 +74,7 @@ description of the home in the words its people use:
 - **People:** Ema (kid), Tom (parent), the babysitter (guest, tonight).
 - **Places and rooms:** kitchen, Ema's room, the hall, the garden, "school", "work".
 - **Things and their devices:** "Ema's phone" (a Wi-Fi client and a GPS source), "the
-  robot in the kitchen" (Stack-chan), "the car" (the TPBot), "the west shutters".
+  robot in the kitchen" (Stackchan), "the car" (the TPBot), "the west shutters".
 - **Routines:** school day, bedtime, "we are away", holidays.
 
 Loops use it to turn raw events into **meaningful events**, each with its cause:
@@ -106,7 +106,7 @@ Rules for a light client:
   the node turns them on, and the device shows it.
 - **Safe on its own.** Watchdogs on the device for anything that moves.
 - **Capabilities can change.** A device registers again when an extension is enabled
-  (Stack-chan's `car_enable`).
+  (Stackchan's `car_enable`).
 
 ## 4. Adapters and data sources
 
@@ -118,14 +118,14 @@ it runs on the node.
 | Adapter | Speaks | Status |
 |---|---|---|
 | `tpbot-bridge` | BLE to the micro:bit in the TPBot | works (POC) |
-| Stack-chan hosting the car | BLE, inside the robot firmware | works (POC) |
+| Stackchan hosting the car | BLE, inside the robot firmware | works (POC) |
 | Home Assistant | HA WebSocket API: chosen entities become measurements, events and commands | next: **the main data source for now** |
 | Wi-Fi presence | router API (OpenWrt ubus, DHCP leases) | idea |
 | Roomba | iRobot Open Interface over serial, through an ESP32 | idea |
 | IP cameras | RTSP, frames decoded on the node | idea |
 | Calendars | a calendar's secret ICS address or CalDAV; Google or Microsoft APIs only read-only, through the capture station (§4.1) | idea |
 | Personal captures | collectors in the capture station on the person's laptop (§4.1) | idea |
-| NFC / QR readers | Stack-chan's NFC reader (works), phone cameras, a USB reader | NFC on Stack-chan works |
+| NFC / QR readers | Stackchan's NFC reader (works), phone cameras, a USB reader | NFC on Stackchan works |
 
 **Home Assistant is a source, not the brain.** For now it brings the sensors and
 devices it already reaches (Zigbee, plugs, contacts, energy, weather, vendor
@@ -177,7 +177,7 @@ weekly "saved for later" digest, "you promised to reply in the family group",
 reminders tied to tasks and the calendar.
 
 The same device may be reached by different adapters over time (the car: first the
-laptop bridge, then Stack-chan). Apps and loops see the **same capability names**,
+laptop bridge, then Stackchan). Apps and loops see the **same capability names**,
 so they do not change.
 
 ## 5. The web/API server and apps
@@ -201,7 +201,7 @@ The **web/API server** is the synchronous half of the node. It grows out of [sbo
 
 ### 5.1 UI sessions: a scan changes the device's UI, then it comes back
 
-Devices with a screen (Stack-chan, an old tablet on the wall, a phone) have a
+Devices with a screen (Stackchan, an old tablet on the wall, a phone) have a
 **default UI**, and **UI sessions** that replace it for a while:
 
 - **A trigger starts a session:** an NFC tag or card, a QR code, a button, a person
@@ -224,8 +224,8 @@ Examples:
 
 | Trigger | On which device | Session | Ends |
 |---|---|---|---|
-| Ema's NFC card on Stack-chan | the robot | the pet, as Ema; she may feed and play | 10 min without touch |
-| Food card on Stack-chan during Ema's session | the robot | the pet eats (inside the session, no switch) | — |
+| Ema's NFC card on Stackchan | the robot | the pet, as Ema; she may feed and play | 10 min without touch |
+| Food card on Stackchan during Ema's session | the robot | the pet eats (inside the session, no switch) | — |
 | Guest scans the robot's QR | the guest's phone | guest view: hall camera, lights | the permission's end |
 | QR on the washing machine | your phone | the machine's status and history | closing the page |
 | A parent arrives home | the kitchen tablet | "welcome home" with the day's events | 5 min |
@@ -314,7 +314,7 @@ They run with priority, their decisions override app commands, and they never
 replace the device's own watchdog (principle 19).
 
 Controllers that need low latency run close to the hardware (on the device or its
-adapter), and the controller server supervises them. A car command through Stack-chan
+adapter), and the controller server supervises them. A car command through Stackchan
 takes about 0.8 s today, which is too slow for anything that must react quickly.
 
 ### 7.3 AI agents build loops
@@ -350,7 +350,7 @@ takes about 0.8 s today, which is too slow for anything that must react quickly.
 
 ### 8.1 Identity
 
-Generalizes the Stack-chan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj) to
+Generalizes the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj) to
 every device:
 
 - **Owner key** (ECDSA P-256) signs: device certificates, the node certificate,
@@ -593,7 +593,7 @@ can run with no `w42.eu` at all.
   or accept plain `http` on the LAN for low-risk pages.
 - **Switching:** a device that loses the local path (a phone leaving home) falls back
   to the hub only if its policy allows it (§10.3), and switches back to local as soon
-  as the local endpoint answers again. Stack-chan's server list is the first form of
+  as the local endpoint answers again. Stackchan's server list is the first form of
   this.
 
 ### 10.2 Away from home: through the hub
@@ -659,7 +659,7 @@ kept, where, and for how long.
 
 - **Event hub:** JetStream embedded in sbot works; when should it become its own
   process? Signatures per event or per batch? Is one stored telemetry message per second
-  right for every device (a 70-field Stack-chan frame is ~1 KB: ~86 MB a day)?
+  right for every device (a 70-field Stackchan frame is ~1 KB: ~86 MB a day)?
 - **App routing:** how separate app repos join the node: as their own servers behind
   the node's routing, or as packages built into the web/API server.
 - **Capability descriptors:** extend `Register`, or a separate document per device

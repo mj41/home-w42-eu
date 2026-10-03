@@ -44,13 +44,13 @@ written in **Go**, built from these parts:
 2. **Light clients.** Every device is a thin client: it connects out to the node,
    says what it can do (commands, measurements, events), sends its **raw data**,
    and does what it is told. The intelligence lives on the node, not in the
-   firmware. A Stack-chan robot, a micro:bit car, an old Android phone, an ESP32
+   firmware. A Stackchan robot, a micro:bit car, an old Android phone, an ESP32
    sensor and a browser tab are all the same kind of thing.
 3. **Adapters for what cannot speak for itself.** Old and closed hardware joins
    through a small adapter: BLE (the TPBot car today), serial (an old Roomba),
    a router API (who is on the Wi-Fi), Home Assistant (its whole sensor array).
 4. **Apps you can switch between.** A device is not married to one function. The
-   same Stack-chan is a telepresence robot, a pet for the kids, or the head of a
+   same Stackchan is a telepresence robot, a pet for the kids, or the head of a
    small car, depending on which app it is connected to. Switching is a tap on the
    device or a click in the browser.
 5. **One event hub.** Everything that happens is an event in the home's
@@ -113,5 +113,5 @@ Use case by use case: each stage makes one of the [use cases](use-cases.md) work
 real people, proved on real hardware, and leaves something that works.
 The current state and the next stages are in [fit-and-roadmap](fit-and-roadmap.md);
 the design is in [architecture](architecture.md); the first full device family is
-[Stack-chan](implementations/stackchan.md); new device and app ideas live in
+[Stackchan](implementations/stackchan.md); new device and app ideas live in
 [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas).

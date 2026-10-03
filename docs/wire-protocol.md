@@ -4,7 +4,7 @@
 want devices or agents to connect the same way implement and reference it.
 
 v1 is what the home's servers speak today. The `wire` package in [stackchan-server](https://github.com/mj41/stackchan-server)
-implements it in Go, and Stack-chan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
+implements it in Go, and Stackchan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
 ([tpbot-ble](https://github.com/mj41/tpbot-ble)), [sbot](https://github.com/mj41/sbot) and [stackchan-pet](https://github.com/mj41/stackchan-pet) all use it. Per-device command catalogs live with each device
 family (see §8).
 
@@ -12,14 +12,11 @@ family (see §8).
 
 - **WebSocket**, opened by the device (outbound only; nothing at home needs an open
   port). `ws://` on the LAN today, `wss://` everywhere once nodes have certificates.
-- **Path:** `GET /api/devices/connect`. Firmware from before 2026-10-02 connects to
-  `/api/workers/connect`; servers serve it too until protocol v2.
+- **Path:** `GET /api/devices/connect`.
 - **Headers:**
   - `Authorization: Bearer <token>`. v1 uses one shared token per server; v2
     replaces it with a device certificate and a challenge (§9).
-  - `X-Device-Id: <device id>`: 1–64 characters of `[A-Za-z0-9._-]`. Firmware from
-    before 2026-10-02 sends the same value as `X-Yolovm-Worker-Id`; servers accept it
-    until protocol v2, clients send only `X-Device-Id`.
+  - `X-Device-Id: <device id>`: 1–64 characters of `[A-Za-z0-9._-]`.
 
 ## 2. Frames
 
@@ -141,7 +138,7 @@ The commands a device family offers are documented with that family:
 
 | Family | Catalog |
 |---|---|
-| Stack-chan | stackchan-server readme, [Commands](https://github.com/mj41/stackchan-server#commands) |
+| Stackchan | stackchan-server readme, [Commands](https://github.com/mj41/stackchan-server#commands) |
 | Car (`car_*`) | sbot readme, [Car capability](https://github.com/mj41/sbot#car-capability); firmware side in [tpbot-ble](https://github.com/mj41/tpbot-ble) |
 
 ## 9. v2 (planned)
@@ -159,7 +156,7 @@ The commands a device family offers are documented with that family:
   class, so servers, UIs and AI agents can use a new device without code written for
   it.
 - **Neutral names:** `DeviceTelemetry`, `DeviceEvent`, `DeviceCommand` accepted next to
-  the v1 names, and the legacy `X-Yolovm-Worker-Id` header no longer accepted.
+  the v1 names.
 - **Delegated actions:** `action_request {id, action, params, why, expires}` from a
   requester and `action_result {id, ok, receipt | signature | reason}` from the holder,
   routed by the node to the devices allowed to hold that action
