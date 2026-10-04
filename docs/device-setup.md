@@ -179,12 +179,15 @@ mj41cz-approved/
 │       │   ├── SHA256SUMS             every published file: parts, merged image,
 │       │   │                          manifest.json, the flasher's files
 │       │   ├── SHA256SUMS.sig         ssh-keygen -Y sign -n stackchan-embody
-│       │   └── SHA256SUMS.tsr         RFC 3161 timestamp (6.3)
+│       │   └── SHA256SUMS.sig.tsr     RFC 3161 timestamp of the signature (6.3)
 │       ├── ci/
 │       │   ├── SHA256SUMS             what GitHub Actions built
-│       │   └── sigstore               the Rekor URL of its attestation (6.3)
+│       │   └── source                 the release and the Actions run (later: the Sigstore
+│       │                              attestation's Rekor URL, 6.3)
+│       ├── cloud/SHA256SUMS, source   the independent cloud rebuild; its signed audit log
+│       │                              is in mj41cz-rebuilds
 │       └── <builder>/SHA256SUMS(.sig)  anyone else who rebuilt it, by merge request
-└── cmd/…                              the Go tool (below)
+└── tool/cmd/sigs                      the Go tool (below): sign, check
 ```
 
 - **The owner's approval** is their signed `SHA256SUMS`, matching CI's: the owner rebuilt the
