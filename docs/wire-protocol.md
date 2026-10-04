@@ -1,7 +1,10 @@
 # Device wire protocol
 
-**Status:** v1, 2026-10-02. **This document is the reference.** Other projects that
-want devices or agents to connect the same way implement and reference it.
+**Status:** version 1 ("v1"), in use since 2026-10-02 by every server and device below.
+**This document is the reference.** Other projects that want devices or agents to connect
+the same way implement and reference it. v1 changes only by additions that older devices
+and servers can ignore (a new frame kind, an optional field); each is listed with its date in
+§10. Anything that is not such an addition is v2 (§9).
 
 v1 is what the home's servers speak today. The `wire` package in [stackchan-server](https://github.com/mj41/stackchan-server)
 implements it in Go, and Stackchan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
@@ -14,8 +17,10 @@ family (see §8).
   port). `ws://` on the LAN today, `wss://` everywhere once nodes have certificates.
 - **Path:** `GET /api/devices/connect`.
 - **Headers:**
-  - `Authorization: Bearer <token>`. v1 uses one shared token per server; v2
-    replaces it with a device certificate and a challenge (§9).
+  - `Authorization: Bearer <token>`: a token shared by a server's own devices, or a token
+    of the device's own (an invite, or a device added by an account on a server with
+    sign-in), which is good only for that device id. v2 replaces tokens with a device
+    certificate and a challenge (§9).
   - `X-Device-Id: <device id>`: 1–64 characters of `[A-Za-z0-9._-]`.
 
 ## 2. Frames
@@ -73,6 +78,7 @@ family (see §8).
 | server → device | `Paired` | `{"viewers", "reconnect"?}`: a browser paired; `reconnect` means "paired before" |
 | server → device | `RobotCommand` | `{"command", "args"?}` |
 | server → device | `ServerOffer` | `{"servers": [{"name", "url", "token"?}]}` |
+| both | `E2EEnroll`, `E2EHello`, `E2ECommand`, `E2EGroupKey`, `E2EData` | end-to-end encryption between a device and its browsers, passed on unread by the server ([e2ee](e2ee.md)); a device without it ignores them |
 
 The kind names say "Robot" for historical reasons; they apply to every device class.
 
@@ -170,3 +176,12 @@ The commands a device family offers are documented with that family:
 - **Endpoint announcements and relay policy:** an owner-signed list of the node's
   local and hub endpoints, and the device's relay policy (`never`, `when-away`,
   `always`), delivered to the device and enforced by it.
+
+## 10. Changes to v1
+
+| Date | Change |
+|---|---|
+| 2026-10-02 | v1: this document. |
+| 2026-10-02 | The connect path `/api/devices/connect` and the header `X-Device-Id` (servers accepted the earlier names for a while). |
+| 2026-10-03 | Tokens of a device's own (invites; devices added by accounts), next to a server's shared token (§1). |
+| 2026-10-03 | End-to-end encryption frames (§4, [e2ee](e2ee.md)): optional on both sides. |
