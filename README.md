@@ -22,6 +22,9 @@ of them, and loops and controllers that AI helps you write and you approve.
 
 1. [Vision](docs/vision.md): the problem, what we build, what it should feel like.
 2. [Use cases](docs/use-cases.md): **the main driver**: who needs what, and when it works.
+   - [Personas and agents](docs/personas.md): the people and programs the use cases are for
+     (the owner, the kids, family far away, guests, AI agents, loops, the relay…), what
+     matters first to each and what each may do.
 3. [Principles](docs/principles.md): the binding rules.
 4. [Architecture](docs/architecture.md): home node (web/API server, controller
    server, event hub), light clients, adapters, apps, loops, AI agents, trust and

@@ -6,7 +6,8 @@ and data flow in this project exists to serve one of these use cases. A stage on
 not when the code runs.
 
 Each use case says **who**, **what they need**, **how it feels when it works**, what it
-takes, what must stay private, and where it stands.
+takes, what must stay private, and where it stands. The people and programs in the **For** column are described in
+[Personas and agents](personas.md).
 
 ## Overview
 
