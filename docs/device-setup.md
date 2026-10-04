@@ -1,8 +1,9 @@
 # Setting a device up: firmware, connection, apps
 
 **Status:** 2026-10-04, design. Firmware `embody-v0.1.0` is released and approved (§6). A
-first version works as one page in s-w42-eu-raw (`/setup`: install, backup, connect, pair,
-all in one), tested end to end on a Stackchan. This
+first version works as one page in the Stackchan manager,
+[s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) (`/setup`: install, backup,
+connect, pair, all in one), tested end to end on a Stackchan. This
 document splits it into small parts with clear trust, and keeps the one-page experience
 where the user allows it. The apps a device can use are in [App catalog](app-catalog.md).
 
@@ -10,8 +11,8 @@ where the user allows it. The apps a device can use are in [App catalog](app-cat
 
 | Who | Wants | Today (POC) | Target |
 |---|---|---|---|
-| Anyone with a new robot | plug it in, press one button in Chrome, it works | chan.w42.eu/setup does it all | the same one page, with the firmware step shown and allowed by them |
-| Owner with a home server | the same, with their server, Wi-Fi and apps filled in | `localhost:8765/setup` on the server's computer | the same; apps from the home's [catalog](app-catalog.md) |
+| Anyone with a new robot | plug it in, press one button in Chrome, it works | sm.w42.eu/setup does it all | the same one page, with the firmware step shown and allowed by them |
+| Owner with a home server | the same, with their server, Wi-Fi and apps filled in | `localhost:8790/setup` (the home's manager) on its computer | the same; apps from the home's [catalog](app-catalog.md) |
 | Owner at another computer | set a robot up for their home server | paste a setup JSON | the same, or scan a code from the home server's page |
 | Developer | their own firmware build, then connect it | `container.sh flash`, then `/setup` with "keep firmware" | unchanged |
 | Anyone | go back to the robot's original firmware | restore from the backup file on `/setup` | the same, in the flasher |
@@ -29,12 +30,12 @@ limits **which code** asks for the port, and what a robot accepts **without a ta
 |---|---|---|
 | The firmware release pipeline (CI on `embody-v*` tags) | define what "official firmware" is | — it is the trust root for firmware, like the source itself |
 | The flasher page (static, published with each release) | install, back up, restore the official firmware | learn tokens, Wi-Fi passwords, accounts |
-| A server's connect page (e.g. chan.w42.eu/setup) | give the robot a server, its token, apps, Wi-Fi | change the firmware; redirect a robot without the person at the robot agreeing |
-| The relay (chan.w42.eu) at runtime | see metadata, drop messages | read or drive (see [e2ee](e2ee.md)) |
+| A server's connect page (e.g. sm.w42.eu/setup) | give the robot a server, its token, apps, Wi-Fi | change the firmware; redirect a robot without the person at the robot agreeing |
+| The relay (raw.sa.w42.eu) at runtime | see metadata, drop messages | read or drive (see [e2ee](e2ee.md)) |
 | Someone with the cable | everything | — physical access is the boundary, as with the QR code |
 
-Today's POC still breaks the third row in one way: chan.w42.eu serves the installer **and** the
-manifest it checks against, so a compromised chan.w42.eu could flash any robot set up through
+Today's POC still breaks the third row in one way: sm.w42.eu serves the installer **and** the
+manifest it checks against, so a compromised sm.w42.eu could flash any robot set up through
 it. Making a new server a robot's default needs a Yes on the robot's screen (3.3).
 
 ## 3. Parts
@@ -61,8 +62,8 @@ the build is reproducible, and the owner approves it (planned: before it is publ
 
 ### 3.2 Flasher
 
-**Planned.** Today s-w42-eu-raw's `/setup` flashes (chan.w42.eu/setup or any local
-server), with the firmware of the GitHub release (`-firmware-release latest`), every part
+**Planned.** Today s-w42-eu-manager's `/setup` flashes (sm.w42.eu/setup or a manager at
+home), with the firmware of the GitHub release (`-firmware-release latest`), every part
 checked against the release's manifest.
 
 A static page and a JS module, published **with each release on GitHub Pages** of the
@@ -75,7 +76,7 @@ firmware repo (one origin; each release in its own path, kept):
 - **Never:** asks for or sees tokens, Wi-Fi, accounts. It talks to no server.
 - Firmware and page come from the same origin and version, so there is nothing to fetch
   across origins and nothing a server can swap.
-- Standalone it ends with "Connect your robot": a link to chan.w42.eu/setup, or "your own
+- Standalone it ends with "Connect your robot": a link to sm.w42.eu/setup, or "your own
   server" (its address).
 
 esptool-js quirks today's setup page handles (0.7.0): `hard_reset` does not pulse RTS, so the page resets the
@@ -101,8 +102,8 @@ separate, static part (3.2).
 
 ### 3.4 Connect page (on each server)
 
-Small, the same on every server that has robots (s-w42-eu-raw first; the pet and sbot
-later), as a shared JS module plus each server's API:
+Small, the same on every server that sets robots up (today the Stackchan manager, for every
+app in its catalog), as a shared JS module plus each server's API:
 
 1. `hello` over USB. No answer: "This robot needs Embody Mode first" (4).
 2. The server gives what only it can: a token (an account's robot on a public server, the
@@ -138,12 +139,12 @@ manifests (3.1) are what stop it from redirecting or reflashing robots unnoticed
 
 ## 5. What moves where
 
-| Now in s-w42-eu-raw | Goes to |
+| Now in s-w42-eu-manager (`-offer`: s-w42-eu-raw) | Goes to |
 |---|---|
 | esptool-js, install, backup, restore, the firmware routes, `-firmware-dir`, `-firmware-release`, the firmware cache | the flasher, in the firmware repo's release |
 | `/setup`: hello, provision, pair, autostart, app choice | stays: the connect page (3.4), as a shared module |
 | `-offer` flags | the [app catalog](app-catalog.md): one directory per app |
-| `/api/setup/local` (address, token, Wi-Fi on the server's computer) | stays; Wi-Fi only on request |
+| a home manager on its own computer: that computer's Wi-Fi (in `/api/me`), `/api/setup/copy` | stays; Wi-Fi only on request |
 
 ## 6. Hardening the release
 
@@ -185,7 +186,7 @@ Layout and tool: [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved) (i
 - **Planned: the owner also signs `manifest.json`** with the owner's P-256 key (principle 3;
   `SHA256SUMS` is signed with the SSH Ed25519 key): `manifest.json.sig` would travel with the
   release, so a browser can check it with WebCrypto where the key comes from elsewhere (the
-  connect page on chan.w42.eu, §4; later the robot itself).
+  connect page on sm.w42.eu, §4; later the robot itself).
 - **The rule:** a release is approved when the owner's signed `SHA256SUMS` equals CI's and
   every other builder's (today: ci, mj41, cloud). Later: CI's Sigstore attestation too, and
   at least one builder besides mj41's own machines.
@@ -295,7 +296,7 @@ blog post about the [independent rebuild](independent-rebuild.md).
 1. **Done:** firmware: `provision` asks for a tap when it changes the default server.
 2. **Open:** flasher: move install/backup/restore into the firmware repo, publish it with the
    release (CI), standalone page first.
-3. **Open:** s-w42-eu-raw: drop the firmware parts, link to the flasher; Wi-Fi on request.
+3. **Open:** s-w42-eu-manager: drop the firmware parts, link to the flasher; Wi-Fi on request.
 4. **Open:** `-flasher` with a pinned release: one page again, with the person's consent.
 5. App catalog: **done** as a design ([its own doc](app-catalog.md)); **open:** the catalog
    itself, then the connect page as a shared module for the pet and sbot.

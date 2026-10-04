@@ -1,11 +1,12 @@
 # Accounts on w42.eu: sign-in providers, linked sign-ins, tiers
 
 **Status:** 2026-10-04, design. Today: Dex at auth.w42.eu with GitHub and Google (Microsoft
-prepared, not enabled); one account per sign-in; tiers in s-w42-eu-raw.
+prepared, not enabled); one account per sign-in; robots in the manager (sm.w42.eu), tiers in
+s-w42-eu-raw.
 
 ## 1. Providers
 
-Dex (auth.w42.eu) federates the providers; the apps (chan.w42.eu and later ones) talk only to
+Dex (auth.w42.eu) federates the providers; the sites (sm.w42.eu, raw.sa.w42.eu and later ones) talk only to
 Dex. Order:
 
 1. GitHub, Google: done.
@@ -34,13 +35,13 @@ Ready for linking:
   done by an admin). Unlinking keeps at least one sign-in.
 - **Same e-mail is not enough to link** by itself: the person must sign in with both
   (an e-mail address at a provider can be someone else's later).
-- In s-w42-eu-raw this replaces `Account.Key` as the owner of added robots by the person
-  id (principle 27: the stored accounts start over).
+- In the manager (s-w42-eu-manager) this replaces `Account.Key` as the owner of added robots
+  by the person id (principle 27: the stored accounts start over).
 
 ## 3. Tiers
 
 Tiers set limits, not access. Who is in which tier and each tier's limits: the
-[tiers table](https://github.com/mj41/s-w42-eu-raw#other-peoples-robots-sign-in-and-add-your-own)
+[tiers table](https://github.com/mj41/s-w42-eu-raw#robots-set-up-by-a-manager-and-sign-in)
 in the s-w42-eu-raw readme.
 
 Rate limiting is the main use: commands per second, open media streams, 640×480 video, robots

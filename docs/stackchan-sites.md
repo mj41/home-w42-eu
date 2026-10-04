@@ -1,7 +1,8 @@
 # Stackchan on w42.eu: a manager and separate apps
 
-**Status:** 2026-10-04, design for review. Replaces chan.w42.eu, which is removed (no backward
-compatibility, [principles](principles.md) 27).
+**Status:** deployed 2026-10-04: sm.w42.eu, raw.sa.w42.eu, pet.sa.w42.eu and s.w42.eu.
+chan.w42.eu, one server for sign-in, robot setup, firmware and the raw dashboard, is removed
+(no backward compatibility, [principles](principles.md) 27).
 
 ## 1. Hostnames
 
@@ -10,8 +11,8 @@ compatibility, [principles](principles.md) 27).
 | Host | What |
 |---|---|
 | `s.w42.eu` | index and project page (static) |
-| `sm.w42.eu` | **the Stackchan manager:** sign-in, your robots, the apps you approve for them, one-click setup over USB, their tokens, the official firmware |
-| `raw.sa.w42.eu` | the raw dashboard: every sensor and command (today's chan.w42.eu dashboard), an app like any other |
+| `sm.w42.eu` | **the Stackchan manager** ([s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager)): sign-in, your robots, the apps you approve for them, one-click setup over USB, their tokens, the official firmware |
+| `raw.sa.w42.eu` | the raw dashboard ([s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw)): every sensor and command, an app like any other |
 | `pet.sa.w42.eu` | the pet ([s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet)) |
 | `dev.sa.w42.eu` | the higher-level API for developers and AI agents ([device API](device-api.md)), planned |
 | `*.sa.w42.eu` | more apps, one host each |
@@ -53,14 +54,16 @@ connected right now stays until it reconnects.
 
 ## 5. Steps
 
-1. **DNS and certificates:** `s.w42.eu`, `sm.w42.eu`, wildcard `*.sa.w42.eu` (GitOps).
-2. **Split s-w42-eu-raw into two programs** in its repo: `stackchan-manager` (sign-in,
-   robots, the app catalog, setup, firmware, `robot-auth`) and the raw app (robot connections,
-   pairing, the dashboard, the end-to-end relay), which checks tokens with the manager. Deploy
-   them as sm.w42.eu and raw.sa.w42.eu.
-3. **pet.sa.w42.eu:** the pet checks tokens with the manager too (a small client both apps share).
-4. **s.w42.eu:** the index page.
-5. **Remove chan.w42.eu:** deployment, DNS, docs. Robots are set up again on sm.w42.eu.
+1. **Done: DNS and certificates:** `s.w42.eu`, `sm.w42.eu`, wildcard `*.sa.w42.eu` (GitOps).
+2. **Done: the manager and the raw app.** The manager became a repo of its own,
+   [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) (sign-in, robots, the app
+   catalog, setup, firmware, `robot-auth`); s-w42-eu-raw kept the raw app (robot connections,
+   pairing, the dashboard, the end-to-end relay), which checks tokens with the manager.
+   Deployed as sm.w42.eu and raw.sa.w42.eu.
+3. **Done: pet.sa.w42.eu:** the pet checks tokens with the manager too, with the Go package
+   both apps share (`github.com/mj41/s-w42-eu-raw/robotauth`).
+4. **Done: s.w42.eu:** the index page.
+5. **Done: remove chan.w42.eu:** deployment, DNS, docs. Robots are set up again on sm.w42.eu.
 6. **dev.sa.w42.eu** once the device API exists.
 
 ## 6. Open questions
@@ -70,5 +73,6 @@ connected right now stays until it reconnects.
 2. **Tiers across apps:** the manager answers per account, or the apps read the same tiers file.
 3. **Home servers:** a home keeps its own servers and [app catalog](app-catalog.md); the public
    manager is for w42.eu. Should a home server be able to use sm.w42.eu for setup?
-4. **The pet in public:** its leaderboard photos would be stored on a public server, and its
-   parent page has a PIN instead of sign-in. Decide before pet.sa.w42.eu goes live.
+4. **The pet in public:** pet.sa.w42.eu is live, with pairing by each robot's QR code and a
+   parent PIN instead of sign-in. Its leaderboard photos are stored on the public server and
+   served only to browsers paired with that robot. Is that enough?

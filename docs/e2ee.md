@@ -3,10 +3,10 @@
 **Status:** 2026-10-04. Done: steps 1–3 of the rollout (§9): the Go reference
 implementation (s-w42-eu-raw's `e2e` package, test vectors), the relay, the browser side
 (the dashboard's `e2e.js`), tested end to end with `fake-robot -e2e`, and the firmware
-(Embody Mode's `e2e.cpp`, per server, off by default). Next: step 4, on for chan.w42.eu.
+(Embody Mode's `e2e.cpp`, per server, off by default). Next: step 4, on for raw.sa.w42.eu.
 Part of the [wire protocol](wire-protocol.md) (planned for v2, usable from v1 as an extension).
 
-A relay such as `chan.w42.eu` connects robots and browsers that cannot reach each other
+A relay such as `raw.sa.w42.eu` connects robots and browsers that cannot reach each other
 directly. Without encryption it sees everything: camera frames, microphone audio, telemetry, commands.
 With end-to-end encryption it carries only ciphertext between a robot and the browsers its
 owner enrolled, so a relay that is curious, compromised or compelled cannot watch, listen
@@ -45,7 +45,7 @@ browsers' WebCrypto and in mbedtls (ESP32-S3 has hardware AES).
 The robot's pairing QR code gets a fragment:
 
 ```
-https://chan.w42.eu/pair?code=KA553ZQC#e2e=1.<R_pub b64url>.<P b64url>
+https://raw.sa.w42.eu/pair?code=KA553ZQC#e2e=1.<R_pub b64url>.<P b64url>
 ```
 
 1. The browser pairs as today (`/pair?code=…`, the session cookie). The fragment survives the
@@ -105,8 +105,8 @@ the inner type is the plaintext type (`0x03` speaker).
 
 Encryption is a setting of each entry in the robot's server list, because it only fits a
 **relay** whose app runs in the browser (the dashboard). App servers that are the app
-(the pet, sbot) need the data and run on the owner's own network; they stay plaintext.
-`chan.w42.eu` is a relay: encrypted (step 4 of §9).
+(the pet, sbot) need the data; they stay plaintext. The pet also runs in public at
+`pet.sa.w42.eu`. `raw.sa.w42.eu` is a relay: encrypted (step 4 of §9).
 
 The setting is the command `server_e2e {"server"?, "on"}` (`server`: a server's name or URL in
 the list, the current one when left out). Anyone may turn it on, since it only protects more;
@@ -136,4 +136,4 @@ a later step; until then they are not available for an encrypted robot.
    hardware.
 2. Browser side in the dashboard (WebCrypto), tested against `fake-robot`.
 3. Firmware (mbedtls), behind a per-server setting, off until tested on the robot.
-4. On for chan.w42.eu.
+4. On for raw.sa.w42.eu.

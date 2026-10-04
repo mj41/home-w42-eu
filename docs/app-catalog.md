@@ -6,12 +6,12 @@ document replaces them with one catalog per home: a directory with one directory
 ## 1. The problem
 
 A Stackchan can switch between apps, each a server: the dashboard (s-w42-eu-raw), the pet
-(s-w42-eu-pet), the cockpit (sbot), a public relay (chan.w42.eu). Today:
+(s-w42-eu-pet), the cockpit (sbot), a public relay (raw.sa.w42.eu). Today:
 
 - every server repeats the others in its own flags (`-offer Pet=ws://…,<token file>`), so
   adding an app means editing several command lines and restarting;
 - the setup page can only pin what that one server happens to offer;
-- nothing says which apps stay at home and which send data out (chan.w42.eu), or which
+- nothing says which apps stay at home and which send data out (raw.sa.w42.eu), or which
   devices may join which app (principle 22: the owner decides).
 
 ## 2. One catalog, not one config
@@ -27,8 +27,9 @@ Not everything belongs in one file. Four kinds of settings, each with one home (
 
 So: **one catalog** for the apps, shared by all servers of a home, next to each server's own
 settings, and **one directory per app** in it, like `/etc/…/conf.d`: an app is added or removed
-as a whole, carries its own token and, later, its own signature. A public server (chan.w42.eu) has its own catalog with only itself, and never
-hands out other servers' tokens.
+as a whole, carries its own token and, later, its own signature. On w42.eu the manager
+(sm.w42.eu) has its own catalog of the public apps and gives each robot a token of its own per
+app ([Stackchan sites](stackchan-sites.md)); it never hands out a home's tokens.
 
 ## 3. The directory
 
@@ -47,9 +48,9 @@ it again when something in it changes):
 ├── cockpit/
 │   ├── app.yaml
 │   └── token -> ../dashboard/token
-└── chan/
+└── raw-w42/
     ├── app.yaml
-    └── token
+    └── token           this robot's token for raw.sa.w42.eu, from sm.w42.eu
 ```
 
 `dashboard/app.yaml`:
@@ -62,11 +63,11 @@ devices: [stackchan]                  # device families (or ids) that may join
 start: true                           # the default app to start with at setup
 ```
 
-`chan/app.yaml`:
+`raw-w42/app.yaml`:
 
 ```yaml
-name: chan.w42.eu
-url: wss://chan.w42.eu
+name: raw.sa.w42.eu
+url: wss://raw.sa.w42.eu
 devices: [stackchan-0a1b2c3d4e50]     # only this robot
 leaves_home: true                     # data goes through a public relay: shown as such
 ```

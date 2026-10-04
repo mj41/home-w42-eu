@@ -17,11 +17,11 @@ link-loss stop, node controller).
 |---|---|---|
 | One home node | three app servers, each with its own pairing and sessions | `sbot` as the web/API server; apps routed by the node; separate app repos included by the user |
 | Home Assistant | not connected | the main data source, through an adapter |
-| Trust | bearer tokens: one shared per LAN server; one per robot on chan.w42.eu | owner key, device keys, grants, scopes |
-| Access control | anyone paired with a robot can do everything; on chan.w42.eu robots are private to their owner by default, and tiers set limits; loops in sbot need grants | default deny, per-device ACLs, devices as proxies, limits, read audit |
+| Trust | bearer tokens: one shared per LAN server; on w42.eu one per robot per app, issued by sm.w42.eu | owner key, device keys, grants, scopes |
+| Access control | anyone paired with a robot can do everything; on raw.sa.w42.eu robots are private to their owner by default, and tiers set limits; loops in sbot need grants | default deny, per-device ACLs, devices as proxies, limits, read audit |
 | AI building loops | agents write code in repos, by hand | agent gateway: query, write, replay, ask approval |
 | Capability descriptors | lists of command and measurement names | wire protocol v2: arguments, units, scopes, safety class |
-| Connection paths | devices connect to whichever server is in their list; `chan.w42.eu` relays for signed-in owners, TLS ending before the server, end-to-end encryption available per robot | local first: direct on the LAN by alias or IP; `w42.eu` only as a hub when away (blind relay, TLS on the node); per-device relay policy, LAN-only devices |
+| Connection paths | devices connect to whichever server is in their list; `raw.sa.w42.eu` relays for signed-in owners, TLS ending before the server, end-to-end encryption available per robot | local first: direct on the LAN by alias or IP; `w42.eu` only as a hub when away (blind relay, TLS on the node); per-device relay policy, LAN-only devices |
 | Delegated actions | secrets sit where they are used (a robot's token on the robot); releases are signed on the owner's laptop | secrets stay in their perimeter (signing station, capture station, phone); others send action requests; the person approves on the holder |
 | Personal captures | none | capture station with tiny reviewed collectors; captures in the person's store; digests |
 | Latency through Stackchan | about 0.2–0.3 s per car command | ~0.1 s |
@@ -77,9 +77,10 @@ Ideas that are not on the roadmap yet live in [home-w42-eu-ideas](https://github
 The POCs fit the **device side** well (light clients, raw data, optional extensions, safety
 on the device), and the **node side** has started: sbot embeds the event hub (JetStream) and
 keeps the safety stop; the controller server runs loops with replay / shadow / live and loop
-grants (none by default), and `frown` is live. chan.w42.eu has sign-in, private robots with tokens
-of their own, tiers and end-to-end encryption available; releases are reproducible and approved in
-`mj41cz-approved`.
+grants (none by default), and `frown` is live. On w42.eu the manager (sm.w42.eu) has sign-in,
+one-click setup and a token per robot per app; its apps are the raw dashboard (raw.sa.w42.eu:
+private robots, tiers, end-to-end encryption available) and the pet (pet.sa.w42.eu);
+releases are reproducible and approved in `mj41cz-approved`.
 
 Still open against the [principles](principles.md) and the [architecture](architecture.md):
 
@@ -89,7 +90,7 @@ Still open against the [principles](principles.md) and the [architecture](archit
   all its data; no permission entries, no read audit.
 - **Local name and TLS (architecture §10.1):** plain `http`/`ws` on the LAN; no local name, so
   no microphone in browsers (they need HTTPS).
-- **Hub, not cloud (principle 4):** at chan.w42.eu TLS ends before the server; only robots
+- **Hub, not cloud (principle 4):** at raw.sa.w42.eu TLS ends before the server; only robots
   with end-to-end encryption on are hidden from it.
 - **Local first (principle 11):** the pet's spoken lines go to Microsoft's Edge text-to-speech
   (espeak-ng is the local fallback); a local voice (Piper) would remove it.
@@ -102,7 +103,7 @@ Still open against the [principles](principles.md) and the [architecture](archit
 and the window shutters controller (use case 5): the first use case that helps the
 whole family every day.
 
-**Alongside:** end-to-end encryption on for chan.w42.eu ([e2ee](e2ee.md) §9, step 4), and
+**Alongside:** end-to-end encryption on for raw.sa.w42.eu ([e2ee](e2ee.md) §9, step 4), and
 the flasher as its own part ([device setup](device-setup.md) §7).
 
 ## 6. Decisions made (2026-10-02)

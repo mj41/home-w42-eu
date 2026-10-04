@@ -612,7 +612,7 @@ can run with no `w42.eu` at all.
 - **QR codes** that point through `w42.eu` keep their secret in the URL fragment,
   which browsers never send to the server and keep across redirects.
 - **Devices outside the home** (a phone with GPS, a car's camera) reach the node the
-  same way. The rendezvous (`chan.w42.eu`) only hands out owner-signed endpoint
+  same way. The rendezvous on `w42.eu` only hands out owner-signed endpoint
   announcements; it cannot point a device anywhere the owner did not sign.
 - **Direct when possible, later:** two parties that can reach each other directly
   (for example over a VPN the owner runs) use that instead of the relay.

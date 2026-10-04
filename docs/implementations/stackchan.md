@@ -1,6 +1,6 @@
 # Stackchan: the first device family
 
-**Status:** 2026-10-04. Works on the LAN and through chan.w42.eu; firmware `embody-v0.1.0`
+**Status:** 2026-10-04. Works on the LAN and on w42.eu (sm.w42.eu and its apps); firmware `embody-v0.1.0`
 released and approved ([device setup](../device-setup.md) §6).
 
 M5Stack's Stackchan robots (a CoreS3 with an ESP32-S3, in a body with two servos) is the
@@ -8,8 +8,9 @@ first device built the home-w42-eu way: **one universal firmware that is a light
 client, and several apps on the server side that give it different jobs.**
 
 Setting up a robot: plug it in and press one button on
-[chan.w42.eu/setup](https://chan.w42.eu/setup) (Chrome, USB); with your own server or your
-own build:
+[sm.w42.eu/setup](https://sm.w42.eu/setup) (Chrome, USB), the Stackchan manager
+([s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager)); it gives the robot the apps you
+approve, each with a token of its own. With your own server or your own build:
 [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md)
 in the firmware fork.
 
@@ -60,8 +61,8 @@ firmware-update path is closed (`patches/xiaozhi-esp32.patch`).
 
 | App | Repo | Job | Status |
 |---|---|---|---|
-| **Embody dashboard** | [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.10.2 at `chan.w42.eu`, with sign-in |
-| **Pet** (Tamagotchi) | [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
+| **Embody dashboard** | [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; at `raw.sa.w42.eu`, with sign-in |
+| **Pet** (Tamagotchi) | [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN; at `pet.sa.w42.eu` |
 | **sbot cockpit** | [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) | Stackchan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
 | AI.AGENT (upstream) | — | voice assistant through xiaozhi's cloud | outside the platform |
 

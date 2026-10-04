@@ -43,8 +43,8 @@ of them, and loops and controllers that AI helps you write and you approve.
      (`/user/embody`, and `/sdcard/embody` with a microSD card), uninstall and remove-all.
 6. **w42.eu services and releases:**
    - [Stackchan sites](docs/stackchan-sites.md): sm.w42.eu (the manager: robots, the apps
-     you approve, setup) and one host per app (`raw.sa.w42.eu`, `pet.sa.w42.eu`, …),
-     replacing chan.w42.eu (design).
+     you approve, setup) and one host per app (`raw.sa.w42.eu`, `pet.sa.w42.eu`, …).
+     Deployed 2026-10-04.
    - [Accounts](docs/accounts.md): sign-in providers (GitHub and Google; Microsoft
      prepared), linked sign-ins, tiers and rate limits.
    - [Analytics](docs/analytics.md): counting visits to the public sites with GoatCounter, no
@@ -68,8 +68,9 @@ Each repo is independent. A home is made of the repos its user includes.
 | Repo | Role | License |
 |---|---|---|
 | [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) | MIT (the firmware, as upstream) |
-| [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard, the relay at `chan.w42.eu` | MIT |
-| [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | the pet app (a Tamagotchi for kids) | MIT |
+| [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) | the Stackchan manager at `sm.w42.eu`: sign-in, your robots, the apps you approve, one-click setup over USB, a token per robot per app | MIT |
+| [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard and relay at `raw.sa.w42.eu`, the `robotauth` package the apps share | MIT |
+| [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | the pet app (a Tamagotchi for kids), at `pet.sa.w42.eu` | MIT |
 | [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app | Apache-2.0 |
 | [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge | Apache-2.0 |
 | [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops | Apache-2.0 |
@@ -86,9 +87,11 @@ Design draft with working proofs of concept, 2026-10-04:
   over BLE.
 - **sbot** with the event hub (JetStream) and the safety stop; its controller server runs
   the `frown` loop live.
-- **chan.w42.eu** (s-w42-eu-raw v0.10.2): sign-in (GitHub, Google), robots private by
-  default with tokens of their own, tiers, one-click setup at
-  [chan.w42.eu/setup](https://chan.w42.eu/setup); end-to-end encryption available.
+- **sm.w42.eu**, the Stackchan manager: sign-in (GitHub, Google), your robots, the apps
+  you approve for each, a token per robot per app, one-click setup at
+  [sm.w42.eu/setup](https://sm.w42.eu/setup). The apps: the raw dashboard at
+  `raw.sa.w42.eu` (robots private by default, tiers, end-to-end encryption available) and
+  the pet at `pet.sa.w42.eu`. `s.w42.eu` is the index.
 - **Firmware `embody-v0.1.0`** released, rebuilt to the same bytes by GitHub Actions, the
   owner's laptop and a cloud rebuild, and approved in
   [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved).

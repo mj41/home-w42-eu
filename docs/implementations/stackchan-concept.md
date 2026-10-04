@@ -107,7 +107,7 @@ command, and small loops react (the robot looks sad while its car is blocked).
 
 - **One firmware, many apps.** Flash once; a new app is a new server.
 - **Apps in Go on your own machine.** The robot talks to a server you run, on your network;
-  the public [chan.w42.eu](https://chan.w42.eu) is optional.
+  the public sites on w42.eu ([s.w42.eu](https://s.w42.eu)) are optional.
 - **Privacy you can see.** Camera and microphone stream only while a paired browser watches
   or listens, and the robot shows LIVE.
 - **Safety close to the hardware.** The car stops on its own 500 ms after the last command;

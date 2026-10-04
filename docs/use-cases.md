@@ -14,7 +14,7 @@ their numbers in [Personas and agents](personas.md); the programs that serve eac
 
 | # | Use case | For | Status |
 |---|---|---|---|
-| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | owner (1), family far away (5), another owner (7) | works on the LAN (Stackchan dashboard, sbot cockpit) and through chan.w42.eu (sign-in, private robots) |
+| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | owner (1), family far away (5), another owner (7) | works on the LAN (Stackchan dashboard, sbot cockpit) and through raw.sa.w42.eu (sign-in, private robots) |
 | 2 | [A friend for the kids](#2-a-friend-for-the-kids) | kids (3), another owner (7) | works (the pet) |
 | 3 | [Play and explore together](#3-play-and-explore-together) | owner at play (2), kids (3) | works (Stackchan on the TPBot, joystick, safety stop, `frown`) |
 | 4 | [Kids got home safely](#4-kids-got-home-safely) | owner (1), kids (3), other adults (4) | next: Wi-Fi presence, NFC card |
@@ -28,7 +28,7 @@ their numbers in [Personas and agents](personas.md); the programs that serve eac
 | 12 | [A second life for old devices](#12-a-second-life-for-old-devices) | owner at play (2), developer (8) | idea |
 | 13 | [Follow up on what I saved](#13-follow-up-on-what-i-saved) | owner (1) | idea |
 | 14 | [Approve what matters, where it is safe](#14-approve-what-matters-where-it-is-safe) | owner (1), independent rebuilder (9) | partly (release approval) |
-| 15 | [Set up my robot with one click, privately, and check what I install](#15-set-up-my-robot-with-one-click-privately-and-check-what-i-install) | another owner (7), independent rebuilder (9) | works (chan.w42.eu/setup; releases checked in mj41cz-approved) |
+| 15 | [Set up my robot with one click, privately, and check what I install](#15-set-up-my-robot-with-one-click-privately-and-check-what-i-install) | another owner (7), independent rebuilder (9) | works (sm.w42.eu/setup; releases checked in mj41cz-approved) |
 
 ---
 
@@ -44,7 +44,7 @@ their numbers in [Personas and agents](personas.md); the programs that serve eac
   connection, the hub when away.
 - **Private:** media only while watched, LIVE badge on the robot, no recording by
   default; robots in kids' rooms LAN only.
-- **Status:** works on the LAN, and today through chan.w42.eu with sign-in, private robots and
+- **Status:** works on the LAN, and today through raw.sa.w42.eu with sign-in, private robots and
   end-to-end encryption available. Away from home without a relay that could read: the blind
   hub (roadmap stage 10).
 
@@ -229,12 +229,12 @@ their numbers in [Personas and agents](personas.md); the programs that serve eac
 
 ## 15. Set up my robot with one click, privately, and check what I install
 
-- **Who:** someone with a new robot who uses chan.w42.eu or their own server, and anyone who
+- **Who:** someone with a new robot who uses sm.w42.eu or their own server, and anyone who
   wants to check the firmware before trusting it ([device setup](device-setup.md) §1).
 - **Need:** a robot that works without a terminal, private to them, with firmware they can
   check is what its source says.
-- **When it works:** I plug the robot in, open chan.w42.eu/setup in Chrome and press one
-  button. The page backs up the robot's firmware, installs Embody Mode and connects the robot;
+- **When it works:** I plug the robot in, open sm.w42.eu/setup in Chrome, pick the apps and press
+  one button. The page backs up the robot's firmware, installs Embody Mode and connects the robot;
   I tap Yes on the robot's screen, and the page opens my robot, paired. Nobody else can use
   it. If I want, I compare the firmware with the hashes signed in mj41cz-approved, or rebuild
   it from its tag and get the same bytes.
@@ -243,7 +243,7 @@ their numbers in [Personas and agents](personas.md); the programs that serve eac
   §6); later the flasher as its own page.
 - **Private:** no server, token or Wi-Fi inside the firmware; robots private to their owner by
   default; end-to-end encryption available.
-- **Status:** works at chan.w42.eu/setup and on any local server; releases are rebuilt and
+- **Status:** works at sm.w42.eu/setup and with a manager at home; releases are rebuilt and
   approved in mj41cz-approved. Planned: the flasher as its own page, and the owner's approval
   before a release is published.
 

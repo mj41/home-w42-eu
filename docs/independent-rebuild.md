@@ -65,7 +65,7 @@ shows it on the old source) or our code (the tools were already proven on the ol
 
 - **Provider:** Linode today, with an API token of its own, limited to machines and volumes, not
   the GitOps repository's; the tool keeps the provider in one small part (`internal/cloud`). Linode
-  is Akamai, which also runs chan.w42.eu; another provider (e.g. AWS or Google Cloud) would add
+  is Akamai, which also runs the w42.eu sites (sm.w42.eu and its apps); another provider (e.g. AWS or Google Cloud) would add
   independence.
 - **A full run from Guix's seed** (`-seed`): the host tools built on the machine from Guix's
   bootstrap seed (`--no-substitutes`, except Rust) instead of substitutes from the build farms
