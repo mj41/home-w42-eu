@@ -28,6 +28,8 @@ of them, and loops and controllers that AI helps you write and you approve.
      the person's consent, and what the robot confirms itself.
    - [App catalog](docs/app-catalog.md): the apps a home's devices can use, one directory
      per app, shared by the home's servers.
+   - [Device storage](docs/device-storage.md): per-app folders under one root
+     (`/user/embody`, laid out like Linux), uninstall and remove-all.
    - [Independent rebuild](docs/independent-rebuild.md): a third verification of releases on
      a short-lived cloud VM, bootstrapped from Guix's seed, with its own certified key and a
      signed audit log.
