@@ -314,8 +314,10 @@ They run with priority, their decisions override app commands, and they never
 replace the device's own watchdog (principle 19).
 
 Controllers that need low latency run close to the hardware (on the device or its
-adapter), and the controller server supervises them. A car command through Stackchan
-takes about 0.8 s today, which is too slow for anything that must react quickly.
+adapter), and the controller server supervises them. A car command takes about 0.2–0.3 s
+through Stackchan today (`car_*` commands go straight from the WebSocket task to BLE) and
+70 ms through the laptop bridge: a round trip through a server is too slow for anything
+that must react at once.
 
 ### 7.3 AI agents build loops
 
@@ -353,8 +355,9 @@ takes about 0.8 s today, which is too slow for anything that must react quickly.
 Generalizes the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj) to
 every device:
 
-- **Owner key** (ECDSA P-256) signs: device certificates, the node certificate,
-  grants, configuration, firmware manifests. A tool (`homectl`, from the planned
+- **Owner keys** (principle 3): the ECDSA P-256 key signs device certificates, the node
+  certificate, grants, configuration, firmware manifests; the SSH Ed25519 key signs release
+  hashes and rebuild-machine certificates. A tool (`homectl`, from the planned
   `chanctl`) does the signing; later a passkey on a phone.
 - **Device identity:** each device has its own key (in NVS first; in a secure
   element where the hardware has one, e.g. the ESP32-S3 DS peripheral). It proves
@@ -492,8 +495,8 @@ Reading is guarded like acting, because scraping is how data leaks:
 ### 8.6 Physical tokens: NFC and QR
 
 - **QR codes** pair browsers with devices (works today), give guest access, and
-  mark places and things. A code never names a host and keeps its secret in the URL
-  fragment, so a relay never sees it (§10).
+  mark places and things. Target: a code never names a host and keeps its secret in the
+  URL fragment, so a relay never sees it (§10); today the pairing QR code names the server.
 - **NFC tags and cards** identify people (a kid's card), things (a food card for the
   pet, works today) and places (a tag at the door). A tag read is a raw event from
   the reader; what it means is a loop's decision. Cards carrying a person's rights

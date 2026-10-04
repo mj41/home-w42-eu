@@ -1,13 +1,13 @@
 # End-to-end encryption between a device and its browsers
 
-**Status:** 2026-10-03. Done: steps 1 and 2 of the rollout (§9): the Go reference
-implementation (stackchan-server's `e2e` package, test vectors), the relay, and the browser
-side (the dashboard's `e2e.js`, the vectors pass in Chrome), tested end to end with
-`fake-robot -e2e`. Next: the firmware.
+**Status:** 2026-10-04. Done: steps 1–3 of the rollout (§9): the Go reference
+implementation (stackchan-server's `e2e` package, test vectors), the relay, the browser side
+(the dashboard's `e2e.js`), tested end to end with `fake-robot -e2e`, and the firmware
+(Embody Mode's `e2e.cpp`, per server, off by default). Next: step 4, on for chan.w42.eu.
 Part of the [wire protocol](wire-protocol.md) (planned for v2, usable from v1 as an extension).
 
 A relay such as `chan.w42.eu` connects robots and browsers that cannot reach each other
-directly. Today it sees everything: camera frames, microphone audio, telemetry, commands.
+directly. Without encryption it sees everything: camera frames, microphone audio, telemetry, commands.
 With end-to-end encryption it carries only ciphertext between a robot and the browsers its
 owner enrolled, so a relay that is curious, compromised or compelled cannot watch, listen
 or drive.
@@ -89,7 +89,8 @@ Commands are sealed under the browser's pairwise key, so the robot knows who sen
 `E2ECommand {"b": B_id, "n": nonce, "c": AES-GCM(K_B, {"command", "args", "seq"},
 aad = robot id)}`. The robot accepts a `seq` only if it is higher than the last one from
 that browser (no replays). Speaker audio uses binary type `0x31`:
-`0x31 | B_id (8) | nonce (12) | AES-GCM(K_B, payload)`.
+`0x31 | B_id (8) | nonce (12) | AES-GCM(K_B, inner type byte + payload)`, with aad = robot id;
+the inner type is the plaintext type (`0x03` speaker).
 
 ## 6. The relay's part
 
@@ -105,9 +106,15 @@ that browser (no replays). Speaker audio uses binary type `0x31`:
 Encryption is a setting of each entry in the robot's server list, because it only fits a
 **relay** whose app runs in the browser (the dashboard). App servers that are the app
 (the pet, sbot) need the data and run on the owner's own network; they stay plaintext.
-`chan.w42.eu` is a relay: encrypted. With encryption on, the robot sends no plaintext media
-or telemetry to that server and accepts commands only as `E2ECommand`, except the relay's
-`camera`/`mic` stream switches.
+`chan.w42.eu` is a relay: encrypted (step 4 of §9).
+
+The setting is the command `server_e2e {"server"?, "on"}` (`server`: a server's name or URL in
+the list, the current one when left out). Anyone may turn it on, since it only protects more;
+only an enrolled browser (a sealed command) may turn it off, so a relay cannot downgrade it.
+Turning it on or off for the current server makes the robot reconnect. With encryption on,
+the robot sends no plaintext media or telemetry to that server and accepts commands only as
+`E2ECommand`, except the relay's stream switches (`camera`, `mic`, `imu_stream`,
+`touch_stream`, `light_stream`).
 
 Also refused from the relay while encrypted: plaintext binary messages (pictures, file
 chunks, speaker audio), since the relay could inject them. Pictures and files go sealed in
@@ -115,9 +122,12 @@ a later step; until then they are not available for an encrypted robot.
 
 ## 8. Managing enrolled browsers
 
-On the robot: the QR screen shows how many browsers are enrolled and offers **Forget all**.
-From an enrolled browser: `forget {"b": B_id}` (sealed like any command). Forgetting a
-browser starts a new epoch, so it cannot read anything sent afterwards.
+- `e2e_forget`, accepted only sealed, from an enrolled browser: the robot forgets **every**
+  enrolled browser and starts a new epoch, so none of them can read anything sent afterwards
+  (event `e2e_forgotten`). A refused `server_e2e` or `e2e_forget` gives the event
+  `e2e_refused {command, reason}`.
+- Later: forgetting one browser (`{"b": B_id}`), and on the robot, the QR screen showing how
+  many browsers are enrolled with **Forget all**.
 
 ## 9. Rollout
 

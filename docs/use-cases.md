@@ -1,32 +1,34 @@
 # Use cases
 
-**Status:** draft, 2026-10-02. **This is the main driver.** Every feature, protocol
+**Status:** draft, 2026-10-04. **This is the main driver.** Every feature, protocol
 and data flow in this project exists to serve one of these use cases. A stage on the
 [roadmap](fit-and-roadmap.md) is done when its use case works for the people in it,
 not when the code runs.
 
 Each use case says **who**, **what they need**, **how it feels when it works**, what it
-takes, what must stay private, and where it stands. The people and programs in the **For** column are described in
-[Personas and agents](personas.md).
+takes, what must stay private, and where it stands. The **For** column names the people by
+their numbers in [Personas and agents](personas.md); the programs that serve each use case
+(agents, loops, apps, the relay) are listed there too.
 
 ## Overview
 
 | # | Use case | For | Status |
 |---|---|---|---|
-| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | a parent away from home | works on the LAN (Stackchan dashboard, sbot cockpit) |
-| 2 | [A friend for the kids](#2-a-friend-for-the-kids) | kids | works (the pet) |
-| 3 | [Play and explore together](#3-play-and-explore-together) | kids and parents | works (Stackchan on the TPBot, joystick, safety stop) |
-| 4 | [Kids got home safely](#4-kids-got-home-safely) | parents | next: Wi-Fi presence, NFC card |
-| 5 | [A comfortable home that saves energy](#5-a-comfortable-home-that-saves-energy) | everyone | next: Home Assistant data, window shutters controller |
-| 6 | [The home looks after itself when we are away](#6-the-home-looks-after-itself-when-we-are-away) | the family | idea |
-| 7 | [Who is at the door](#7-who-is-at-the-door) | whoever is home, or away | idea |
-| 8 | [A home that knows our days](#8-a-home-that-knows-our-days) | the family | idea (calendars) |
-| 9 | [A guest or a babysitter for an evening](#9-a-guest-or-a-babysitter-for-an-evening) | parents, guests | partly (QR pairing) |
-| 10 | [Build what we want by asking](#10-build-what-we-want-by-asking) | the owner | idea |
-| 11 | [Our data stays ours](#11-our-data-stays-ours) | everyone | partly (local servers, media only while watched) |
-| 12 | [A second life for old devices](#12-a-second-life-for-old-devices) | the family, the planet | idea |
-| 13 | [Follow up on what I saved](#13-follow-up-on-what-i-saved) | an adult with too many apps | idea |
-| 14 | [Approve what matters, where it is safe](#14-approve-what-matters-where-it-is-safe) | owners, parents | idea |
+| 1 | [Be there from anywhere](#1-be-there-from-anywhere) | owner (1), family far away (5), another owner (7) | works on the LAN (Stackchan dashboard, sbot cockpit) and through chan.w42.eu (sign-in, private robots) |
+| 2 | [A friend for the kids](#2-a-friend-for-the-kids) | kids (3), another owner (7) | works (the pet) |
+| 3 | [Play and explore together](#3-play-and-explore-together) | owner at play (2), kids (3) | works (Stackchan on the TPBot, joystick, safety stop, `frown`) |
+| 4 | [Kids got home safely](#4-kids-got-home-safely) | owner (1), kids (3), other adults (4) | next: Wi-Fi presence, NFC card |
+| 5 | [A comfortable home that saves energy](#5-a-comfortable-home-that-saves-energy) | owner (1), other adults (4) | next: Home Assistant data, window shutters controller |
+| 6 | [The home looks after itself when we are away](#6-the-home-looks-after-itself-when-we-are-away) | owner (1), other adults (4) | idea |
+| 7 | [Who is at the door](#7-who-is-at-the-door) | owner (1), other adults (4) | idea |
+| 8 | [A home that knows our days](#8-a-home-that-knows-our-days) | owner (1), other adults (4) | idea (calendars) |
+| 9 | [A guest or a babysitter for an evening](#9-a-guest-or-a-babysitter-for-an-evening) | owner (1), a guest or a babysitter (6) | partly (QR pairing) |
+| 10 | [Build what we want by asking](#10-build-what-we-want-by-asking) | owner (1), owner at play (2), developer (8) | partly (hub with replay, controller server; the agent gateway is design) |
+| 11 | [Our data stays ours](#11-our-data-stays-ours) | everyone, the owner (1) first | partly (local servers, media only while watched) |
+| 12 | [A second life for old devices](#12-a-second-life-for-old-devices) | owner at play (2), developer (8) | idea |
+| 13 | [Follow up on what I saved](#13-follow-up-on-what-i-saved) | owner (1) | idea |
+| 14 | [Approve what matters, where it is safe](#14-approve-what-matters-where-it-is-safe) | owner (1), independent rebuilder (9) | partly (release approval) |
+| 15 | [Set up my robot with one click, privately, and check what I install](#15-set-up-my-robot-with-one-click-privately-and-check-what-i-install) | another owner (7), independent rebuilder (9) | works (chan.w42.eu/setup; releases checked in mj41cz-approved) |
 
 ---
 
@@ -42,7 +44,9 @@ takes, what must stay private, and where it stands. The people and programs in t
   connection, the hub when away.
 - **Private:** media only while watched, LIVE badge on the robot, no recording by
   default; robots in kids' rooms LAN only.
-- **Status:** works on the LAN. Away from home: the hub (roadmap stage 10).
+- **Status:** works on the LAN, and today through chan.w42.eu with sign-in, private robots and
+  end-to-end encryption available. Away from home without a relay that could read: the blind
+  hub (roadmap stage 10).
 
 ## 2. A friend for the kids
 
@@ -66,10 +70,11 @@ takes, what must stay private, and where it stands. The people and programs in t
   look through its eyes as it drives down the corridor. It stops by itself before
   the wall, and the face shows it.
 - **Takes:** the TPBot car with the micro:bit, Stackchan hosting it over BLE, the
-  cockpit, the safety stop; next: the robot reacting to the car.
+  cockpit, the safety stop, the robot reacting to the car (`frown`).
 - **Private:** the camera is on only while someone drives.
-- **Status:** works (POC). Next: lower latency, BLE security, the robot frowning when
-  blocked.
+- **Status:** works (POC): a car command takes about 0.2–0.3 s through Stackchan; the
+  micro:bit accepts only listed BLE centrals (an allowlist); the robot frowns while the car is
+  blocked (`frown`, live).
 
 ## 4. Kids got home safely
 
@@ -156,8 +161,9 @@ takes, what must stay private, and where it stands. The people and programs in t
   owner approval.
 - **Private:** the AI sees only the events its task needs, and nothing sensitive by
   default.
-- **Status:** idea (the first loop, the safety stop, was written this way by hand with
-  AI help).
+- **Status:** partly: the event hub with replay and the controller server work, and the
+  first loop between two devices, `frown`, went replay → shadow → live. The agent gateway is
+  design.
 
 ## 11. Our data stays ours
 
@@ -215,8 +221,31 @@ takes, what must stay private, and where it stands. The people and programs in t
   permission entries for who may ask for what, and up to how much.
 - **Private:** card data stays on my phone; signing keys stay on my laptop or key; the
   requester only gets the result.
-- **Status:** idea. The owner-key signing of the trust design is the first such
-  perimeter.
+- **Status:** partly: firmware releases are approved on the owner's laptop: its
+  `SHA256SUMS` signed there and published in
+  [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved)
+  ([device setup](device-setup.md) §6.2). Delegated actions are design; the owner-key signing
+  of the trust design is the first such perimeter.
+
+## 15. Set up my robot with one click, privately, and check what I install
+
+- **Who:** someone with a new robot who uses chan.w42.eu or their own server, and anyone who
+  wants to check the firmware before trusting it ([device setup](device-setup.md) §1).
+- **Need:** a robot that works without a terminal, private to them, with firmware they can
+  check is what its source says.
+- **When it works:** I plug the robot in, open chan.w42.eu/setup in Chrome and press one
+  button. The page backs up the robot's firmware, installs Embody Mode and connects the robot;
+  I tap Yes on the robot's screen, and the page opens my robot, paired. Nobody else can use
+  it. If I want, I compare the firmware with the hashes signed in mj41cz-approved, or rebuild
+  it from its tag and get the same bytes.
+- **Takes:** the setup page and the USB setup protocol with the tap on the robot, sign-in and
+  private robots, reproducible releases with signed hashes ([device setup](device-setup.md)
+  §6); later the flasher as its own page.
+- **Private:** no server, token or Wi-Fi inside the firmware; robots private to their owner by
+  default; end-to-end encryption available.
+- **Status:** works at chan.w42.eu/setup and on any local server; releases are rebuilt and
+  approved in mj41cz-approved. Planned: the flasher as its own page, and the owner's approval
+  before a release is published.
 
 ---
 

@@ -31,6 +31,8 @@ of them, and loops and controllers that AI helps you write and you approve.
    access control, relay.
 5. [Device wire protocol](docs/wire-protocol.md): the reference for how devices,
    adapters and agents connect.
+   - [End-to-end encryption](docs/e2ee.md): a device and its enrolled browsers, through a
+     relay that carries only ciphertext.
    - [Device API](docs/device-api.md): sensors in real units, actuators as named parts
      (`left1`, `yaw`), after Linux's sysfs and IIO.
    - [Device setup](docs/device-setup.md): firmware, connecting over USB, one page with
@@ -39,16 +41,17 @@ of them, and loops and controllers that AI helps you write and you approve.
      per app, shared by the home's servers.
    - [Device storage](docs/device-storage.md): per-app folders under one root
      (`/user/embody`, and `/sdcard/embody` with a microSD card), uninstall and remove-all.
-   - [Accounts](docs/accounts.md): sign-in providers (Microsoft next), linked sign-ins,
-     tiers and rate limits.
+6. **w42.eu services and releases:**
+   - [Accounts](docs/accounts.md): sign-in providers (GitHub and Google; Microsoft
+     prepared), linked sign-ins, tiers and rate limits.
    - [Analytics](docs/analytics.md): counting visits to the public sites with GoatCounter, no
      cookies, nothing from homes.
    - [Independent rebuild](docs/independent-rebuild.md): a third verification of releases on
-     a short-lived cloud VM, bootstrapped from Guix's seed, with its own certified key and a
-     signed audit log.
-6. [Stackchan](docs/implementations/stackchan.md): the first device family, with
+     a short-lived cloud VM (Linode): Espressif's toolchain built from source with Guix host
+     tools, a certified key of its own, a signed audit log.
+7. [Stackchan](docs/implementations/stackchan.md): the first device family, with
    its apps and the TPBot car.
-7. [Fit and roadmap](docs/fit-and-roadmap.md): how the existing repos fit, the gaps,
+8. [Fit and roadmap](docs/fit-and-roadmap.md): how the existing repos fit, the gaps,
    and the next stages.
 
 Ideas for devices, adapters and loops (old phones, a Roomba, lawn mowers, Home
@@ -68,13 +71,27 @@ Each repo is independent. A home is made of the repos its user includes.
 | [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge | Apache-2.0 |
 | [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stackchan working notes, hardware coverage, trust design, build and run scripts | Apache-2.0 |
 | [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops | Apache-2.0 |
+| [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved) | the signed hashes of each release, per builder, and the tool that checks them ([device setup](docs/device-setup.md) §6.2) | Apache-2.0 |
+| [mj41cz-rebuilds](https://gitlab.com/mj41cz/mj41cz-rebuilds) | independent rebuilds of releases on short-lived cloud machines, with a signed audit log ([independent rebuild](docs/independent-rebuild.md)) | Apache-2.0 |
 
 How they fit together and what comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
 
 ## Status
 
-Design draft, 2026-10-02, after the first working proofs of concept (Stackchan with
-three apps, the TPBot car over BLE, the sbot cockpit with joystick and safety stop).
+Design draft with working proofs of concept, 2026-10-04:
+
+- **Stackchan** with three apps (the dashboard, the pet, the sbot cockpit) and the TPBot car
+  over BLE.
+- **sbot** with the event hub (JetStream) and the safety stop; its controller server runs
+  the `frown` loop live.
+- **chan.w42.eu** (stackchan-server v0.10.2): sign-in (GitHub, Google), robots private by
+  default with tokens of their own, tiers, one-click setup at
+  [chan.w42.eu/setup](https://chan.w42.eu/setup); end-to-end encryption available.
+- **Firmware `embody-v0.1.0`** released, rebuilt to the same bytes by GitHub Actions, the
+  owner's laptop and a cloud rebuild, and approved in
+  [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved).
+
+What comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
 
 ## License
 

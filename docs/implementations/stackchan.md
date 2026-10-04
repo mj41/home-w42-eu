@@ -1,12 +1,15 @@
 # Stackchan: the first device family
 
-**Status:** 2026-10-02. Works on the LAN with one robot (`stackchan-0a1b2c3d4e50`).
+**Status:** 2026-10-04. Works on the LAN and through chan.w42.eu; firmware `embody-v0.1.0`
+released and approved ([device setup](../device-setup.md) §6).
 
 M5Stack's Stackchan robots (a CoreS3 with an ESP32-S3, in a body with two servos) is the
 first device built the home-w42-eu way: **one universal firmware that is a light
 client, and several apps on the server side that give it different jobs.**
 
-Setting up a robot, from building the firmware to pairing a phone:
+Setting up a robot: plug it in and press one button on
+[chan.w42.eu/setup](https://chan.w42.eu/setup) (Chrome, USB); with your own server or your
+own build:
 [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md)
 in the firmware fork.
 
@@ -16,7 +19,7 @@ in the firmware fork.
 |---|---|
 | Screen (320×240, touch) | the face, pictures, sprites, QR codes; raw touch points |
 | Head servos (yaw, pitch) | `look`, gestures, hold, continuous yaw; raw positions, load, temperature |
-| Camera (GC0308) | live JPEG stream while watched, 640×480 snapshots |
+| Camera (GC0308) | live JPEG stream while watched (320×240 or 640×480), 640×480 snapshots |
 | Microphone, speaker | raw PCM both ways while in use |
 | 12 RGB LEDs, power LED | colours, per-LED pixels, effects |
 | IMU, magnetometer | raw accel / gyro / field at 100 Hz while watched |
@@ -40,6 +43,12 @@ Mode**, the first launcher app. It:
 - runs commands, and keeps no app logic of its own;
 - keeps a **list of servers** and switches with Next / Pin / Connect on its QR
   screen, or by `server_switch`;
+- is **set up over USB** (`@stackchan` lines: `hello`, `provision`, `pair`, `restart`); a new
+  default server needs a Yes on its screen, and it records its original and previous
+  firmware for a restore ([device setup](../device-setup.md) §3.3);
+- has **end-to-end encryption** per server: it seals media, telemetry and events for the
+  browsers enrolled through its QR code, and from that server takes commands only sealed by
+  them (the relay may still switch streams on and off) ([e2ee](../e2ee.md));
 - has **optional extensions**: the TPBot car (BLE) is compiled in, off until
   `car_enable`, and costs nothing while off.
 
@@ -51,7 +60,7 @@ firmware-update path is closed (`patches/xiaozhi-esp32.patch`).
 
 | App | Repo | Job | Status |
 |---|---|---|---|
-| **Embody dashboard** | [stackchan-server](https://github.com/mj41/stackchan-server) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.1.0 at `chan.w42.eu` |
+| **Embody dashboard** | [stackchan-server](https://github.com/mj41/stackchan-server) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.10.2 at `chan.w42.eu`, with sign-in |
 | **Pet** (Tamagotchi) | [stackchan-pet](https://github.com/mj41/stackchan-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
 | **sbot cockpit** | [sbot](https://github.com/mj41/sbot) | Stackchan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
 | AI.AGENT (upstream) | — | voice assistant through xiaozhi's cloud | outside the platform |
@@ -82,12 +91,14 @@ That is principle 22 (switching is simple) in practice.
 
 ## What it does not have yet
 
-- **Trust:** one shared token per deployment; no device key, no grants, no scopes.
+- **Trust:** a token per robot, given over USB at setup (a shared one on LAN servers), and
+  end-to-end encryption to its enrolled browsers; but no device key, no grants, no scopes.
   The plan is the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj),
   generalized in [architecture §8](../architecture.md#8-trust-identity-and-access-control).
 - **App routing:** switching means reconnecting to another server; the node does not
   route yet.
-- **Event hub:** each server keeps recent events in memory (and a small state file);
-  there is no shared, persistent hub yet.
-- **Latency through the robot:** a car command takes about 0.8 s through Stackchan,
-  against 70 ms through the laptop bridge. Commands wait in the app loop.
+- **One event hub for all apps:** sbot has one (NATS JetStream, embedded); the dashboard and
+  the pet keep recent events in memory (and a small state file).
+- **Fast car control through the robot:** a car command takes about 0.2–0.3 s through
+  Stackchan (`car_*` commands go straight from the WebSocket task to BLE), against 70 ms
+  through the laptop bridge.

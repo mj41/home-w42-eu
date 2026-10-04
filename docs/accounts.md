@@ -1,7 +1,7 @@
 # Accounts on w42.eu: sign-in providers, linked sign-ins, tiers
 
-**Status:** 2026-10-04, design. Today: Dex at auth.w42.eu with GitHub and Google; one account
-per sign-in; tiers in stackchan-server.
+**Status:** 2026-10-04, design. Today: Dex at auth.w42.eu with GitHub and Google (Microsoft
+prepared, not enabled); one account per sign-in; tiers in stackchan-server.
 
 ## 1. Providers
 
@@ -9,7 +9,7 @@ Dex (auth.w42.eu) federates the providers; the apps (chan.w42.eu and later ones)
 Dex. Order:
 
 1. GitHub, Google: done.
-2. **Microsoft next:** Dex's `microsoft` connector and an app registered in Microsoft Entra
+2. **Microsoft, prepared, not enabled:** Dex's `microsoft` connector and an app registered in Microsoft Entra
    with the redirect `https://auth.w42.eu/callback`. Tenant `consumers` (personal accounts) to
    start; `common` adds work and school accounts. In a multi-tenant sign-in, any tenant's admin
    can set a user's e-mail ("nOAuth"), so **an e-mail from Microsoft never grants anything**:
@@ -39,18 +39,12 @@ Ready for linking:
 
 ## 3. Tiers
 
-Tiers set limits, not access (stackchan-server readme, "Tiers"):
-
-| Tier | Who |
-|---|---|
-| 1 | the owner, people the owner lists as tier 1 |
-| 2 | sponsors |
-| 3 | others the owner approved |
-| 4 | signed in |
-| 5 | anonymous |
+Tiers set limits, not access. Who is in which tier and each tier's limits: the
+[tiers table](https://github.com/mj41/stackchan-server#other-peoples-robots-sign-in-and-add-your-own)
+in the stackchan-server readme.
 
 Rate limiting is the main use: commands per second, open media streams, 640×480 video, robots
 an account may add. Hitting a limit says how to get more: tier 5 is asked to sign in, tier 4 to
 become a sponsor. The list of tiers 1–3 is a plain file in a private config repository, by
-e-mail or GitHub login. A database comes when the file is not enough (around a hundred people
-at once is fine with the file and memory).
+e-mail (`email:`), GitHub login (`github:`) or GitHub user id (`github-id:`). A database comes when the file is not
+enough (around a hundred people at once is fine with the file and memory).

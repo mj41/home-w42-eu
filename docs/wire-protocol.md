@@ -122,6 +122,8 @@ The kind names say "Robot" for historical reasons; they apply to every device cl
 | `0x08` | device → server | light and proximity samples: uint16 LE count, then per sample uint32 LE ms, uint16 LE proximity, ch0, ch1 |
 | `0x10` | server → device | picture to show (JPEG) |
 | `0x11` | server → device | file chunk: uint8 name length, name, uint32 LE total size, uint32 LE offset, data |
+| `0x30` | device → browsers | sealed under the group key, passed on unread by the server: see [e2ee](e2ee.md) §4 |
+| `0x31` | browser → device | sealed under the browser's pairwise key, passed on unread by the server: see [e2ee](e2ee.md) §5 |
 
 New types are added here first. `0x80`–`0xFF` are free for experiments.
 
@@ -184,4 +186,4 @@ The commands a device family offers are documented with that family:
 | 2026-10-02 | v1: this document. |
 | 2026-10-02 | The connect path `/api/devices/connect` and the header `X-Device-Id`. |
 | 2026-10-03 | Tokens of a device's own (invites; devices added by accounts), next to a server's shared token (§1). |
-| 2026-10-03 | End-to-end encryption frames (§4, [e2ee](e2ee.md)): optional on both sides. |
+| 2026-10-03 | End-to-end encryption frames (§4) and binary types `0x30`, `0x31` (§6), [e2ee](e2ee.md): optional on both sides. |

@@ -14,12 +14,12 @@ Nothing personal about real people goes here (no names, ages or habits of the ki
 | 1 | [The owner (mj41)](#1-the-owner-mj41) | person | privacy and security | all, 10, 11, 14 |
 | 2 | [The owner at play](#2-the-owner-at-play) | person | fun, no ceremony | 3, 10, 12 |
 | 3 | [The kids](#3-the-kids) | people | fun, safety | 2, 3, 4 |
-| 4 | [Other adults at home](#4-other-adults-at-home) | people | it just works | 4, 5, 6, 8 |
+| 4 | [Other adults at home](#4-other-adults-at-home) | people | it just works | 4, 5, 6, 7, 8 |
 | 5 | [Family far away](#5-family-far-away) | people | be there | 1 |
 | 6 | [A guest or a babysitter](#6-a-guest-or-a-babysitter) | people | easy, then gone | 9 |
-| 7 | [Another owner on chan.w42.eu](#7-another-owner-on-chanw42eu) | people | one click, private | 1, 2 |
+| 7 | [Another owner on chan.w42.eu](#7-another-owner-on-chanw42eu) | people | one click, private | 1, 2, 15 |
 | 8 | [A developer](#8-a-developer) | people | clear, reproducible | 10, 12 |
-| 9 | [An independent rebuilder](#9-an-independent-rebuilder) | people | verifiable | 11 |
+| 9 | [An independent rebuilder](#9-an-independent-rebuilder) | people | verifiable | 14, 15 |
 | 10 | [Viewers of a public stream](#10-viewers-of-a-public-stream) | people | watch, nothing more | — (planned) |
 | 11 | [The owner's AI agents](#11-the-owners-ai-agents) | program | do the task, nothing else | 10, 13, 14 |
 | 12 | [Home automation (loops)](#12-home-automation-loops) | program | reliable, local | 4, 5, 6 |
@@ -92,8 +92,9 @@ Nothing personal about real people goes here (no names, ages or habits of the ki
 
 - **Who:** someone with their own Stackchan who uses the public server instead of running one.
 - **Wants:** plug the robot in, press one button, use the apps.
-- **First of all:** one click ([device setup](device-setup.md) persona "anyone"), and their robot
-  **private** to them (sign-in), with end-to-end encryption so the relay cannot watch.
+- **First of all:** one click ([device setup](device-setup.md) §1, "Anyone with a new robot";
+  use case 15), and their robot **private** to them (sign-in), with end-to-end encryption so
+  the relay cannot watch.
 - **May:** their own robots on the public server; the public apps.
 - **Must not:** see or bother other people's robots; be bothered by anonymous browsers.
 
@@ -118,7 +119,8 @@ Nothing personal about real people goes here (no names, ages or habits of the ki
 - **Wants:** to watch, maybe to send a reaction the owner allowed.
 - **May:** only what the owner shared, rate-limited; never anything that reaches the rest of the
   home.
-- **Status:** planned (access rights for clients, tiers and rate limits are open notes).
+- **Status:** planned. Tiers and rate limits exist on chan.w42.eu ([accounts](accounts.md));
+  access rights for viewers of a shared robot are open.
 
 ## Programs and services
 

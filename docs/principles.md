@@ -20,9 +20,11 @@ TPBot car taught.
 
 ## Ownership and trust
 
-3. **The owner is the root of trust.** One owner key per home (ECDSA P-256; on a
-   laptop, a YubiKey, later a passkey) signs device certificates, grants,
-   configuration and firmware manifests. Devices verify these signatures themselves.
+3. **The owner is the root of trust.** One owner per home, with two keys by purpose
+   (on a laptop, a YubiKey, later a passkey): an **SSH Ed25519** key signs what git and
+   `ssh-keygen` check (release hashes, certificates for rebuild machines), and an
+   **ECDSA P-256** key signs what browsers and devices check (device certificates, grants,
+   configuration, firmware manifests). Devices verify these signatures themselves.
 4. **No service we run is trusted for authenticity.** A compromised `w42.eu` may
    deny service. It must not be able to redirect a device, impersonate one, or
    read a home's data.

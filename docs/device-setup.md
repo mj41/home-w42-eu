@@ -1,7 +1,8 @@
 # Setting a device up: firmware, connection, apps
 
-**Status:** 2026-10-03, design. A first version works as one page in stackchan-server
-(`/setup`: install, backup, connect, pair, all in one), tested end to end on a Stackchan. This
+**Status:** 2026-10-04, design. Firmware `embody-v0.1.0` is released and approved (§6). A
+first version works as one page in stackchan-server (`/setup`: install, backup, connect, pair,
+all in one), tested end to end on a Stackchan. This
 document splits it into small parts with clear trust, and keeps the one-page experience
 where the user allows it. The apps a device can use are in [App catalog](app-catalog.md).
 
@@ -32,9 +33,9 @@ limits **which code** asks for the port, and what a robot accepts **without a ta
 | The relay (chan.w42.eu) at runtime | see metadata, drop messages | read or drive (see [e2ee](e2ee.md)) |
 | Someone with the cable | everything | — physical access is the boundary, as with the QR code |
 
-Today's POC breaks the third row: chan.w42.eu serves the installer **and** the manifest it
-checks against, so a compromised chan.w42.eu could flash any robot set up through it, and the
-connect step can point a robot at any server.
+Today's POC still breaks the third row in one way: chan.w42.eu serves the installer **and** the
+manifest it checks against, so a compromised chan.w42.eu could flash any robot set up through
+it. Making a new server a robot's default needs a Yes on the robot's screen (3.3).
 
 ## 3. Parts
 
@@ -51,13 +52,18 @@ connect step can point a robot at any server.
 
 One firmware source, build configurations as files (`sdkconfig.defaults` plus
 `sdkconfig.defaults.release`), one build script (`release.sh`) for CI and local checks. A
-release holds the parts, `manifest.json` with their SHA-256, one merged image, and the
-flasher page. No server, token or Wi-Fi is ever inside: those are the robot's settings.
+release holds the parts, `manifest.json` with their SHA-256, one merged image and
+`SHA256SUMS` (planned: the flasher page). No server, token or Wi-Fi is ever inside: those are
+the robot's settings.
 
-Publishing needs the owner's approval; every release is rebuilt by independent builders who
-sign its hashes in a public repository, and the build is reproducible: §6.
+Every release is rebuilt by independent builders who sign its hashes in a public repository,
+the build is reproducible, and the owner approves it (planned: before it is published): §6.
 
 ### 3.2 Flasher
+
+**Planned.** Today stackchan-server's `/setup` flashes (chan.w42.eu/setup or any local
+server), with the firmware of the GitHub release (`-firmware-release latest`), every part
+checked against the release's manifest.
 
 A static page and a JS module, published **with each release on GitHub Pages** of the
 firmware repo (one origin; each release in its own path, kept):
@@ -72,7 +78,7 @@ firmware repo (one origin; each release in its own path, kept):
 - Standalone it ends with "Connect your robot": a link to chan.w42.eu/setup, or "your own
   server" (its address).
 
-esptool-js quirks it handles (0.7.0): `hard_reset` does not pulse RTS, so the page resets the
+esptool-js quirks today's setup page handles (0.7.0): `hard_reset` does not pulse RTS, so the page resets the
 robot itself; `readFlash` leaves the flasher's MD5 packet unread; backups resume on a new
 session after a failed block.
 
@@ -146,6 +152,9 @@ later by anyone, without trusting GitHub Pages, CI or us.
 
 ### 6.1 Publishing needs the owner's approval
 
+Planned; today the workflow publishes on the tag and the owner approves afterwards in
+`mj41cz-approved` (6.2).
+
 - The release workflow builds on an `embody-v*` tag, then **waits**: the jobs that create the
   GitHub release and deploy GitHub Pages run in a protected environment (`release`) whose
   required reviewer is the owner. Nothing is published until the owner approves it on GitHub,
@@ -168,76 +177,41 @@ the owner's): append-only, the branch protected against force pushes, commits si
 It is the publication: no web page, anyone clones it and checks it with `git` and
 `ssh-keygen`. Other projects' releases (server images, other published files) can join later.
 
-```
-mj41cz-approved/
-├── builder-keys/
-│   ├── mj41.allowed_signers           one line: the builder's public SSH key
-│   └── <builder>.allowed_signers
-├── stackchan-embody/
-│   └── embody-v0.2.0/
-│       ├── mj41/
-│       │   ├── SHA256SUMS             every published file: parts, merged image,
-│       │   │                          manifest.json, the flasher's files
-│       │   ├── SHA256SUMS.sig         ssh-keygen -Y sign -n stackchan-embody
-│       │   └── SHA256SUMS.sig.tsr     RFC 3161 timestamp of the signature (6.3)
-│       ├── ci/
-│       │   ├── SHA256SUMS             what GitHub Actions built
-│       │   └── source                 the release and the Actions run (later: the Sigstore
-│       │                              attestation's Rekor URL, 6.3)
-│       ├── cloud/SHA256SUMS, source   the independent cloud rebuild; its signed audit log
-│       │                              is in mj41cz-rebuilds
-│       └── <builder>/SHA256SUMS(.sig)  anyone else who rebuilt it, by merge request
-└── tool/cmd/sigs                      the Go tool (below): sign, check
-```
+Layout and tool: [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved) (its README).
 
 - **The owner's approval** is their signed `SHA256SUMS`, matching CI's: the owner rebuilt the
-  release from the tag (6.4) and got the same bytes. Then the owner approves the publishing
-  job on GitHub (6.1).
-- **The owner also signs `manifest.json`** (ECDSA P-256, principle 3): `manifest.json.sig`
-  travels with the release on GitHub Pages, so a browser can check it with WebCrypto where the
-  key comes from elsewhere (the connect page on chan.w42.eu, §4; later the robot itself).
-- **The rule for checkers:** the owner's signature, CI's attestation, and the same hashes;
-  later also at least one more builder ("mj41 plus one").
-
-**The Go tool** in the same repository, public:
-
-- `approve <release>` (the owner): downloads the workflow's artifacts, rebuilds the release in
-  the pinned container, compares every SHA-256, checks the CI attestation, writes and signs
-  `SHA256SUMS` and `manifest.json.sig`, gets the timestamp, commits (signed) and pushes; the
-  owner then approves the release on GitHub.
-- `rebuild <release>` (any builder): the same without approving: their signed `SHA256SUMS`
-  for a merge request.
-- `check <release>` (anyone, any time, cron): fetches every published file from GitHub Pages
-  and the release, compares them with all builders' `SHA256SUMS`, verifies the signatures,
-  the timestamp and the attestation, and reports any difference.
+  release from the tag (6.4) and got the same bytes. Then (planned, 6.1) the owner approves
+  the publishing job on GitHub.
+- **Planned: the owner also signs `manifest.json`** with the owner's P-256 key (principle 3;
+  `SHA256SUMS` is signed with the SSH Ed25519 key): `manifest.json.sig` would travel with the
+  release, so a browser can check it with WebCrypto where the key comes from elsewhere (the
+  connect page on chan.w42.eu, §4; later the robot itself).
+- **The rule:** a release is approved when the owner's signed `SHA256SUMS` equals CI's and
+  every other builder's (today: ci, mj41, cloud). Later: CI's Sigstore attestation too, and
+  at least one builder besides mj41's own machines.
 
 ### 6.3 Timestamps by third parties
 
-Two independent records, so neither GitHub, nor one service, nor we can backdate or swap a
+Records by third parties, so neither GitHub, nor one service, nor we can backdate or swap a
 release unnoticed:
 
-- **Sigstore, for the CI build:** GitHub artifact attestations
-  (`actions/attest-build-provenance`) sign each file with a short-lived Sigstore certificate
-  bound to the workflow, the repo and the commit, and record it in **Rekor**, Sigstore's
-  public transparency log, with its time. Its Rekor URL is in `ci/sigstore`; checked with
-  `gh attestation verify <file> --repo mj41/StackChan`.
 - **One public timestamp service, for the approval:** an RFC 3161 timestamp of the owner's
-  `SHA256SUMS` from DigiCert's public service (`http://timestamp.digicert.com`: free, widely
-  used for code signing, long-lived roots; plain HTTP is fine, the answer is signed), as
-  `SHA256SUMS.tsr`, checked with `openssl ts -verify` against DigiCert's certificate chain
-  (kept in the repository).
+  signature (`SHA256SUMS.sig`) from DigiCert's public service (`http://timestamp.digicert.com`:
+  free, widely used for code signing, long-lived roots; plain HTTP is fine, the answer is
+  signed), as `SHA256SUMS.sig.tsr`, checked with `openssl ts -verify` against the system's CA
+  certificates.
+- **Sigstore, for the CI build (planned, not in the release workflow yet):** GitHub artifact
+  attestations (`actions/attest-build-provenance`) sign each file with a short-lived Sigstore
+  certificate bound to the workflow, the repo and the commit, and record it in **Rekor**,
+  Sigstore's public transparency log, with its time. Its Rekor URL would go into `ci/source`;
+  checked with `gh attestation verify <file> --repo mj41/StackChan`.
 
 ### 6.4 Reproducible builds
 
 The strongest check is an independent rebuild that gives the same bytes: then the owner does
-not have to trust CI at all.
-
-**Result (2026-10-03):** two release builds in two build directories gave **the same bytes
-for all five files** (bootloader, partition table, OTA data, app, assets), after two fixes:
-`CONFIG_APP_REPRODUCIBLE_BUILD` alone left 69 bytes different in the app, from one
-`__TIME__ __DATE__` banner in the mooncake component; `SOURCE_DATE_EPOCH` set to the commit's
-time fixes it without touching the component. Both are in the firmware's release build now.
-The same holds between GitHub Actions and a laptop (below).
+not have to trust CI at all. A release build gives the same bytes for all seven published
+files (the five parts, `manifest.json`, the merged image) on GitHub Actions, on the owner's
+laptop and on a cloud machine.
 
 | | State |
 |---|---|
@@ -250,54 +224,38 @@ The same holds between GitHub Actions and a laptop (below).
 | Generated assets image | packed in name order (sorted `os.walk`, our patch to xiaozhi) |
 | Incremental builds | none for releases: `release.sh` builds clean |
 
-Limits: the same container image is required (another compiler gives other bytes), and the
-merged image depends on that container's esptool too.
+Limits: the same compiler is required (another compiler gives other bytes), and the merged
+image depends on that container's esptool too.
 
-**GitHub and a laptop give the same bytes (2026-10-04):** the release workflow on GitHub
-Actions and a local build of the same commit gave identical SHA-256 for all seven published
-files (the five parts, `manifest.json`, the merged image), after two more fixes found by this
-comparison:
-
-- the assets image packed its speech models and its index in the filesystem's order
-  (`os.walk` in xiaozhi's `build_default_assets.py`): now in name order, via our patch;
-- an incremental local build kept objects compiled with an older `SOURCE_DATE_EPOCH`:
-  `release.sh` now always builds clean.
-
-**How far down the toolchain is trusted (2026-10-04):**
+**How far down the toolchain is trusted:**
 
 | Level | What is trusted | Result |
 |---|---|---|
 | 1. Espressif's compiler | their prebuilt toolchain (GCC 14.2.0 for Xtensa, binutils, newlib, picolibc) in the container pinned by digest | GitHub and a laptop: the same bytes |
 | 2. Our own compiler | built from Espressif's crosstool-NG sources (`esp-14.2.0_20260121`, every component at its tagged commit), on Ubuntu 22.04 (host GCC 11.4), in Espressif's build path `/builds/idf/crosstool-NG` | **the firmware is the same bytes** as with Espressif's compiler, all seven files |
 | 3. Bootstrapped host | the same, but every host tool (compiler, binutils, C library, make, Python, meson, Rust for the wrappers) from Guix 1.5.0, whose packages are built from a small auditable seed; `guix challenge`: all 40 host packages identical on both Guix build farms and here | **the firmware is the same bytes** again |
+| Cloud rebuild | level 3 on a short-lived Linode machine with a certified key of its own; the Guix host tools from both build farms, checked by `guix challenge` (not yet built from the seed) | **the same bytes**, with a signed audit log ([Independent rebuild](independent-rebuild.md)) |
 
 Three compilers with different histories give the same firmware: Espressif's compiler adds
 nothing that its source does not explain (*diverse double-compiling*, David A. Wheeler).
 
-Found on the way:
+What the toolchain builds depend on:
 
 - **The build path ends up in the firmware:** newlib's `assert()` messages carry source paths,
-  so a toolchain built elsewhere gives other strings (112 bytes here). Building in
-  `/builds/idf/crosstool-NG`, like Espressif, removes the difference.
-- **Our two toolchains (levels 2 and 3) produce identical target libraries** (all 195 files),
-  although their hosts differ (glibc 2.35 and 2.41, GCC 11 and 14). Espressif's differ from
-  them in 27 files, all `libm.a` variants, in 21 complex-maths functions (register choices),
-  which the firmware does not link. Espressif built their compiler with host GCC 6.3.0, so we
-  built it once more on Debian 9 (host GCC 6.3.0 too): then **all 195 target library files are
-  byte-identical to Espressif's**. The difference came from the host compiler that compiled
-  the cross compiler, not from the sources. (That build stops at picolibc, whose meson is too
-  new for Debian 9's Python; newlib, libgcc and libstdc++ were done. The compiler programs
-  themselves still differ by a few KB: matching those needs Espressif's exact build image,
-  which is not public, and they are not what reaches the robot.)
-- **Level 3 is not yet "from the seed on this machine":** the Guix packages came from Guix's
-  build farms (checked with `guix challenge`), not rebuilt here; `guix build --no-substitutes`
-  would do that, in many hours.
+  so our toolchains are built in Espressif's path, `/builds/idf/crosstool-NG`.
+- **The host compiler that builds the cross compiler** shapes the code of a few target library
+  functions (complex maths in `libm`, which the firmware does not link): built with
+  Espressif's host GCC 6.3.0, all 195 target library files are byte-identical to theirs.
+- **Level 3 is not "from the seed on this machine":** the Guix packages come from Guix's build
+  farms (checked with `guix challenge`); `guix build --no-substitutes` would rebuild them, in
+  many hours.
 - crosstool-NG installs Rust with `curl … | sh` for Espressif's small wrapper programs; the
   Guix build uses Guix's Rust instead (a two-line patch).
 
 The scripts that rebuild the toolchain (levels 2 and 3) are in the firmware repository,
-`firmware/toolchain/`. A third verification, on a cloud VM from Guix's seed, with its own key and a signed
-audit log: [Independent rebuild](independent-rebuild.md).
+`firmware/toolchain/`. A third verification on a short-lived cloud VM (Linode): Espressif's
+toolchain built from source with Guix host tools, a certified key of its own, a signed audit
+log: [Independent rebuild](independent-rebuild.md).
 
 The Python tools (esptool, the ESP-IDF build scripts) and CMake shape the output too; they are
 source, pinned in the same container, and readable. `fetch_repos.py` stops when a patch
@@ -334,34 +292,33 @@ blog post about the [independent rebuild](independent-rebuild.md).
 
 ## 7. Rollout
 
-1. Firmware: `provision` asks for a tap when it changes the default server.
-2. Flasher: move install/backup/restore into the firmware repo, publish it with the release
-   (CI), standalone page first.
-3. stackchan-server: drop the firmware parts, link to the flasher; Wi-Fi on request.
-4. `-flasher` with a pinned release: one page again, with the person's consent.
-5. App catalog (its own doc), then the connect page as a shared module for the pet and sbot.
-6. Release hardening (§6): the `release` environment with the owner as reviewer, the
-   GitHub-versus-local rebuild check, the `mj41cz-approved` repository on GitLab with its tool,
-   the Sigstore attestation and a timestamp, the signed manifest; then our own compiler
-   (level 2).
-7. Signed manifests (principle 3).
+1. **Done:** firmware: `provision` asks for a tap when it changes the default server.
+2. **Open:** flasher: move install/backup/restore into the firmware repo, publish it with the
+   release (CI), standalone page first.
+3. **Open:** stackchan-server: drop the firmware parts, link to the flasher; Wi-Fi on request.
+4. **Open:** `-flasher` with a pinned release: one page again, with the person's consent.
+5. App catalog: **done** as a design ([its own doc](app-catalog.md)); **open:** the catalog
+   itself, then the connect page as a shared module for the pet and sbot.
+6. Release hardening (§6): **done:** the GitHub-versus-local rebuild check, the
+   `mj41cz-approved` repository on GitLab with its tool, the timestamp, our own compiler
+   (levels 2 and 3) and the cloud rebuild; **open:** the `release` environment with the owner
+   as reviewer, the Sigstore attestation, the signed manifest.
+7. **Open:** signed manifests (principle 3).
 
 ## 8. Decisions
 
-2026-10-03:
-
 - **The tap for `provision`** is asked only when the default server changes. Servers that
   are not the default do nothing until someone chooses them, and the robot shows its list.
-- **Backups:** the robot records its original firmware (once) and the latest backup
-  (replaced each time); the flasher restores either. Older backups are files, restored with
-  esptool from a terminal. Needs a second record in the firmware (`last_fw` next to
-  `orig_fw`).
-- **Timestamp service:** DigiCert's public RFC 3161 service, for the owner's `SHA256SUMS`
+- **Backups (done):** the robot records its original firmware (once, `orig_fw`) and the
+  firmware before the latest setup with a backup (replaced each time, `prev_fw`); the setup
+  page restores either. Older backups are files, restored with esptool from a terminal.
+- **Timestamp service:** DigiCert's public RFC 3161 service, for the owner's signature
   (§6.3).
 - **Approved artifacts, like Bitcoin Core's guix.sigs:** a public repository on GitLab,
   `mj41cz-approved` (not GitHub, not Akamai): signed `SHA256SUMS` per builder per release, CI's
-  hashes with their Sigstore reference, and the public Go tool. No separate web page. The owner
-  also signs `manifest.json` for browsers (§6.2).
-- **Toolchain:** level 1 now; level 2 (our own compiler, diverse double-compiling) once the
-  release process runs (§6.4).
-- **Flasher:** GitHub Pages of the firmware repository (§3.2).
+  hashes with their source, and the public Go tool. No separate web page. The owner also
+  signs `manifest.json` for browsers (§6.2).
+- **Toolchain:** levels 1–3 give identical bytes; releases are built with level 1 and checked
+  against levels 2–3 and the cloud rebuild (§6.4).
+- **Flasher:** GitHub Pages of the firmware repository (§3.2), planned; today
+  stackchan-server's `/setup`.
