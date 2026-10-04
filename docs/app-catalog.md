@@ -103,6 +103,11 @@ on the setup page, or in an app) *accepts* and *pins*.
    the catalog lives in the node's registry and is signed by the owner key, and devices verify
    it (principle 3), so a server cannot offer an app the owner did not list.
 
+4. **Later: a hub of apps from others.** A public registry where other people publish apps
+   would need security checks (review, signatures, permissions an app asks for, reports) before
+   anything from it is offered to a robot. Not now (decided 2026-10-04): the catalog lists only
+   our own apps and the ones the owner adds by hand.
+
 ## 6. Decisions
 
 2026-10-03:

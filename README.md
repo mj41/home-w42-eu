@@ -31,12 +31,18 @@ of them, and loops and controllers that AI helps you write and you approve.
    access control, relay.
 5. [Device wire protocol](docs/wire-protocol.md): the reference for how devices,
    adapters and agents connect.
+   - [Device API](docs/device-api.md): sensors in real units, actuators as named parts
+     (`left1`, `yaw`), after Linux's sysfs and IIO.
    - [Device setup](docs/device-setup.md): firmware, connecting over USB, one page with
      the person's consent, and what the robot confirms itself.
    - [App catalog](docs/app-catalog.md): the apps a home's devices can use, one directory
      per app, shared by the home's servers.
    - [Device storage](docs/device-storage.md): per-app folders under one root
-     (`/user/embody`, laid out like Linux), uninstall and remove-all.
+     (`/user/embody`, and `/sdcard/embody` with a microSD card), uninstall and remove-all.
+   - [Accounts](docs/accounts.md): sign-in providers (Microsoft next), linked sign-ins,
+     tiers and rate limits.
+   - [Analytics](docs/analytics.md): counting visits to the public sites with GoatCounter, no
+     cookies, nothing from homes.
    - [Independent rebuild](docs/independent-rebuild.md): a third verification of releases on
      a short-lived cloud VM, bootstrapped from Guix's seed, with its own certified key and a
      signed audit log.
