@@ -2,9 +2,9 @@
 
 **Status:** version 1 ("v1"), in use since 2026-10-02 by every server and device below.
 **This document is the reference.** Other projects that want devices or agents to connect
-the same way implement and reference it. v1 changes only by additions that older devices
-and servers can ignore (a new frame kind, an optional field); each is listed with its date in
-§10. Anything that is not such an addition is v2 (§9).
+the same way implement and reference it. **Early stage:** v1 changes without backward
+compatibility (principle 27): devices and servers are updated together, and every change is
+listed with its date in §10. §9 collects the bigger changes already planned.
 
 v1 is what the home's servers speak today. The `wire` package in [stackchan-server](https://github.com/mj41/stackchan-server)
 implements it in Go, and Stackchan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
@@ -161,8 +161,8 @@ The commands a device family offers are documented with that family:
 - **Capability descriptors:** per command its arguments, units, scope and safety
   class, so servers, UIs and AI agents can use a new device without code written for
   it.
-- **Neutral names:** `DeviceTelemetry`, `DeviceEvent`, `DeviceCommand` accepted next to
-  the v1 names.
+- **Neutral names:** `DeviceTelemetry`, `DeviceEvent`, `DeviceCommand` replace the `Robot…`
+  names (renamed, not kept alongside).
 - **Delegated actions:** `action_request {id, action, params, why, expires}` from a
   requester and `action_result {id, ok, receipt | signature | reason}` from the holder,
   routed by the node to the devices allowed to hold that action
@@ -182,6 +182,6 @@ The commands a device family offers are documented with that family:
 | Date | Change |
 |---|---|
 | 2026-10-02 | v1: this document. |
-| 2026-10-02 | The connect path `/api/devices/connect` and the header `X-Device-Id` (servers accepted the earlier names for a while). |
+| 2026-10-02 | The connect path `/api/devices/connect` and the header `X-Device-Id`. |
 | 2026-10-03 | Tokens of a device's own (invites; devices added by accounts), next to a server's shared token (§1). |
 | 2026-10-03 | End-to-end encryption frames (§4, [e2ee](e2ee.md)): optional on both sides. |

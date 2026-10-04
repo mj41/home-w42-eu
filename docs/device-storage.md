@@ -1,6 +1,6 @@
 # Storage on a device: per-app folders under one root
 
-**Status:** 2026-10-04, design (proposal, three questions in §5). For Stackchan's Embody Mode
+**Status:** 2026-10-04, design (proposal, two questions open in §5). For Stackchan's Embody Mode
 first; other devices with a file store follow the same layout.
 
 ## 1. Today
@@ -64,6 +64,6 @@ Names stay relative, as today (`snd/eat.wav`); `..` and absolute paths are refus
 2. **Your dashboard and other apps' files.** Proposed: no exception; every app sees its own folder,
    the dashboard too. The robot's own "Remove all" and per-app uninstall cover cleaning up. Or
    should the owner's dashboard see (and delete) every app's files?
-3. **Today's files.** Proposed: on the first start of the new firmware, files under `pet/` move to
-   `var/lib/pet/` (the pet's names drop the prefix), everything else to `var/lib/dashboard/`; the
-   pet re-uploads whatever is missing anyway. Or simply delete them all?
+3. ~~Today's files.~~ Decided by principle 27 (no backward compatibility): the new firmware
+   starts with an empty `/user/embody`, and files outside it are deleted on its first start; the
+   pet uploads its files again by itself, anything else is uploaded again by hand.

@@ -116,3 +116,8 @@ TPBot car taught.
     binary, compare the hash, and sign it with their own key.
 26. **Proved on real hardware.** A feature is "done" when it worked on our own
     devices, with what was tested and what was not written down.
+27. **Early stage: no backward compatibility.** Until a first stable release, protocols,
+    APIs, file formats and stored settings change when something better comes along,
+    without migrations or old names kept alongside: devices and servers are updated
+    together. Changes are still written down (the wire protocol's change list), so a
+    rebuild of an older release can be explained.

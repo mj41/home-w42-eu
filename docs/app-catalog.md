@@ -95,7 +95,7 @@ on the setup page, or in an app) *accepts* and *pins*.
 ## 5. Managing it
 
 1. **Now:** the directories, made by hand (`mkdir`, an editor, `ln -s` for a shared token);
-   `-offer` keeps working and adds to them.
+   they replace the `-offer` flags (no backward compatibility, principle 27).
 2. **Then:** an "Apps" page on the home server: add, remove, rename, which devices, the
    default start; it writes the directories. An app can also bring its own directory (its
    installer creates it), listed as *new* until the owner approves it (an `approved` file).
