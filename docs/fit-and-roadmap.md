@@ -31,7 +31,7 @@ link-loss stop, node controller).
 The order follows the [use cases](use-cases.md): each stage makes one or more of them
 work for real people, leaves a working system, and is proved on our own hardware.
 
-1. **Done: commit the POCs** (tpbot-ble, sbot, stackchan, stackchan-mj, these two repos).
+1. **Done: commit the POCs** (tpbot-ble, sbot, stackchan, the notes, these two repos).
 2. **Done: event hub and controller server.** The hub (NATS JetStream, embedded in sbot)
    holds telemetry, events, commands and decisions. The controller server runs loops with
    the loop interface and the three modes (replay, shadow, live); the first loop links two

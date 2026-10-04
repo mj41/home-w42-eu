@@ -12,7 +12,7 @@ compatibility, [principles](principles.md) 27).
 | `s.w42.eu` | index and project page (static) |
 | `sm.w42.eu` | **the Stackchan manager:** sign-in, your robots, the apps you approve for them, one-click setup over USB, their tokens, the official firmware |
 | `raw.sa.w42.eu` | the raw dashboard: every sensor and command (today's chan.w42.eu dashboard), an app like any other |
-| `pet.sa.w42.eu` | the pet ([stackchan-pet](https://github.com/mj41/stackchan-pet)) |
+| `pet.sa.w42.eu` | the pet ([s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet)) |
 | `dev.sa.w42.eu` | the higher-level API for developers and AI agents ([device API](device-api.md)), planned |
 | `*.sa.w42.eu` | more apps, one host each |
 
@@ -39,7 +39,7 @@ Removing an app on sm.w42.eu revokes its token at once.
   (`POST sm.w42.eu/api/robot-auth {app, robot, token}`, authenticated as that app) and gets the
   robot's owner and whether it is private or public. The answer is cached for a few minutes.
 - Apps hold no robot tokens and no account database. Later the manager signs the tokens and apps
-  verify them offline ([trust design](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md)).
+  verify them offline ([trust design](implementations/stackchan-trust.md)).
 
 ## 4. People, pairing, privacy
 
@@ -52,7 +52,7 @@ Removing an app on sm.w42.eu revokes its token at once.
 ## 5. Steps
 
 1. **DNS and certificates:** `s.w42.eu`, `sm.w42.eu`, wildcard `*.sa.w42.eu` (GitOps).
-2. **Split stackchan-server into two programs** in its repo: `stackchan-manager` (sign-in,
+2. **Split s-w42-eu-raw into two programs** in its repo: `stackchan-manager` (sign-in,
    robots, the app catalog, setup, firmware, `robot-auth`) and the raw app (robot connections,
    pairing, the dashboard, the end-to-end relay), which checks tokens with the manager. Deploy
    them as sm.w42.eu and raw.sa.w42.eu.

@@ -1,7 +1,7 @@
 # Setting a device up: firmware, connection, apps
 
 **Status:** 2026-10-04, design. Firmware `embody-v0.1.0` is released and approved (§6). A
-first version works as one page in stackchan-server (`/setup`: install, backup, connect, pair,
+first version works as one page in s-w42-eu-raw (`/setup`: install, backup, connect, pair,
 all in one), tested end to end on a Stackchan. This
 document splits it into small parts with clear trust, and keeps the one-page experience
 where the user allows it. The apps a device can use are in [App catalog](app-catalog.md).
@@ -61,7 +61,7 @@ the build is reproducible, and the owner approves it (planned: before it is publ
 
 ### 3.2 Flasher
 
-**Planned.** Today stackchan-server's `/setup` flashes (chan.w42.eu/setup or any local
+**Planned.** Today s-w42-eu-raw's `/setup` flashes (chan.w42.eu/setup or any local
 server), with the firmware of the GitHub release (`-firmware-release latest`), every part
 checked against the release's manifest.
 
@@ -101,7 +101,7 @@ separate, static part (3.2).
 
 ### 3.4 Connect page (on each server)
 
-Small, the same on every server that has robots (stackchan-server first; the pet and sbot
+Small, the same on every server that has robots (s-w42-eu-raw first; the pet and sbot
 later), as a shared JS module plus each server's API:
 
 1. `hello` over USB. No answer: "This robot needs Embody Mode first" (4).
@@ -138,7 +138,7 @@ manifests (3.1) are what stop it from redirecting or reflashing robots unnoticed
 
 ## 5. What moves where
 
-| Now in stackchan-server | Goes to |
+| Now in s-w42-eu-raw | Goes to |
 |---|---|
 | esptool-js, install, backup, restore, the firmware routes, `-firmware-dir`, `-firmware-release`, the firmware cache | the flasher, in the firmware repo's release |
 | `/setup`: hello, provision, pair, autostart, app choice | stays: the connect page (3.4), as a shared module |
@@ -295,7 +295,7 @@ blog post about the [independent rebuild](independent-rebuild.md).
 1. **Done:** firmware: `provision` asks for a tap when it changes the default server.
 2. **Open:** flasher: move install/backup/restore into the firmware repo, publish it with the
    release (CI), standalone page first.
-3. **Open:** stackchan-server: drop the firmware parts, link to the flasher; Wi-Fi on request.
+3. **Open:** s-w42-eu-raw: drop the firmware parts, link to the flasher; Wi-Fi on request.
 4. **Open:** `-flasher` with a pinned release: one page again, with the person's consent.
 5. App catalog: **done** as a design ([its own doc](app-catalog.md)); **open:** the catalog
    itself, then the connect page as a shared module for the pet and sbot.
@@ -321,4 +321,4 @@ blog post about the [independent rebuild](independent-rebuild.md).
 - **Toolchain:** levels 1–3 give identical bytes; releases are built with level 1 and checked
   against levels 2–3 and the cloud rebuild (§6.4).
 - **Flasher:** GitHub Pages of the firmware repository (§3.2), planned; today
-  stackchan-server's `/setup`.
+  s-w42-eu-raw's `/setup`.

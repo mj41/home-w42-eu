@@ -6,9 +6,9 @@ the same way implement and reference it. **Early stage:** v1 changes without bac
 compatibility (principle 27): devices and servers are updated together, and every change is
 listed with its date in §10. §9 collects the bigger changes already planned.
 
-v1 is what the home's servers speak today. The `wire` package in [stackchan-server](https://github.com/mj41/stackchan-server)
+v1 is what the home's servers speak today. The `wire` package in [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw)
 implements it in Go, and Stackchan's [Embody Mode](https://github.com/mj41/StackChan/tree/embody-mj41), `tpbot-bridge`
-([tpbot-ble](https://github.com/mj41/tpbot-ble)), [sbot](https://github.com/mj41/sbot) and [stackchan-pet](https://github.com/mj41/stackchan-pet) all use it. Per-device command catalogs live with each device
+([tpbot-ble](https://github.com/mj41/tpbot-ble)), [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) and [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) all use it. Per-device command catalogs live with each device
 family (see §8).
 
 ## 1. Transport
@@ -146,8 +146,8 @@ The commands a device family offers are documented with that family:
 
 | Family | Catalog |
 |---|---|
-| Stackchan | stackchan-server readme, [Commands](https://github.com/mj41/stackchan-server#commands) |
-| Car (`car_*`) | sbot readme, [Car capability](https://github.com/mj41/sbot#car-capability); firmware side in [tpbot-ble](https://github.com/mj41/tpbot-ble) |
+| Stackchan | s-w42-eu-raw readme, [Commands](https://github.com/mj41/s-w42-eu-raw#commands) |
+| Car (`car_*`) | sbot readme, [Car capability](https://github.com/mj41/s-w42-eu-sbot#car-capability); firmware side in [tpbot-ble](https://github.com/mj41/tpbot-ble) |
 
 ## 9. v2 (planned)
 

@@ -47,7 +47,7 @@ Nothing personal about real people goes here (no names, ages or habits of the ki
 - **Wants:** quick experiments: flash a build, try an idea, no tickets, no signatures in the way.
 - **First of all:** fun, short loops from idea to robot.
 - **The tension with persona 1** is resolved by **modes**, not by weaker rules: a development
-  robot or a development server (own firmware, `stackchan-usb`, a LAN server without sign-in),
+  robot or a development server (own firmware, `s-w42-eu-usb`, a LAN server without sign-in),
   separate from the home's production devices and releases. What is fun to build becomes a
   release through the normal, checked path.
 

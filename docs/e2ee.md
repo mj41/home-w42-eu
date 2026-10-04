@@ -1,7 +1,7 @@
 # End-to-end encryption between a device and its browsers
 
 **Status:** 2026-10-04. Done: steps 1–3 of the rollout (§9): the Go reference
-implementation (stackchan-server's `e2e` package, test vectors), the relay, the browser side
+implementation (s-w42-eu-raw's `e2e` package, test vectors), the relay, the browser side
 (the dashboard's `e2e.js`), tested end to end with `fake-robot -e2e`, and the firmware
 (Embody Mode's `e2e.cpp`, per server, off by default). Next: step 4, on for chan.w42.eu.
 Part of the [wire protocol](wire-protocol.md) (planned for v2, usable from v1 as an extension).
@@ -132,7 +132,7 @@ a later step; until then they are not available for an encrypted robot.
 ## 9. Rollout
 
 1. This design and a Go reference implementation (key derivation, sealing, enrollment, test
-   vectors) used by stackchan-server's relay and `fake-robot`, tested end to end without
+   vectors) used by s-w42-eu-raw's relay and `fake-robot`, tested end to end without
    hardware.
 2. Browser side in the dashboard (WebCrypto), tested against `fake-robot`.
 3. Firmware (mbedtls), behind a per-server setting, off until tested on the robot.

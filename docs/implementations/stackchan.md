@@ -29,7 +29,7 @@ in the firmware fork.
 | Power (AXP2101, INA226) | voltages, currents, plug and button events |
 | BLE (NimBLE central) | hosts other devices: the TPBot car today |
 
-Details and coverage: [hardware.md](https://github.com/mj41/stackchan-mj/blob/main/docs/hardware.md) in stackchan-mj.
+Details and coverage: [HARDWARE.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/HARDWARE.md) in the firmware fork; how it works, by example: [Stackchan concept](stackchan-concept.md).
 
 ## The firmware: Embody Mode as a light client
 
@@ -60,9 +60,9 @@ firmware-update path is closed (`patches/xiaozhi-esp32.patch`).
 
 | App | Repo | Job | Status |
 |---|---|---|---|
-| **Embody dashboard** | [stackchan-server](https://github.com/mj41/stackchan-server) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.10.2 at `chan.w42.eu`, with sign-in |
-| **Pet** (Tamagotchi) | [stackchan-pet](https://github.com/mj41/stackchan-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
-| **sbot cockpit** | [sbot](https://github.com/mj41/sbot) | Stackchan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
+| **Embody dashboard** | [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | relay and full remote control: every sensor, every command, camera, mic, speaker, IR, NFC, files | works on the LAN; v0.10.2 at `chan.w42.eu`, with sign-in |
+| **Pet** (Tamagotchi) | [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | a pet for the kids: needs, food via NFC cards, games, naps, routines, parent page with PIN | works on the LAN |
+| **sbot cockpit** | [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) | Stackchan together with other devices: camera + joystick + head pad + lights; the TPBot car; the sonar safety stop | works on the LAN |
 | AI.AGENT (upstream) | — | voice assistant through xiaozhi's cloud | outside the platform |
 
 The same robot, with the same firmware, is a remote-controlled telepresence head,
@@ -93,7 +93,7 @@ That is principle 22 (switching is simple) in practice.
 
 - **Trust:** a token per robot, given over USB at setup (a shared one on LAN servers), and
   end-to-end encryption to its enrolled browsers; but no device key, no grants, no scopes.
-  The plan is the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj),
+  The plan is the Stackchan trust design ([Stackchan trust design](stackchan-trust.md)),
   generalized in [architecture §8](../architecture.md#8-trust-identity-and-access-control).
 - **App routing:** switching means reconnecting to another server; the node does not
   route yet.

@@ -41,9 +41,9 @@ the node on the LAN, and the node dials the relay. Nothing at home needs an open
 the node directly, and some devices never use `w42.eu` at all (§10).
 
 **One home, many repos.** A home is made of the repos its user includes: the node
-(growing out of [sbot](https://github.com/mj41/sbot)), device firmware (the [StackChan fork](https://github.com/mj41/StackChan/tree/embody-mj41),
+(growing out of [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot)), device firmware (the [StackChan fork](https://github.com/mj41/StackChan/tree/embody-mj41),
 [tpbot-ble](https://github.com/mj41/tpbot-ble)), and app repos that stay separate but join the home when
-included ([stackchan-pet](https://github.com/mj41/stackchan-pet), the [stackchan-server](https://github.com/mj41/stackchan-server)
+included ([s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet), the [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw)
 dashboard). All the repos: [The repos today](../README.md#the-repos-today). Each repo is independent; they meet at the
 [wire protocol](wire-protocol.md) and the event hub's topics.
 
@@ -182,7 +182,7 @@ so they do not change.
 
 ## 5. The web/API server and apps
 
-The **web/API server** is the synchronous half of the node. It grows out of [sbot](https://github.com/mj41/sbot).
+The **web/API server** is the synchronous half of the node. It grows out of [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot).
 
 - **Device gateway:** the wire protocol endpoint for light clients and adapters.
 - **Registry, pairing, policy:** devices, capabilities, people, sessions, grants;
@@ -352,7 +352,7 @@ that must react at once.
 
 ### 8.1 Identity
 
-Generalizes the Stackchan trust design ([design.md](https://github.com/mj41/stackchan-mj/blob/main/docs/design.md) in stackchan-mj) to
+Generalizes the Stackchan trust design ([Stackchan trust design](implementations/stackchan-trust.md)) to
 every device:
 
 - **Owner keys** (principle 3): the ECDSA P-256 key signs device certificates, the node

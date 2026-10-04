@@ -68,11 +68,10 @@ Each repo is independent. A home is made of the repos its user includes.
 | Repo | Role | License |
 |---|---|---|
 | [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) | MIT (the firmware, as upstream) |
-| [stackchan-server](https://github.com/mj41/stackchan-server) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard, the relay at `chan.w42.eu` | MIT |
-| [stackchan-pet](https://github.com/mj41/stackchan-pet) | the pet app (a Tamagotchi for kids) | MIT |
-| [sbot](https://github.com/mj41/sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app | Apache-2.0 |
+| [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard, the relay at `chan.w42.eu` | MIT |
+| [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | the pet app (a Tamagotchi for kids) | MIT |
+| [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app | Apache-2.0 |
 | [tpbot-ble](https://github.com/mj41/tpbot-ble) | micro:bit firmware for the TPBot car, laptop tool and bridge | Apache-2.0 |
-| [stackchan-mj](https://github.com/mj41/stackchan-mj) | Stackchan working notes, hardware coverage, trust design, build and run scripts | Apache-2.0 |
 | [home-w42-eu-ideas](https://github.com/mj41/home-w42-eu-ideas) | ideas for devices, adapters, apps and loops | Apache-2.0 |
 | [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved) | the signed hashes of each release, per builder, and the tool that checks them ([device setup](docs/device-setup.md) §6.2) | Apache-2.0 |
 | [mj41cz-rebuilds](https://gitlab.com/mj41cz/mj41cz-rebuilds) | independent rebuilds of releases on short-lived cloud machines, with a signed audit log ([independent rebuild](docs/independent-rebuild.md)) | Apache-2.0 |
@@ -87,7 +86,7 @@ Design draft with working proofs of concept, 2026-10-04:
   over BLE.
 - **sbot** with the event hub (JetStream) and the safety stop; its controller server runs
   the `frown` loop live.
-- **chan.w42.eu** (stackchan-server v0.10.2): sign-in (GitHub, Google), robots private by
+- **chan.w42.eu** (s-w42-eu-raw v0.10.2): sign-in (GitHub, Google), robots private by
   default with tokens of their own, tiers, one-click setup at
   [chan.w42.eu/setup](https://chan.w42.eu/setup); end-to-end encryption available.
 - **Firmware `embody-v0.1.0`** released, rebuilt to the same bytes by GitHub Actions, the
@@ -95,6 +94,8 @@ Design draft with working proofs of concept, 2026-10-04:
   [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved).
 
 What comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
+
+Stack-chan (スタックチャン) is a registered trademark of Shinya Ishikawa; this project is independent and only made to work with [Stack-chan](https://github.com/stack-chan/stack-chan) robots.
 
 ## License
 

@@ -36,7 +36,7 @@ of use behind it.
    the firmware; later also the flasher on GitHub Pages), served from stats.w42.eu (no CDN);
    the setup page sends its steps as events (`setup/start`, `setup/flashed`,
    `setup/confirmed`, `setup/failed/<step>`).
-3. **Servers:** stackchan-server counts (robots online, sessions per tier, 429s per tier) and
+3. **Servers:** s-w42-eu-raw counts (robots online, sessions per tier, 429s per tier) and
    sends hourly totals to GoatCounter's API, or shows them on an admin page; no per-session
    data leaves the server.
 4. **Home servers are never counted.** The script is only in the pages chan.w42.eu serves with

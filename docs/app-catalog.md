@@ -5,8 +5,8 @@ document replaces them with one catalog per home: a directory with one directory
 
 ## 1. The problem
 
-A Stackchan can switch between apps, each a server: the dashboard (stackchan-server), the pet
-(stackchan-pet), the cockpit (sbot), a public relay (chan.w42.eu). Today:
+A Stackchan can switch between apps, each a server: the dashboard (s-w42-eu-raw), the pet
+(s-w42-eu-pet), the cockpit (sbot), a public relay (chan.w42.eu). Today:
 
 - every server repeats the others in its own flags (`-offer Pet=ws://…,<token file>`), so
   adding an app means editing several command lines and restarting;
