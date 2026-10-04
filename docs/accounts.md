@@ -9,8 +9,11 @@ Dex (auth.w42.eu) federates the providers; the apps (chan.w42.eu and later ones)
 Dex. Order:
 
 1. GitHub, Google: done.
-2. **Microsoft next** (personal and work accounts): Dex's `microsoft` connector, tenant
-   `common`; an app registered in Microsoft Entra with the redirect `https://auth.w42.eu/callback`.
+2. **Microsoft next:** Dex's `microsoft` connector and an app registered in Microsoft Entra
+   with the redirect `https://auth.w42.eu/callback`. Tenant `consumers` (personal accounts) to
+   start; `common` adds work and school accounts. In a multi-tenant sign-in, any tenant's admin
+   can set a user's e-mail ("nOAuth"), so **an e-mail from Microsoft never grants anything**:
+   admin and tiers by e-mail count only e-mails verified by GitHub or Google.
 3. Others (e.g. X) only when someone needs them; X's OAuth gives no e-mail, so such an
    account could not be matched by e-mail in tiers.
 
