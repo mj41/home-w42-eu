@@ -42,6 +42,9 @@ of them, and loops and controllers that AI helps you write and you approve.
    - [Device storage](docs/device-storage.md): per-app folders under one root
      (`/user/embody`, and `/sdcard/embody` with a microSD card), uninstall and remove-all.
 6. **w42.eu services and releases:**
+   - [Stackchan sites](docs/stackchan-sites.md): sm.w42.eu (the manager: robots, the apps
+     you approve, setup) and one host per app (`raw.sa.w42.eu`, `pet.sa.w42.eu`, …),
+     replacing chan.w42.eu (design).
    - [Accounts](docs/accounts.md): sign-in providers (GitHub and Google; Microsoft
      prepared), linked sign-ins, tiers and rate limits.
    - [Analytics](docs/analytics.md): counting visits to the public sites with GoatCounter, no
