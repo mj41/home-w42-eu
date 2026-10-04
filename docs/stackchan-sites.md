@@ -30,7 +30,9 @@ or sign-in, and cannot call its API as the user. One wildcard certificate covers
    with `servers` and `pin`); the robot asks on its screen before its start app is set.
 4. The robot connects to its start app; the QR screen switches between the approved apps.
 
-Removing an app on sm.w42.eu revokes its token at once.
+Removing a robot (or an app, by setting it up again) on sm.w42.eu revokes the tokens: an app
+accepts a revoked token for at most a minute more (it caches the manager's answer), and a robot
+connected right now stays until it reconnects.
 
 ## 3. Robot tokens: issued by the manager, checked by each app
 
