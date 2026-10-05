@@ -64,6 +64,11 @@ One card, everything prefilled with the usual choice; the details are folded:
 
 - **Status** (from what the apps tell the manager when the robot connects): online or last
   seen, and on which app.
+- **Paired browsers** (folded: "Paired browsers: 3 (1 watching now)"): by app, each with its
+  device, when it paired, last seen, end-to-end; **Remove** and **Remove all**. The app unpairs
+  it within a minute; an end-to-end browser is also forgotten by the robot (its next signed
+  list says `forget`), so it cannot read the robot through any app. The robot's screen shows
+  only "N watching now".
 - **Open ‹start app›**: the big button. The start app is the one with the ★.
 - **Apps:** chips; tap a chip to star it (start app) or remove it, **+ add** for the others.
   - Remote changes allowed: saved at once, with the state under it: "waiting for the robot"
@@ -102,6 +107,7 @@ Per robot, so the page can be smart about it:
 | apps, start app, their version; which version the robot has | the manager; the robot reports its version when it connects (the app passes it on) |
 | remote changes allowed, asks before the start app changes | the USB setup (the robot holds the real setting) |
 | online, last seen, on which app | the apps' robot-auth calls |
+| paired browsers | the apps' robot-auth calls (`seen.pairings`); removals go back in the answer (`unpair`) |
 | history | every change here and every setup over USB |
 
 ## 7. Changes to the plumbing (small)
