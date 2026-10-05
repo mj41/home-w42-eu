@@ -116,10 +116,10 @@ Per robot, so the page can be smart about it:
 
 ## 7. Changes to the plumbing (small)
 
-- Robots report the version of their app list in their Register labels (`apps_ver`); the app
-  passes it on in robot-auth, so the manager knows "on the robot ✓".
-- robot-auth also tells the manager the app and the robot's firmware (for status and "update
-  available").
+- Since 2026-10-06 the robot reports to its manager itself, live, on its own connection
+  ([manager-channel.md](manager-channel.md)): the app it is on, its firmware, its app list's
+  version ("on the robot ✓"), a question on its screen and the answer. robot-auth carries only
+  tokens and paired browsers.
 - The setup page's work (Web Serial, flashing, provisioning) becomes a module the one page uses.
 
 ## 8. Decided

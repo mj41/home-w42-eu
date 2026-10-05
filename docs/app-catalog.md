@@ -89,9 +89,9 @@ leaves_home: true                     # data goes through a public relay: shown 
 
 | User | Uses the catalog for |
 |---|---|
-| The home manager | the apps it sets up on robots, over USB and later online (`ManagedApps`, signed by the manager), with their tokens |
+| The home manager | the apps it sets up on robots, over USB and later online (signed `Apps` on the robot's [manager channel](manager-channel.md)), with their tokens |
 | The connect page ([Device setup](device-setup.md) §3.4) | the app list and the default start; the robot gets every allowed app with its token |
-| The robot | nothing directly: it keeps the apps its managers set, its pin and autostart (device state) |
+| The robot | nothing directly: it keeps the apps its manager set, its pin and autostart (device state) |
 | Apps | links to each other ("open in the pet") |
 
 The robot's list stays the device-side truth: the owner picks the apps on the manager's page

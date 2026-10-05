@@ -69,8 +69,8 @@ connected right now stays until it reconnects.
 ## 6. Open questions
 
 1. **Done: apps added later:** the owner changes a robot's apps on the manager's page (if
-   allowed at the USB setup); the app the robot is on relays the manager-signed list
-   (`ManagedApps`) with the new apps and their tokens, and the robot checks the signature.
+   allowed at the USB setup); the manager sends the signed list on the robot's own connection to
+   it ([manager-channel.md](manager-channel.md)), and the robot checks the signature.
 2. **Tiers across apps:** the manager answers per account, or the apps read the same tiers file.
 3. **Home servers:** a home keeps its own servers and [app catalog](app-catalog.md); the public
    manager is for w42.eu. Should a home server be able to use sm.w42.eu for setup?
