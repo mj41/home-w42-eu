@@ -1,17 +1,21 @@
 # App catalog: the apps a home's devices can use
 
-**Status:** 2026-10-03, design. Today each server lists other apps with `-offer` flags; this
-document replaces them with one catalog per home: a directory with one directory per app. Setting devices up: [Device setup](device-setup.md).
+**Status:** 2026-10-03, design; updated 2026-10-05. Built: the home manager's catalog,
+`~/.config/s-w42-eu-manager/apps.json`, a JSON list of apps, each with a `secret_file` (tokens per
+robot, checked with the manager) or a `token_file` (one shared token)
+([s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) README, "The app catalog"). A
+robot's apps come only from its managers; apps never change its list. The directory with one
+directory per app (§3) is the design for later. Setting devices up: [Device setup](device-setup.md).
 
 ## 1. The problem
 
 A Stackchan can switch between apps, each a server: the dashboard (s-w42-eu-raw), the pet
-(s-w42-eu-pet), the cockpit (sbot), a public relay (raw.sa.w42.eu). Today:
+(s-w42-eu-pet), the cockpit (sbot), a public relay (raw.sa.w42.eu). Before the catalog:
 
-- every server repeats the others in its own flags (`-offer Pet=ws://…,<token file>`), so
-  adding an app means editing several command lines and restarting;
-- the setup page can only pin what that one server happens to offer;
-- nothing says which apps stay at home and which send data out (raw.sa.w42.eu), or which
+- every server repeated the others in its own flags (`-offer Pet=ws://…,<token file>`, removed
+  2026-10-05), so adding an app meant editing several command lines and restarting;
+- the setup page could only pin what that one server happened to offer;
+- nothing said which apps stay at home and which send data out (raw.sa.w42.eu), or which
   devices may join which app (principle 22: the owner decides).
 
 ## 2. One catalog, not one config
@@ -20,12 +24,12 @@ Not everything belongs in one file. Four kinds of settings, each with one home (
 
 | What | Where | Who changes it |
 |---|---|---|
-| **App catalog:** which apps the home has, where they are, who may join them | one directory per home, with one directory per app, read by every server of the home; later the node, each app signed by the owner key | the owner |
+| **App catalog:** which apps the home has, where they are, who may join them | the home manager's `apps.json` today; designed: one directory per home, with one directory per app; later the node, each app signed by the owner key | the owner |
 | **Server settings:** how one server runs (listen address, TLS, sign-in, state file) | that server's flags or its own config | whoever runs it |
 | **Secrets:** robot tokens, OIDC secrets | files of their own (an app's token in its directory, mode 0600), never inside a config file | the owner |
-| **Device state:** the servers a robot accepted, its pin, autostart, Wi-Fi | the robot (NVS) | the owner, at the robot or through an app |
+| **Device state:** the robot's apps as its managers set them, its pin, autostart, Wi-Fi | the robot (NVS) | the owner, at the robot or through its managers |
 
-So: **one catalog** for the apps, shared by all servers of a home, next to each server's own
+So: **one catalog** for the apps, kept by the home manager, next to each server's own
 settings, and **one directory per app** in it, like `/etc/…/conf.d`: an app is added or removed
 as a whole, carries its own token and, later, its own signature. On w42.eu the manager
 (sm.w42.eu) has its own catalog of the public apps and gives each robot a token of its own per
@@ -85,18 +89,21 @@ leaves_home: true                     # data goes through a public relay: shown 
 
 | User | Uses the catalog for |
 |---|---|
-| Every server of the home | `ServerOffer` to devices that may join (replaces `-offer`) |
+| The home manager | the apps it sets up on robots, over USB and later online (`ManagedApps`, signed by the manager), with their tokens |
 | The connect page ([Device setup](device-setup.md) §3.4) | the app list and the default start; the robot gets every allowed app with its token |
-| The robot | nothing directly: it keeps its own accepted list, pin and autostart (device state) |
+| The robot | nothing directly: it keeps the apps its managers set, its pin and autostart (device state) |
 | Apps | links to each other ("open in the pet") |
 
-The robot's list stays the device-side truth: the catalog *offers*, the owner (at the robot,
-on the setup page, or in an app) *accepts* and *pins*.
+The robot's list stays the device-side truth: the owner picks the apps on the manager's page
+(at setup, or later online if allowed at setup), and the start app is set by the manager (asked
+on the robot's screen) or by Pin on the QR screen. Apps never change the list; an app may
+suggest switching to another of the robot's apps (`server_switch`), and the robot asks on its
+screen.
 
 ## 5. Managing it
 
-1. **Now:** the directories, made by hand (`mkdir`, an editor, `ln -s` for a shared token);
-   they replace the `-offer` flags (no backward compatibility, principle 27).
+1. **Now:** the home manager's `apps.json`, edited by hand. The `-offer` flags and the
+   `ServerOffer` message are gone (2026-10-05, no backward compatibility, principle 27).
 2. **Then:** an "Apps" page on the home server: add, remove, rename, which devices, the
    default start; it writes the directories. An app can also bring its own directory (its
    installer creates it), listed as *new* until the owner approves it (an `approved` file).
@@ -122,3 +129,9 @@ on the setup page, or in an app) *accepts* and *pins*.
   written by the owner or the Apps page; until it is there the app is listed as *new* and
   offered to no device. Once signing exists, `app.yaml.sig` replaces it.
 - **Where:** `~/.config/w42eu/apps/`, or `/etc/w42eu/apps/` for a node run as a service.
+
+2026-10-05:
+
+- **Only managers set a robot's apps.** Apps never manage the list: `ServerOffer`, s-w42-eu-raw's
+  `-offer` flag and the robot commands `server_add`, `server_remove` and `server_default` are
+  gone. An app keeps `server_switch` (the robot asks on its screen) and `server_e2e`.

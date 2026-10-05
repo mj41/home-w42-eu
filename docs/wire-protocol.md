@@ -45,7 +45,8 @@ family (see §8).
    │◄─────────────── Accepted / Rejected ─│
    │◄────────────────────────── PairCode ─│   a one-time code to show as a QR
    │◄───────────── Paired (if any viewer) ─│
-   │◄──────────────────────── ServerOffer ─│   other servers the device may switch to
+   │◄──────────────────────── ManagedApps ─│   a manager's signed app list, if changed
+   │── AppsVersion ─────────────────────►│   after applying it
    │── RobotTelemetry, RobotEvent ──────►│
    │◄──────────────────────── RobotCommand ─│
    │── binary media (only while asked) ──►│
@@ -60,8 +61,11 @@ family (see §8).
   alias or IP) before any hub endpoint. It uses a hub endpoint only if its relay
   policy allows it, and returns to the local endpoint as soon as it answers again
   ([architecture §10](architecture.md#10-connection-paths-local-first-w42eu-only-as-a-hub)).
-  `ServerOffer` entries are candidates for that list; the owner decides which are
-  allowed.
+- **Apps come from managers:** a device's list of servers (its apps) is set by its
+  managers (s-w42-eu-manager: a home's own, or sm.w42.eu), over USB at setup and later by
+  `ManagedApps`, which the server relays from the manager. A server never changes that list;
+  it may suggest switching to another of the device's apps (the `server_switch` command), and
+  the device asks on its screen.
 
 ## 4. Frame kinds
 
@@ -72,12 +76,13 @@ family (see §8).
 | device → server | `RobotEvent` | `{"name", "data"?}`: data values are numbers or strings |
 | device → server | `RobotPong` | `{"id", "queue_ms"}`: answer to the `ping` command |
 | device → server | `Heartbeat` | `{}` |
+| device → server | `AppsVersion` | `{"versions": "<manager id>:<version>,…"}`: the app lists it has now, after a `ManagedApps`; never sealed |
 | server → device | `Accepted` | `{}` |
 | server → device | `Rejected` | `{"reason"}` |
 | server → device | `PairCode` | `{"code", "url", "expires_in_s"}`: show `url` as a QR code, `code` as text |
 | server → device | `Paired` | `{"viewers", "reconnect"?}`: a browser paired; `reconnect` means "paired before" |
 | server → device | `RobotCommand` | `{"command", "args"?}` |
-| server → device | `ServerOffer` | `{"servers": [{"name", "url", "token"?}]}` |
+| server → device | `ManagedApps` | `{"payload", "sig"}`: an app list signed by one of the device's managers, relayed unread; the device checks the signature with the manager's key from its setup |
 | both | `E2EEnroll`, `E2EHello`, `E2ECommand`, `E2EGroupKey`, `E2EData` | end-to-end encryption between a device and its browsers, passed on unread by the server ([e2ee](e2ee.md)); a device without it ignores them |
 
 The kind names say "Robot" for historical reasons; they apply to every device class.
@@ -187,3 +192,4 @@ The commands a device family offers are documented with that family:
 | 2026-10-02 | The connect path `/api/devices/connect` and the header `X-Device-Id`. |
 | 2026-10-03 | Tokens of a device's own (invites; devices added by accounts), next to a server's shared token (§1). |
 | 2026-10-03 | End-to-end encryption frames (§4) and binary types `0x30`, `0x31` (§6), [e2ee](e2ee.md): optional on both sides. |
+| 2026-10-05 | `ServerOffer` removed: a device's apps come only from its managers; `ManagedApps` and `AppsVersion` (§3, §4). |

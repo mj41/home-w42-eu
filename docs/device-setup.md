@@ -139,11 +139,11 @@ manifests (3.1) are what stop it from redirecting or reflashing robots unnoticed
 
 ## 5. What moves where
 
-| Now in s-w42-eu-manager (`-offer`: s-w42-eu-raw) | Goes to |
+| Now in s-w42-eu-manager | Goes to |
 |---|---|
 | esptool-js, install, backup, restore, the firmware routes, `-firmware-dir`, `-firmware-release`, the firmware cache | the flasher, in the firmware repo's release |
 | `/setup`: hello, provision, pair, autostart, app choice | stays: the connect page (3.4), as a shared module |
-| `-offer` flags | the [app catalog](app-catalog.md): one directory per app |
+| the app catalog, `apps.json` (the robot's apps; s-w42-eu-raw's `-offer` flags are gone) | the [app catalog](app-catalog.md): one directory per app |
 | a home manager on its own computer: that computer's Wi-Fi (in `/api/me`), `/api/setup/copy` | stays; Wi-Fi only on request |
 
 ## 6. Hardening the release

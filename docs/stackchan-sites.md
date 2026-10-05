@@ -68,8 +68,9 @@ connected right now stays until it reconnects.
 
 ## 6. Open questions
 
-1. **Apps added later:** how a robot learns a newly approved app without USB. Proposed: the app
-   it is on asks the manager and sends the robot a `ServerOffer` with the new app and its token.
+1. **Done: apps added later:** the owner changes a robot's apps on the manager's page (if
+   allowed at the USB setup); the app the robot is on relays the manager-signed list
+   (`ManagedApps`) with the new apps and their tokens, and the robot checks the signature.
 2. **Tiers across apps:** the manager answers per account, or the apps read the same tiers file.
 3. **Home servers:** a home keeps its own servers and [app catalog](app-catalog.md); the public
    manager is for w42.eu. Should a home server be able to use sm.w42.eu for setup?

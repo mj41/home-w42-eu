@@ -71,8 +71,8 @@ All apps share the same space, first come, first served (§2.2).
 
 ## 4. Uninstall and remove-all, where
 
-- **On the robot:** removing a server from the robot's list (QR screen, or `server_remove` from a
-  browser) offers to remove its app's data too; a "Remove all Embody data" in the robot's settings,
+- **On the robot:** when an app leaves the robot's list (only its manager removes apps), the
+  robot offers to remove its app's data too; a "Remove all Embody data" in the robot's settings,
   with a confirmation on the screen.
 - **From the server:** `app_data_remove` (its own data only).
 - **Over USB:** `{"op":"reset"}` removes all (the setup page's "Start over"), confirmed on the

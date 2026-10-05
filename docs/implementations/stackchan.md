@@ -42,8 +42,8 @@ Mode**, the first launcher app. It:
 - sends raw telemetry and hardware events, and streams media only while someone
   watches or listens (with a red LIVE badge);
 - runs commands, and keeps no app logic of its own;
-- keeps a **list of servers** and switches with Next / Pin / Connect on its QR
-  screen, or by `server_switch`;
+- keeps a **list of servers** (its apps, set by its managers) and switches with Next / Pin /
+  Connect on its QR screen, or by `server_switch` (asked on its screen);
 - is **set up over USB** (`@stackchan` lines: `hello`, `provision`, `pair`, `restart`); a new
   default server needs a Yes on its screen, and it records its original and previous
   firmware for a restore ([device setup](../device-setup.md) §3.3);

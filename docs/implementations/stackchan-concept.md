@@ -97,8 +97,9 @@ command, and small loops react (the robot looks sad while its car is blocked).
 - **On the robot:** swipe up, **QR**. The QR screen pairs a phone (scan it, or type the
   8-character code) and switches apps: **Next** shows the next server, **Connect** goes
   there, **Pin** makes it the default.
-- **From a server:** a server can offer others to its robots, and a page can move the robot
-  (`server_switch`).
+- **From a server:** a server can suggest switching to another of the robot's apps
+  (`server_switch`); the robot asks on its screen. The robot's apps come only from its managers
+  (set up over USB, changed online if allowed at setup).
 - **Without anyone touching it** (optional, off by default): the robot can start Embody Mode
   after a power-on (a checkbox at setup), and a server (or an AI agent through it) can restart
   the robot or open another app.
