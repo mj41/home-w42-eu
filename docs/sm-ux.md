@@ -34,7 +34,7 @@ its card, and the page offers only what can work right now: online or over the c
 │                                                      │
 │ [ Open Pet ]                                     ⋯   │
 │                                                      │
-│ Apps   ★ Pet   Raw dashboard   + add                 │
+│ Apps   ★ Pet   Raw data   + add                 │
 │        changes go to the robot online ✓              │
 │                                                      │
 │ Private · firmware embody-v0.3.0 (latest)            │
