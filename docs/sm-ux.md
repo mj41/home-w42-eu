@@ -69,7 +69,11 @@ One card, everything prefilled with the usual choice; the details are folded:
   it within a minute; an end-to-end browser is also forgotten by the robot (its next signed
   list says `forget`), so it cannot read the robot through any app. The robot's screen shows
   only "N watching now".
-- **Open ‹start app›**: the big button. The start app is the one with the ★.
+- **Open ‹start app›**: the big button. The start app is the one with the ★. While the robot is
+  online on another app, the big button opens that one, and **Switch to ‹start app›** (or an app
+  chip) opens the app and moves the robot there: the manager's next signed list says `switch`
+  (once; stale after 2 minutes), the apps pass it on within 15 s, and the robot asks Yes on its
+  screen when it was set up so.
 - **Apps:** chips; tap a chip to star it (start app) or remove it, **+ add** for the others.
   - Remote changes allowed: saved at once, with the state under it: "waiting for the robot"
     → "on the robot ✓" (when the robot reports the list's version), or "confirm on the robot's
