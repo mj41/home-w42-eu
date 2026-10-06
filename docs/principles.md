@@ -107,6 +107,15 @@ TPBot car taught.
     a loop can switch a device's UI for a session, with that person's rights; when the
     session ends, the device returns to its default UI. The owner decides which apps a
     device may join.
+    - **Apps are separate.** An app never delivers, removes or reorders a device's apps; it
+      may only suggest a switch, which the person at the device confirms.
+    - **USB or the manager delivers and removes apps.** Over the cable (being at the device is
+      the proof), or online by the device's manager, signed with the manager's key.
+    - **The manager is optional.** It can be turned off on the device, or by the manager
+      itself; it is turned on again only on the device or over USB. Off, the device keeps
+      no connection to it, and its apps change only over USB.
+    - **Switching is always possible on the device** (its QR screen), manager or not; with
+      the manager on, also from the manager's page.
 23. **Old hardware is welcome.** If it has a radio, a port or a screen, it gets an
     adapter or a light client, before it gets thrown away.
 

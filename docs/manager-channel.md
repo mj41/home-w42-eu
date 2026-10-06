@@ -25,6 +25,10 @@ limits on a real robot:
 
 ## 2. The design in short
 
+**Principles** ([principles](principles.md) 22): apps are separate; USB or the manager delivers
+and removes them; the manager is optional (off on the robot or by the manager itself, on again
+only on the robot or over USB); switching is always possible on the robot's QR screen.
+
 ```
  ANYWHERE                     W42.EU                          HOME (behind NAT)
  phone, laptop ── page ─►  sm.w42.eu  ◄═══ link (out) ═══  home manager (primary)
@@ -78,6 +82,8 @@ limits on a real robot:
 | U15 | owner away from home | change a home robot from sm.w42.eu, if the home allows it | S15 |
 | U16 | person at the robot | make the other manager the primary (the robot goes to a cottage, the home node is gone), if the USB setup allowed it | S16 |
 | U17 | owner with a cottage | see and manage the robots of several homes on one sm.w42.eu account | S3 |
+| U18 | owner who wants no remote control | turn the manager off: apps only over USB, switching on the robot | S17 |
+| U19 | owner with a phone at home | open the home manager's page on the phone (no sign-in at home) | S18 |
 
 ## 4. Sequences
 
@@ -201,6 +207,25 @@ list. The old primary's tokens stop working when it removes the robot.
    own). The old primary sees "managed by sm.w42.eu now" when the robot is back in reach.
 4. Without that setting the screen only shows the manager; changing it takes USB (S12).
 
+**S17. The manager off (USB only)**
+1. On the robot: Manager screen → **Turn off** → "Turn home on laptop off?" → Yes. Or on the
+   manager's page: ⋯ → **Turn the manager off (USB only)** → the manager sends a signed `Disable`
+   (when the robot is away: when it connects).
+2. robot: saves the manager as off, tells it `Off {by: robot | manager}`, closes the channel and
+   opens none. The page: "The manager is off on this robot …"; nothing that changes the robot
+   (the API answers `manager_off`).
+3. Apps then change only over USB; the person switches apps on the QR screen.
+4. On again only at the robot (Manager screen → **Turn on** → Yes) or by a USB setup: the
+   channel's `Hello` tells the manager. A manager can never turn itself on.
+
+**S18. A phone at home**
+1. The home manager (no sign-in) trusts only the computer it runs on. While the robot's channel
+   is up, it sends the robot a one-time page code (`PageCode`, valid 10 minutes, used once).
+2. The Manager screen's QR is `http://<home>:8790/phone?code=…` (the robot shows only an address
+   on its manager's own page). A phone that scans it is signed in there ("this phone ·
+   Sign out"); the robot gets a new code.
+3. Being at the robot is the proof, as for pairing with an app.
+
 **S13. Firmware over the air (later)**
 manager → robot: **signed** `Firmware {version, manifest URL, SHA-256s}`; the robot asks on its
 screen, downloads, checks, installs, reports. Designed separately.
@@ -258,7 +283,8 @@ screen, downloads, checks, installs, reports. Designed separately.
   ask_pin}`, and optionally `embody/manager2` with `may_become_primary` (S16); every app on the
   robot comes from the primary. The "several managers" code goes (principle 27).
 - The **Manager screen**: a button on the QR screen; the manager's name, the channel's state,
-  the address of the home manager's page with a QR code, **Use ‹the other›** when allowed.
+  the address of the home manager's page with a QR code (with a one-time sign-in code for a
+  phone, S18), **Turn off / Turn on** (S17), **Use ‹the other›** when allowed.
 - The channel task: its own WebSocket client (reused from the app client), reconnect with
   backoff, a heartbeat from the app loop, `Restart` handled in the task itself.
 - Signed messages are applied in the app loop under the screen lock (as app lists are since
@@ -278,6 +304,9 @@ screen, downloads, checks, installs, reports. Designed separately.
 - **Restart the robot** is always on the card, greyed out while the robot answers, highlighted
   when it is stuck (S9).
 - An sm.w42.eu account may link several homes.
+- The manager is optional (S17): off on the robot or by the manager; on again only on the
+  robot or over USB.
+- A phone signs in to a home manager with the one-time code on a robot's Manager screen (S18).
 
 ## 9. Steps
 
