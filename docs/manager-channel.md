@@ -1,6 +1,6 @@
 # The robot's manager: one primary, sm.w42.eu upstream
 
-**Status:** proposed 2026-10-05; built and tested 2026-10-06 (§11), not released yet. Changes how a Stackchan manager (a home's own
+**Status:** proposed 2026-10-05; built and tested 2026-10-06 (§11). Changes how a Stackchan manager (a home's own
 s-w42-eu-manager, or sm.w42.eu) reaches a robot. Builds on [sm-ux.md](sm-ux.md) and the node
 and relay of [architecture.md](architecture.md); the frames are in
 [wire-protocol.md](wire-protocol.md).
@@ -336,6 +336,10 @@ screen, downloads, checks, installs, reports. Designed separately.
 
 ## 11. How it was tested (2026-10-06)
 
+The steps that need a person at the robot (a tap, a Yes) ran with a test build
+(`./container.sh test`: USB control without a Yes, taps may answer the robot's questions; never
+released), driven over USB (`s-w42-eu-usb swipe`, `tap`, `screenshot -top`).
+
 Three ways: Go tests with a simulated robot (s-w42-eu-manager `internal/robotsim`: the firmware's
 channel logic, signature and seq checks included) against real managers over real WebSockets;
 headless Chrome page tests (`e2e/`); and the real robot (CoreS3, this firmware) with a local
@@ -349,17 +353,19 @@ topology: the home manager (:8790) linked to a second manager standing in for sm
 | S3 link | ✓, and in the browser (approval page and back) | ✓ (local sm) |
 | S4 an sm.w42.eu app for a home robot | ✓ (token from sm, robot-auth at sm) | ✓ the robot connects to sm's Raw data with sm's token |
 | S5 change apps | ✓ | ✓ list applied within a second |
-| S6 switch, question, answer | ✓ Yes and timeout | ✓ question on the page, "not confirmed" after 60 s; without asking: on the new app in 1.3 s (10 of 10, and more) |
-| S7 switch on the robot's screen | ✓ | needs a tap (a person) |
+| S6 switch, question, answer | ✓ Yes and timeout | ✓ question on the page, Yes tapped: switched; nobody: "not confirmed" after 60 s; without asking: on the new app in 1.3 s (10 of 10, and more) |
+| S7 switch on the robot's screen | ✓ | ✓ QR screen: Next, Connect; the page follows |
 | S8 remove a browser | ✓ home app and sm app | ✓ both; the robot forgot the end-to-end browser (new epoch) |
 | S9 a hung robot | ✓ | ✓ (`s-w42-eu-usb stall`): "not responding" after 11 s, Restart from the page, back in 10 s |
 | S10 the internet (sm) down | ✓ | ✓ home kept working; link back 2 s after sm |
 | S11 the home manager off | — | ✓ robot stays on its app; channel back 23 s after the manager |
 | S12 another primary | ✓ | ✓ (set up again several times) |
-| S14 finding the home manager | ✓ Manage at home (shared address) | the QR screen's gear is there; the Manager screen needs a tap |
+| S14 finding the home manager | ✓ Manage at home (shared address) | ✓ the gear, the Manager screen with its page's address and QR |
 | S15 full control through the home | ✓, and in the browser | ✓ switches from sm's page in 1.3 s; read-only answers 403 |
-| S16 the second manager | ✓ there and back | needs a tap and a Yes (a person) |
+| S16 the second manager | ✓ there and back | ✓ there and back on the Manager screen: each manager's own apps follow |
 | U17 several homes | ✓ | — |
+| S17 the manager off | ✓ on the robot, from the page, while away | ✓ off and on on the Manager screen (Yes); off from the page; on by a USB setup |
+| S18 a phone at home | ✓ | ✓ the Manager screen's QR signs a phone in; used once, then a new code |
 
 Found and fixed on the way: a PMIC read that aborted the firmware on an I2C timeout during the
 clean start after an app switch (now skipped, and the clean start changes only what is not at
