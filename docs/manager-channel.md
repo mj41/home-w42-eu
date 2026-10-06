@@ -75,14 +75,15 @@ sm.w42.eu** (the link). Every place names both ends and says connected or not:
 | the robot's Manager screen | which manager, connected, its page as a link and a QR code | "not connected" and the last error; or "off" |
 
 - **After an hour away** the card adds why that may be: the robot is off, away from its Wi-Fi,
-  or was set up with another manager over USB. A manager is not told when its robot leaves
-  (the robot talks only to its new primary), so it keeps the robot as it was last seen, and what
-  it knew is marked so: "✓ On the robot when it was last seen".
+  or was set up with another manager over USB while not connected here. It keeps the robot as
+  it was last seen, and what it knew is marked so: "✓ On the robot when it was last seen".
 - **Apps of a linked manager** carry its name on their chips at home ("Raw data sm.w42.eu"), so
   two apps with the same name are told apart.
 - **"Watching now"** under Paired browsers comes only from an app report under a minute old.
-- Not yet: a robot on this computer's USB that has another manager now could say so on the card
-  (its `status` over USB names its manager).
+- **A robot set up with another manager over USB** tells the old one on its way out (`Leaving`,
+  S19): the old card then says "Set up with ‹to› over USB …" instead of the away note, and
+  changes there are refused. Only a robot whose channel was up can say so; otherwise the away
+  note stays the only hint.
 
 ## 3. Use cases
 
@@ -107,6 +108,7 @@ sm.w42.eu** (the link). Every place names both ends and says connected or not:
 | U17 | owner with a cottage | see and manage the robots of several homes on one sm.w42.eu account | S3 |
 | U18 | owner who wants no remote control | turn the manager off: apps only over USB, switching on the robot | S17 |
 | U19 | owner with a phone at home | open the home manager's page on the phone (no sign-in at home) | S18 |
+| U20 | owner who sets the robot up with another manager over USB (moving it, or trying sm.w42.eu alone) | the old manager's page says where it went, instead of a robot that is just away | S19 |
 
 ## 4. Sequences
 
@@ -249,6 +251,16 @@ list. The old primary's tokens stop working when it removes the robot.
    Sign out"); the robot gets a new code.
 3. Being at the robot is the proof, as for pairing with an app.
 
+**S19. Set up with another manager over USB**
+1. page (another manager) → robot over USB: a setup with a manager whose key differs from the
+   primary's.
+2. robot → old primary, on its open channel: `Leaving {to: "<the new manager's name>"}`, then
+   the robot saves the new manager and connects to it. (Not connected: nobody is told.)
+3. old primary: the robot "left": its card says "Set up with ‹to› over USB … it talks only to
+   that one now", changes are refused (`409 left`), history notes it. A home sends it so to
+   sm.w42.eu too.
+4. A USB setup with the old manager again clears it (its Hello on the new channel).
+
 **S13. Firmware over the air (later)**
 manager → robot: **signed** `Firmware {version, manifest URL, SHA-256s}`; the robot asks on its
 screen, downloads, checks, installs, reports. Designed separately.
@@ -261,6 +273,11 @@ screen, downloads, checks, installs, reports. Designed separately.
 |---|---|---|
 | robot → | `Hello` | firmware, the app list version, the app it is on, its apps as `{id, name}` (`id`: the first 8 bytes of SHA-256 of the URL, hex) |
 | robot → | `State` | on every change: app, connection state, `question {text, seconds_left}` or none, the last `answer` (`switched`, `not confirmed`, `refused: …`), `stuck`, `forgotten` |
+| robot → | `Ping` | every 25 s when nothing else went |
+| robot → | `Off` | `{by: "robot" \| "manager"}`: the manager is off on the robot now (S17); the channel closes |
+| robot → | `Leaving` | `{to}`: a USB setup gave it another manager (S19); the channel closes |
+| → robot | `PageCode` | `{url}`: a one-time sign-in address on the manager's page for the Manager screen's QR (S18) |
+| → robot | `Disable` | **signed**: `{robot, seq}`: the manager turns itself off for this robot (S17) |
 | → robot | `Apps` | **signed**: `{robot, version, servers [{name, url, token?}], pin, ask_pin}` |
 | → robot | `Switch` | **signed**: `{robot, seq, app}` |
 | → robot | `Forget` | **signed**: `{robot, seq, browsers}` |
@@ -389,6 +406,7 @@ topology: the home manager (:8790) linked to a second manager standing in for sm
 | U17 several homes | ✓ | — |
 | S17 the manager off | ✓ on the robot, from the page, while away | ✓ off and on on the Manager screen (Yes); off from the page; on by a USB setup |
 | S18 a phone at home | ✓ | ✓ the Manager screen's QR signs a phone in; used once, then a new code |
+| S19 set up with another manager | ✓ there and back, and in the browser | ✓ (2026-10-06, test build) home → the local sm over USB: home's page "Set up with sm test over USB" at once; back home: cleared, the robot under its home on sm again |
 
 Found and fixed on the way: a PMIC read that aborted the firmware on an I2C timeout during the
 clean start after an app switch (now skipped, and the clean start changes only what is not at

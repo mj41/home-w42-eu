@@ -98,8 +98,9 @@ Still open against the [principles](principles.md) and the [architecture](archit
   (espeak-ng is the local fallback); a local voice (Piper) would remove it.
 - **One node:** the pet and the dashboard keep their own pairing and sessions, not yet routed
   by the node.
-- **A manager is not told when its robot leaves** (a USB setup with another manager): its page
-  shows the robot as last seen, with a note after an hour ([the robot's manager](manager-channel.md) §2.1).
+- **A manager hears that its robot left only if the robot's channel was up** at the USB setup
+  with another manager (`Leaving`, [the robot's manager](manager-channel.md) S19); otherwise its
+  page shows the robot as last seen, with a note after an hour.
 - **The home manager runs on a laptop,** with self-signed HTTPS for the local apps: phones
   accept the certificate once per app.
 
