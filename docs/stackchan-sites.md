@@ -29,7 +29,7 @@ or sign-in, and cannot call its API as the user. One wildcard certificate covers
 3. One click with the robot on USB: the manager installs the official firmware (if needed) and
    writes every approved app into the robot, each with **a token of its own** (`provision`
    with `servers` and `pin`); the robot asks on its screen before its start app is set.
-4. The robot connects to its start app; the QR screen switches between the approved apps.
+4. The robot connects to its start app; the app switcher (the QR screen) switches between the approved apps.
 
 Removing a robot (or an app, by setting it up again) on sm.w42.eu revokes the tokens: an app
 accepts a revoked token for at most a minute more (it caches the manager's answer), and a robot

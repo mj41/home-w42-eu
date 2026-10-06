@@ -96,7 +96,7 @@ leaves_home: true                     # data goes through a public relay: shown 
 
 The robot's list stays the device-side truth: the owner picks the apps on the manager's page
 (at setup, or later online if allowed at setup), and the start app is set by the manager (asked
-on the robot's screen) or by Pin on the QR screen. Apps never change the list; an app may
+on the robot's screen) or by Pin on the app switcher (the QR screen). Apps never change the list; an app may
 suggest switching to another of the robot's apps (`server_switch`), and the robot asks on its
 screen.
 

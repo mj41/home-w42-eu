@@ -68,7 +68,7 @@ Each repo is independent. A home is made of the repos its user includes.
 | Repo | Role | License |
 |---|---|---|
 | [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) | MIT (the firmware, as upstream) |
-| [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) | the Stackchan manager at `sm.w42.eu`: sign-in, your robots, the apps you approve, one-click setup over USB, a token per robot per app | MIT |
+| [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) | the Stackchan manager (optional), at home on your computer or at `sm.w42.eu`: your robots, the apps you approve, one-click setup over USB, a token per robot per app | MIT |
 | [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard and relay at `raw.sa.w42.eu`, the `robotauth` package the apps share | MIT |
 | [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | the pet app (a Tamagotchi for kids), at `pet.sa.w42.eu` | MIT |
 | [s-w42-eu-sbot](https://github.com/mj41/s-w42-eu-sbot) | grows into the home node: web/API server, event hub, controller server; the cockpit app | Apache-2.0 |
@@ -78,6 +78,18 @@ Each repo is independent. A home is made of the repos its user includes.
 | [mj41cz-rebuilds](https://gitlab.com/mj41cz/mj41cz-rebuilds) | independent rebuilds of releases on short-lived cloud machines, with a signed audit log ([independent rebuild](docs/independent-rebuild.md)) | Apache-2.0 |
 
 How they fit together and what comes next: [Fit and roadmap](docs/fit-and-roadmap.md).
+
+### Stackchan: how the pieces fit
+
+| Piece | What it is | Needed? |
+|---|---|---|
+| **Robot** | a Stackchan with the [Embody Mode firmware](https://github.com/mj41/StackChan/tree/embody-mj41/firmware/main/apps/app_embody_mode). On its screen the **app switcher** (the QR screen: Next, Connect) lists its apps and switches between them; its gear opens the **Manager screen** (which manager it has, turn it off or on). | yes |
+| **Apps** | servers the robot connects to, one at a time: [Raw data](https://github.com/mj41/s-w42-eu-raw), [Pet](https://github.com/mj41/s-w42-eu-pet), [Sbot](https://github.com/mj41/s-w42-eu-sbot), … | at least one |
+| **Phone or browser** | opens an app's page and pairs with the robot by scanning its QR code; with end-to-end encryption only paired browsers can read the robot | to use an app |
+| **Manager** | [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager): the web service that sets robots up over USB, gives each robot its own token per app, and switches and changes apps from its page; on your own computer (the home manager) or online at [sm.w42.eu](https://sm.w42.eu), which a home manager may link to | optional: without it, apps are written over USB and switched on the robot's app switcher |
+
+"Manager" always means this web service; on the robot there is only the app switcher and the
+Manager screen that shows which manager it has.
 
 ## Status
 

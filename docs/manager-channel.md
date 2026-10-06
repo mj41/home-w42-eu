@@ -27,7 +27,11 @@ limits on a real robot:
 
 **Principles** ([principles](principles.md) 22): apps are separate; USB or the manager delivers
 and removes them; the manager is optional (off on the robot or by the manager itself, on again
-only on the robot or over USB); switching is always possible on the robot's QR screen.
+only on the robot or over USB); switching is always possible on the robot's app switcher (its QR screen).
+
+**Names:** the **manager** is only the web service (the home manager on your computer, or
+sm.w42.eu). On the robot there are the **app switcher** (its QR screen: Next, Connect) and the
+**Manager screen** (the app switcher's gear), which shows the robot's manager.
 
 ```
  ANYWHERE                     W42.EU                          HOME (behind NAT)
@@ -54,7 +58,7 @@ only on the robot or over USB); switching is always possible on the robot's QR s
   - **full control through the home:** sm.w42.eu's page works like the home's; its requests go
     down the link and the home manager, the only one with its key on the robot, signs them and
     logs them as "from sm.w42.eu" (S15).
-- **The robot shows its manager** on a Manager screen (next to the QR screen): which manager,
+- **The robot shows its manager** on a Manager screen (the app switcher's gear): which manager,
   connected or not, the home manager's address as a link and a QR code (S14).
 - **sm.w42.eu is primary only for robots in homes without a manager.** Then the robot's
   channel goes to sm.w42.eu directly, and its page is a full manager.
@@ -166,7 +170,7 @@ sm.w42.eu's page is the full manager.
 5. home manager → sm.w42.eu over the link: the new state (shadow).
 
 **S7. Switching on the robot's screen**
-1. The person at the robot: QR screen → Next → Connect.
+1. The person at the robot: app switcher → Next → Connect.
 2. robot → manager: `State {app}`; the pages (primary, and the shadow over the link) follow.
 
 **S8. Removing a paired browser**
@@ -206,7 +210,7 @@ Only over USB: S1 or S2 again replaces the key, the channel URL and token, and t
 list. The old primary's tokens stop working when it removes the robot.
 
 **S14. Finding the home manager**
-1. On the robot: the Manager screen (a button on the QR screen) shows "home on laptop",
+1. On the robot: the Manager screen (the gear on the app switcher) shows "home on laptop",
    connected or not, and its page's address (`http://192.168.1.10:8790`) with a QR code: scan it
    with a phone on the home Wi-Fi.
 2. On sm.w42.eu (read-only shadow): **Manage at home** at the top of the home's robots. With the
@@ -239,7 +243,7 @@ list. The old primary's tokens stop working when it removes the robot.
 2. robot: saves the manager as off, tells it `Off {by: robot | manager}`, closes the channel and
    opens none. The page: "The manager is off on this robot …"; nothing that changes the robot
    (the API answers `manager_off`).
-3. Apps then change only over USB; the person switches apps on the QR screen.
+3. Apps then change only over USB; the person switches apps on the app switcher.
 4. On again only at the robot (Manager screen → **Turn on** → Yes) or by a USB setup: the
    channel's `Hello` tells the manager. A manager can never turn itself on.
 
@@ -322,7 +326,7 @@ screen, downloads, checks, installs, reports. Designed separately.
 - One primary instead of several managers: NVS `embody/manager {key, name, url, token, seq,
   ask_pin}`, and optionally `embody/manager2` with `may_become_primary` (S16); every app on the
   robot comes from the primary. The "several managers" code goes (principle 27).
-- The **Manager screen**: a button on the QR screen; the manager's name, the channel's state,
+- The **Manager screen**: the gear on the app switcher; the manager's name, the channel's state,
   the address of the home manager's page with a QR code (with a one-time sign-in code for a
   phone, S18), **Turn off / Turn on** (S17), **Use ‹the other›** when allowed.
 - The channel task: its own WebSocket client (reused from the app client), reconnect with
@@ -394,7 +398,7 @@ topology: the home manager (:8790) linked to a second manager standing in for sm
 | S4 an sm.w42.eu app for a home robot | ✓ (token from sm, robot-auth at sm) | ✓ the robot connects to sm's Raw data with sm's token |
 | S5 change apps | ✓ | ✓ list applied within a second |
 | S6 switch, question, answer | ✓ Yes and timeout | ✓ question on the page, Yes tapped: switched; nobody: "not confirmed" after 60 s; without asking: on the new app in 1.3 s (10 of 10, and more) |
-| S7 switch on the robot's screen | ✓ | ✓ QR screen: Next, Connect; the page follows |
+| S7 switch on the robot's screen | ✓ | ✓ app switcher: Next, Connect; the page follows |
 | S8 remove a browser | ✓ home app and sm app | ✓ both; the robot forgot the end-to-end browser (new epoch) |
 | S9 a hung robot | ✓ | ✓ (`s-w42-eu-usb stall`): "not responding" after 11 s, Restart from the page, back in 10 s |
 | S10 the internet (sm) down | ✓ | ✓ home kept working; link back 2 s after sm |
