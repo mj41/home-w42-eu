@@ -61,6 +61,29 @@ only on the robot or over USB); switching is always possible on the robot's QR s
 - **Apps keep only what is theirs:** checking robot tokens with the manager that issued them
   (robot-auth) and reporting paired browsers. No relaying, no polling.
 
+### 2.1 What the pages and the robot say about connections
+
+Two connections matter to a person: **robot ↔ its manager** (the channel) and **home ↔
+sm.w42.eu** (the link). Every place names both ends and says connected or not:
+
+| Where | Connected | Not connected |
+|---|---|---|
+| a robot's card on its manager | "● connected · on Pet" | "not connected · last seen 5 min ago · on Pet" |
+| a home's robot on sm.w42.eu | "● connected to home on laptop · on Pet" | "not connected to home on laptop · last seen …" |
+| the home's link card | "This home is linked to sm.w42.eu, connected", and what sm.w42.eu may do (shows your robots read-only, or may change them; the home signs) | "…, not connected now (the error)" |
+| the home on sm.w42.eu | "this home is connected · read-only here: changes at home" | "this home is not connected, last seen …" |
+| the robot's Manager screen | which manager, connected, its page as a link and a QR code | "not connected" and the last error; or "off" |
+
+- **After an hour away** the card adds why that may be: the robot is off, away from its Wi-Fi,
+  or was set up with another manager over USB. A manager is not told when its robot leaves
+  (the robot talks only to its new primary), so it keeps the robot as it was last seen, and what
+  it knew is marked so: "✓ On the robot when it was last seen".
+- **Apps of a linked manager** carry its name on their chips at home ("Raw data sm.w42.eu"), so
+  two apps with the same name are told apart.
+- **"Watching now"** under Paired browsers comes only from an app report under a minute old.
+- Not yet: a robot on this computer's USB that has another manager now could say so on the card
+  (its `status` over USB names its manager).
+
 ## 3. Use cases
 
 | # | Who | Wants | How (sequence) |

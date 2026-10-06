@@ -1,6 +1,6 @@
 # How the existing work fits, and what comes next
 
-**Status:** 2026-10-04.
+**Status:** 2026-10-06.
 
 ## 1. The map
 
@@ -80,7 +80,9 @@ keeps the safety stop; the controller server runs loops with replay / shadow / l
 grants (none by default), and `frown` is live. On w42.eu the manager (sm.w42.eu) has sign-in,
 one-click setup and a token per robot per app; its apps are the raw dashboard (raw.sa.w42.eu:
 private robots, tiers, end-to-end encryption available) and the pet (pet.sa.w42.eu);
-releases are reproducible and approved in `mj41cz-approved`.
+releases are reproducible and approved in `mj41cz-approved`. Since 2026-10-06 each robot keeps
+a live, signed connection to its one manager, and a home manager links up to sm.w42.eu
+([the robot's manager](manager-channel.md)).
 
 Still open against the [principles](principles.md) and the [architecture](architecture.md):
 
@@ -96,6 +98,10 @@ Still open against the [principles](principles.md) and the [architecture](archit
   (espeak-ng is the local fallback); a local voice (Piper) would remove it.
 - **One node:** the pet and the dashboard keep their own pairing and sessions, not yet routed
   by the node.
+- **A manager is not told when its robot leaves** (a USB setup with another manager): its page
+  shows the robot as last seen, with a note after an hour ([the robot's manager](manager-channel.md) §2.1).
+- **The home manager runs on a laptop,** with self-signed HTTPS for the local apps: phones
+  accept the certificate once per app.
 
 ## 5. What to do next
 

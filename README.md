@@ -81,19 +81,22 @@ How they fit together and what comes next: [Fit and roadmap](docs/fit-and-roadma
 
 ## Status
 
-Design draft with working proofs of concept, 2026-10-04:
+Design draft with working proofs of concept, 2026-10-06:
 
 - **Stackchan** with three apps (the dashboard, the pet, the sbot cockpit) and the TPBot car
   over BLE.
 - **sbot** with the event hub (JetStream) and the safety stop; its controller server runs
   the `frown` loop live.
-- **sm.w42.eu**, the Stackchan manager: sign-in (GitHub, Google), your robots, the apps
-  you approve for each, a token per robot per app, one-click setup at
-  [sm.w42.eu/setup](https://sm.w42.eu/setup). The apps: the raw dashboard at
-  `raw.sa.w42.eu` (robots private by default, tiers, end-to-end encryption available) and
+- **The Stackchan manager**, at [sm.w42.eu](https://sm.w42.eu) and at home on your own
+  computer: one page for your robots, one-click setup over USB, the apps you approve for each
+  robot with a token per robot per app. Each robot keeps a live connection to its one manager
+  ([the robot's manager](docs/manager-channel.md)): switch apps, restart, change apps from the
+  page, see a question on its screen. A home manager links up to sm.w42.eu (read-only or full
+  control); the manager is optional, and switching is always possible on the robot. The apps:
+  the raw dashboard at `raw.sa.w42.eu` (robots private by default, end-to-end encryption) and
   the pet at `pet.sa.w42.eu`. `s.w42.eu` is the index.
-- **Firmware `embody-v0.1.0`** released, rebuilt to the same bytes by GitHub Actions, the
-  owner's laptop and a cloud rebuild, and approved in
+- **Firmware `embody-v0.5.1`** released, rebuilt to the same bytes by GitHub Actions, the
+  owner's laptop and a cloud rebuild, signed by the owner in
   [mj41cz-approved](https://gitlab.com/mj41cz/mj41cz-approved).
 
 What comes next: [Fit and roadmap](docs/fit-and-roadmap.md).

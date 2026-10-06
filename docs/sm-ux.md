@@ -30,7 +30,7 @@ its card, and the page offers only what can work right now: online or over the c
 ┌──────────────────────────────────────────────────────┐
 │ sm.w42.eu                          Ema · Sign out    │
 ├──────────────────────────────────────────────────────┤
-│ ● Stackchan 0a1b…4e50              online · on Pet   │
+│ ● Stackchan 0a1b…4e50           connected · on Pet   │
 │                                                      │
 │ [ Open Pet ]                                     ⋯   │
 │                                                      │
@@ -62,13 +62,16 @@ One card, everything prefilled with the usual choice; the details are folded:
 
 ## 4. The robot card
 
-- **Status** (from what the apps tell the manager when the robot connects): online or last
-  seen, and on which app.
+- **Status** (from the robot's own connection to its manager, [manager-channel.md](manager-channel.md)):
+  "connected · on Pet", or "not connected · last seen 5 min ago". After an hour away the card
+  says why that may be (off, away from its Wi-Fi, or set up with another manager over USB), and
+  what it knew is "on the robot when it was last seen" (manager-channel.md §2.1).
 - **Paired browsers** (folded: "Paired browsers: 3 (1 watching now)"): by app, each with its
   device, when it paired, last seen, end-to-end; **Remove** and **Remove all**. The app unpairs
   it within a minute; an end-to-end browser is also forgotten by the robot (its next signed
   list says `forget`), so it cannot read the robot through any app. The robot's screen shows
-  only "N watching now".
+  only "N watching now". "Watching now" comes only from an app report under a minute old (the
+  apps report every 15 s while the robot is on them).
 - **Open ‹start app›**: the big button. The start app is the one with the ★. While the robot is
   online on another app, the big button opens that one, and **Switch to ‹start app›** (or an app
   chip) opens the app and moves the robot there: the manager's next signed list says `switch`
@@ -110,7 +113,7 @@ Per robot, so the page can be smart about it:
 | firmware version, original firmware recorded or not | the setup page's `hello` (USB) |
 | apps, start app, their version; which version the robot has | the manager; the robot reports its version when it connects (the app passes it on) |
 | remote changes allowed, asks before the start app changes | the USB setup (the robot holds the real setting) |
-| online, last seen, on which app | the apps' robot-auth calls |
+| connected, last seen, on which app, a question on its screen | the robot's channel to its manager |
 | paired browsers | the apps' robot-auth calls (`seen.pairings`); removals go back in the answer (`unpair`) |
 | history | every change here and every setup over USB |
 
