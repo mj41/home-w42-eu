@@ -1,7 +1,7 @@
 # Accounts on w42.eu: sign-in providers, linked sign-ins, tiers
 
-**Status:** 2026-10-04, design. Today: Dex at auth.w42.eu with GitHub and Google (Microsoft
-prepared, not enabled); one account per sign-in; robots in the manager (sm.w42.eu), tiers in
+**Status:** 2026-10-08. Dex at auth.w42.eu with GitHub and Google (Microsoft prepared, not
+enabled); a person (user) with one or more sign-ins in the manager (sm.w42.eu); tiers in
 s-w42-eu-raw.
 
 ## 1. Providers
@@ -21,22 +21,25 @@ Dex. Order:
 Each provider's verified e-mail and its own user id come through Dex (scope `federated:id`:
 `federated_claims {connector_id, user_id}`).
 
-## 2. One person, several sign-ins (linking, later)
+## 2. One person, several sign-ins
 
-Today an account is one sign-in: Dex's issuer and subject, which differ per provider, so
-signing in with Google gives another account than with GitHub, with its own robots.
+Dex's issuer and subject differ per provider, so each sign-in is its own identity. The manager
+joins them:
 
-Ready for linking:
-
-- **A person** has an id of our own and a list of **sign-ins** (provider + user id). Robots,
-  tiers and permissions belong to the person, never to a sign-in.
-- **Linking:** signed in, "Add another sign-in" runs the login again; the new sign-in joins the
-  person unless it already belongs to someone else (then it is refused; merging two people is
-  done by an admin). Unlinking keeps at least one sign-in.
-- **Same e-mail is not enough to link** by itself: the person must sign in with both
-  (an e-mail address at a provider can be someone else's later).
-- In the manager (s-w42-eu-manager) this replaces `Account.Key` as the owner of added robots
-  by the person id (principle 27: the stored accounts start over).
+- **A user** has an id of our own (`u-` and 16 hex digits) and a list of **sign-ins** (Dex's
+  issuer and subject, provider, its user id, login, verified e-mail). The user id is the account
+  key everywhere: robots' and linked homes' owner in the manager, and the account every app gets
+  through the one sign-in (s-w42-eu-raw's `sso`). A sign-in never owns anything.
+- **Adding a sign-in:** signed in, "Your sign-ins" on the manager's page runs the login again for
+  the chosen provider; the new sign-in joins the user. A sign-in that already belongs to another
+  user brings that whole user along (its robots and homes): signing in with both in one browser
+  proves both are this person's. This matters most at the switch to users: every sign-in from
+  before became a user of its own.
+- **Same e-mail is not enough to join** by itself: the person must sign in with both (an e-mail
+  address at a provider can be someone else's later).
+- The apps follow at their regular checks (a minute at most): a session's account is replaced
+  with the manager's current one, and a robot's owner comes with the robot's next report.
+- Later: removing a sign-in (at least one stays).
 
 ## 3. Tiers
 

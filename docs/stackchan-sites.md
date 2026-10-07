@@ -47,7 +47,7 @@ connected right now stays until it reconnects.
 ## 4. People, pairing, privacy
 
 - One sign-in for all sites: each site is its own client of auth.w42.eu, and an account is the
-  same everywhere (issuer and subject).
+  same everywhere (the manager's user id, which may have several sign-ins: [accounts](accounts.md)).
 - A robot is private to its owner by default in every app: the app learns the owner from the
   manager and pairs only them (and whom they allow). End-to-end encryption stays per app.
 - Tiers and limits ([accounts](accounts.md)) apply per app, decided by the manager.
