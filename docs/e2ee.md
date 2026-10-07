@@ -1,9 +1,11 @@
 # End-to-end encryption between a device and its browsers
 
-**Status:** 2026-10-04. Done: steps 1–3 of the rollout (§9): the Go reference
+**Status:** 2026-10-07. Done: steps 1–3 of the rollout (§9): the Go reference
 implementation (s-w42-eu-raw's `e2e` package, test vectors), the relay, the browser side
 (the dashboard's `e2e.js`), tested end to end with `fake-robot -e2e`, and the firmware
-(Embody Mode's `e2e.cpp`, per server, off by default). Next: step 4, on for raw.sa.w42.eu.
+(Embody Mode's `e2e.cpp`, per server, off by default). Step 4 is built: the manager's catalog
+marks an app `"e2e": true` and its robots turn encryption on for it (§7); raw.sa.w42.eu gets it
+with the next deploy.
 Part of the [wire protocol](wire-protocol.md) (planned for v2, usable from v1 as an extension).
 
 A relay such as `raw.sa.w42.eu` connects robots and browsers that cannot reach each other
@@ -108,6 +110,11 @@ Encryption is a setting of each entry in the robot's server list, because it onl
 (the pet, sbot) need the data; they stay plaintext. The pet also runs in public at
 `pet.sa.w42.eu`. `raw.sa.w42.eu` is a relay: encrypted (step 4 of §9).
 
+**From the manager:** a catalog app marked `"e2e": true` (on sm.w42.eu: Raw data) comes with
+`e2e: true` in the robot's app list (the USB setup and the signed `Apps` list); the robot turns
+encryption on for it, never off. So every robot set up with raw.sa.w42.eu is encrypted, and
+the owner decides it in one place, the catalog.
+
 The setting is the command `server_e2e {"server"?, "on"}` (`server`: a server's name or URL in
 the list, the current one when left out). Anyone may turn it on, since it only protects more;
 only an enrolled browser (a sealed command) may turn it off, so a relay cannot downgrade it.
@@ -118,7 +125,9 @@ the robot sends no plaintext media or telemetry to that server and accepts comma
 
 Also refused from the relay while encrypted: plaintext binary messages (pictures, file
 chunks, speaker audio), since the relay could inject them. Pictures and files go sealed in
-a later step; until then they are not available for an encrypted robot.
+a later step; until then they are not available for an encrypted robot: s-w42-eu-raw refuses
+them at once ("this robot is end-to-end encrypted: …") instead of relaying what the robot
+would drop. Speaker audio already goes sealed.
 
 ## 8. Managing enrolled browsers
 
@@ -136,4 +145,4 @@ a later step; until then they are not available for an encrypted robot.
    hardware.
 2. Browser side in the dashboard (WebCrypto), tested against `fake-robot`.
 3. Firmware (mbedtls), behind a per-server setting, off until tested on the robot.
-4. On for raw.sa.w42.eu.
+4. On for raw.sa.w42.eu: the catalog's `"e2e": true` (built 2026-10-07).
