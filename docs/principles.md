@@ -44,7 +44,9 @@ TPBot car taught.
    usual is paused.
 8. **Media is never implied.** Camera, microphone, speaker and location are separate
    scopes, granted explicitly, and visible on the device while in use (Stackchan's
-   red LIVE badge is the pattern). Sensitive data (location, calendars, presence)
+   red LIVE badge is the pattern). The device itself may forbid them: Stackchan's camera
+   and microphone can be off, or off at night, set only on the robot or over USB, and
+   refused by its firmware whatever an app or a manager asks. Sensitive data (location, calendars, presence)
    goes only to AI models the owner allowed for it, by default local ones.
 
 9. **Third-party accounts only through narrow, reviewed collectors.** Captures from
