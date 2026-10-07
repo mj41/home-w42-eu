@@ -275,7 +275,7 @@ screen, downloads, checks, installs, reports. Designed separately.
 
 | Direction | Kind | Body |
 |---|---|---|
-| robot → | `Hello` | firmware, the app list version, the app it is on, its apps as `{id, name}` (`id`: the first 8 bytes of SHA-256 of the URL, hex) |
+| robot → | `Hello` | firmware, the app list version, the app it is on, its apps as `{id, name, e2e}` (`id`: the first 8 bytes of SHA-256 of the URL, hex; `e2e`: encrypted end to end; an app the catalog marks `e2e` that is not gets the list again, once per version) |
 | robot → | `State` | on every change: app, connection state, `question {text, seconds_left}` or none, the last `answer` (`switched`, `not confirmed`, `refused: …`), `stuck`, `forgotten` |
 | robot → | `Ping` | every 25 s when nothing else went |
 | robot → | `Off` | `{by: "robot" \| "manager"}`: the manager is off on the robot now (S17); the channel closes |
