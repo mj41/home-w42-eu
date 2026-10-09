@@ -7,7 +7,10 @@ sensors measure, does what it is told, and shows a red LIVE badge while its came
 microphone streams. Everything else is an app on a server on your own network. Point the
 robot at another server and the same robot becomes something else.
 
-![One robot, many apps: the dashboard, the QR screen, the pet and its menus, the cockpit](img/one-robot-many-apps.gif)
+![One robot, many apps, in 3D: Raw data, the app switcher's QR screen, the pet and its menus, Focus, the cockpit](img/one-robot-many-apps.gif)
+
+The robot pictures here are 3D renders (M5Stack's StackChan structure files) with real screens
+from the robot.
 
 ```
  Stackchan (Embody Mode)             app server at home                   people
@@ -25,9 +28,9 @@ tested on one robot at home, and not reviewed by humans.
 
 [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) turns the robot into a Tamagotchi.
 
-| The robot's screen | | |
+| The robot | | |
 |---|---|---|
-| ![The pet is hungry](img/robot-pet-face.jpg) | ![The pet's menu: food, play, nap, needs](img/robot-pet-menu.jpg) | ![The food menu](img/robot-pet-food.jpg) |
+| <img src="img/robot3d-pet-hungry.png" width="260" alt="The robot with the pet: hungry"> | <img src="img/robot3d-pet-menu.png" width="260" alt="The pet's menu: food, play, nap, needs"> | <img src="img/robot3d-pet-food.png" width="260" alt="The food menu"> |
 | hungry: it asks for food | a tap on the screen: the menu | food (or hold an NFC food card to it) |
 
 **What a kid does:** strokes its head, taps its screen, holds a card with a banana on it to
@@ -92,7 +95,7 @@ command, and small loops react (the robot looks sad while its car is blocked).
 
 | | |
 |---|---|
-| ![The QR screen](img/robot-qr-screen.jpg) | ![The dashboard's face with a speech bubble](img/robot-dashboard-face.jpg) |
+| <img src="img/robot3d-qr.png" width="260" alt="The robot with the app switcher's QR screen"> | <img src="img/robot3d-raw.png" width="260" alt="The robot on Raw data: its face with a speech bubble"> |
 
 - **On the robot:** swipe up, **QR**. The QR screen pairs a phone (scan it, or type the
   8-character code) and switches apps: **Next** shows the next server, **Connect** goes
