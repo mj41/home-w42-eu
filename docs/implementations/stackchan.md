@@ -8,8 +8,8 @@ first device built the home-w42-eu way: **one universal firmware that is a light
 client, and several apps on the server side that give it different jobs.**
 
 Setting up a robot: plug it in and press one button on
-[sm.w42.eu/setup](https://sm.w42.eu/setup) (Chrome, USB), the Stackchan manager
-([s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager)); it gives the robot the apps you
+[sm.w42.eu/setup](https://sm.w42.eu/setup) (Chrome, USB), the Stackchan manager (at home:
+[s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager)); it gives the robot the apps you
 approve, each with a token of its own. With your own server or your own build:
 [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md)
 in the firmware fork.

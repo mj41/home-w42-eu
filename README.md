@@ -68,7 +68,7 @@ Each repo is independent. A home is made of the repos its user includes.
 | Repo | Role | License |
 |---|---|---|
 | [StackChan fork, branch `embody-mj41`](https://github.com/mj41/StackChan/tree/embody-mj41) | Stackchan firmware with Embody Mode, a light client; how to set up a robot: [SETUP.md](https://github.com/mj41/StackChan/blob/embody-mj41/firmware/main/apps/app_embody_mode/SETUP.md) | MIT (the firmware, as upstream) |
-| [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) | the Stackchan manager (optional), at home on your computer or at `sm.w42.eu`: your robots, the apps you approve, one-click setup over USB, a token per robot per app | MIT |
+| [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) | the home manager (optional), on your computer at home, and can link up to the online manager at `sm.w42.eu`: your robots, the apps you approve, one-click setup over USB, a token per robot per app | MIT |
 | [s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw) | Go implementation of the wire protocol (`wire` package), the full Stackchan dashboard and relay at `raw.sa.w42.eu`, the `robotauth` package the apps share | MIT |
 | [s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet) | the pet app (a Tamagotchi for kids), at `pet.sa.w42.eu` | MIT |
 | [s-w42-eu-focus](https://github.com/mj41/s-w42-eu-focus) | Focus, a focus timer (Pomodoro style): the robot is the timer, a phone optional | Apache-2.0 |

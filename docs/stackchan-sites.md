@@ -11,7 +11,7 @@ chan.w42.eu, one server for sign-in, robot setup, firmware and the raw dashboard
 | Host | What |
 |---|---|
 | `s.w42.eu` | index and project page (static) |
-| `sm.w42.eu` | **the Stackchan manager** ([s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager)): sign-in, your robots, the apps you approve for them, one-click setup over USB, their tokens, the official firmware |
+| `sm.w42.eu` | **the Stackchan manager** online (private code; the home manager [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) is its public part): sign-in, your robots, the apps you approve for them, one-click setup over USB, their tokens, the official firmware |
 | `raw.sa.w42.eu` | the raw dashboard ([s-w42-eu-raw](https://github.com/mj41/s-w42-eu-raw)): every sensor and command, an app like any other |
 | `pet.sa.w42.eu` | the pet ([s-w42-eu-pet](https://github.com/mj41/s-w42-eu-pet)) |
 | `dev.sa.w42.eu` | the higher-level API for developers and AI agents ([device API](device-api.md)), planned |
@@ -55,9 +55,10 @@ connected right now stays until it reconnects.
 ## 5. Steps
 
 1. **Done: DNS and certificates:** `s.w42.eu`, `sm.w42.eu`, wildcard `*.sa.w42.eu` (GitOps).
-2. **Done: the manager and the raw app.** The manager became a repo of its own,
-   [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager) (sign-in, robots, the app
-   catalog, setup, firmware, `robot-auth`); s-w42-eu-raw kept the raw app (robot connections,
+2. **Done: the manager and the raw app.** The manager became a repo of its own (robots, the app
+   catalog, setup, firmware, `robot-auth`; later split into the public home manager,
+   [s-w42-eu-manager](https://github.com/mj41/s-w42-eu-manager), and sm.w42.eu's private part with
+   sign-in and users); s-w42-eu-raw kept the raw app (robot connections,
    pairing, the dashboard, the end-to-end relay), which checks tokens with the manager.
    Deployed as sm.w42.eu and raw.sa.w42.eu.
 3. **Done: pet.sa.w42.eu:** the pet checks tokens with the manager too, with the Go package
